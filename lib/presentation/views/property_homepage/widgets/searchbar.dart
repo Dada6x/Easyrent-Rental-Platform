@@ -13,16 +13,20 @@ class CustomSearchBar extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-          child: TextField(
-            decoration: InputDecoration(
-              prefixIcon: const Icon(Icons.search),
-              hintText: "Search Something".tr,
-              hintStyle: AppTextStyles.h16medium.copyWith(color: grey),
-              filled: true,
-              fillColor: Theme.of(context).colorScheme.secondary,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-                borderSide: BorderSide.none,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 5),
+            child: TextField(
+              decoration: InputDecoration(
+                prefixIcon: const Icon(Icons.search),
+                hintText: "Search Something".tr,
+                hintStyle: AppTextStyles.h16medium.copyWith(color: grey),
+                filled: true,
+                fillColor:
+                    Theme.of(context).colorScheme.primary.withOpacity(0.05),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide.none,
+                ),
               ),
             ),
           ),
@@ -42,7 +46,8 @@ class CustomSearchBar extends StatelessWidget {
           child: Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.secondary,
+              border: Border.all(color: Theme.of(context).colorScheme.primary.withOpacity(0.3)),
+              color: Theme.of(context).colorScheme.primary.withOpacity(0.05),
               borderRadius: BorderRadius.circular(12),
             ),
             child: const Icon(Icons.tune),

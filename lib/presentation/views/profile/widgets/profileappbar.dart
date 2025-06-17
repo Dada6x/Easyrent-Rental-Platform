@@ -22,7 +22,7 @@ AppBar profileAppbar() {
         padding: EdgeInsets.all(8.0.r),
         child: Row(
           children: [
-            const ThemeLanguageRow(),
+            const ThemeToggleButton(),
             IconButton(
                 onPressed: () {
                   HomeScreenNavigator.scaffoldKey.currentState?.openEndDrawer();

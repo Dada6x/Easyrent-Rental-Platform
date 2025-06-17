@@ -38,11 +38,15 @@ class _PropertyFilterChipsState extends State<PropertyFilterChips> {
                 label: Text(filters[index], style: AppTextStyles.h14regular),
                 selected: isSelected,
                 selectedColor: Theme.of(context).colorScheme.primary,
-                backgroundColor: Theme.of(context).colorScheme.secondary,
+                backgroundColor: Theme.of(context).colorScheme.primary.withOpacity(0.05),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20.r),
                     side: BorderSide(
-                        color: Theme.of(context).colorScheme.outline)),
+                      color: Theme.of(context)
+                          .colorScheme
+                          .primary
+                          .withOpacity(0.1),
+                    )),
                 onSelected: (_) {
                   setState(() {
                     selectedIndex = index;
@@ -58,3 +62,6 @@ class _PropertyFilterChipsState extends State<PropertyFilterChips> {
     );
   }
 }
+
+// Theme.of(context).colorScheme.primary.withOpacity(0.05), for secondery 
+      // color: Theme.of(context).colorScheme.primary.withOpacity(0.3),

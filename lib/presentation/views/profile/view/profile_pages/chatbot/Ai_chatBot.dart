@@ -33,8 +33,7 @@ class _ChatPageState extends State<Ai_ChatBot> {
   );
 
   // 📡 Hugging Face model and token
-  final String _apiKey =
-      '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'; // ⛔️ replace this with your token
+  final String _apiKey = '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';
   final String _model = 'HuggingFaceH4/zephyr-7b-beta';
 
   final Dio _dio = Dio();
@@ -74,7 +73,6 @@ class _ChatPageState extends State<Ai_ChatBot> {
   }
 
   void _handleSendPressed(types.PartialText message) async {
-    // 1. Add user message
     final userMessage = types.TextMessage(
       author: _user,
       createdAt: DateTime.now().millisecondsSinceEpoch,

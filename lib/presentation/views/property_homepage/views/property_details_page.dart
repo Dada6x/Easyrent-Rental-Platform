@@ -1,7 +1,4 @@
 import 'package:card_swiper/card_swiper.dart';
-import 'package:easyrent/core/app/controller/app_controller.dart';
-import 'package:easyrent/core/constants/assets.dart';
-import 'package:easyrent/presentation/views/property_homepage/widgets/agent_widget.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,15 +7,18 @@ import 'package:iconify_flutter_plus/iconify_flutter_plus.dart';
 import 'package:iconify_flutter_plus/icons/ph.dart';
 import 'package:iconify_flutter_plus/icons/tabler.dart';
 import 'package:like_button/like_button.dart';
+import 'package:skeletonizer/skeletonizer.dart';
+import 'package:easyrent/core/app/controller/app_controller.dart';
+import 'package:easyrent/core/constants/assets.dart';
 import 'package:easyrent/core/constants/colors.dart';
 import 'package:easyrent/core/constants/utils/divider.dart';
 import 'package:easyrent/core/constants/utils/error_loading_mssg.dart';
 import 'package:easyrent/core/constants/utils/textStyles.dart';
 import 'package:easyrent/data/models/propertyModel.dart';
+import 'package:easyrent/presentation/views/property_homepage/widgets/agent_widget.dart';
 import 'package:easyrent/presentation/views/property_homepage/widgets/gallery_widget.dart';
 import 'package:easyrent/presentation/views/property_homepage/widgets/map_location_widget.dart';
 import 'package:easyrent/presentation/views/property_homepage/widgets/panorama_page.dart';
-import 'package:skeletonizer/skeletonizer.dart';
 
 class PropertyDetailsPage extends StatelessWidget {
   final PropertyModel property;
@@ -102,8 +102,10 @@ class PropertyDetailsPage extends StatelessWidget {
                             Container(
                                 padding: const EdgeInsets.all(10),
                                 decoration: BoxDecoration(
-                                  color:
-                                      Theme.of(context).colorScheme.secondary,
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .primary
+                                      .withOpacity(0.05),
                                   borderRadius: BorderRadius.circular(30),
                                 ),
                                 child: Text(
@@ -181,7 +183,6 @@ class PropertyDetailsPage extends StatelessWidget {
                           style: AppTextStyles.h16medium.copyWith(color: grey),
                         ),
                       ),
-
                       const CustomDivider(),
                       //! Panorama View
                       const _Headers(text: "Panorama View"),
@@ -192,7 +193,10 @@ class PropertyDetailsPage extends StatelessWidget {
                         margin: EdgeInsets.symmetric(horizontal: 8.w),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(12.r),
-                          color: Theme.of(context).colorScheme.secondary,
+                          color: Theme.of(context)
+                              .colorScheme
+                              .primary
+                              .withOpacity(0.05),
                         ),
                         child: InkWell(
                           borderRadius: BorderRadius.circular(12.r),
@@ -204,10 +208,21 @@ class PropertyDetailsPage extends StatelessWidget {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Icon(Icons.panorama_horizontal_select,
-                                    size: 40.r,
-                                    color:
-                                        Theme.of(context).colorScheme.primary),
+                                Container(
+                                  padding: EdgeInsets.all(7.r),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(12),
+                                      border: Border.all(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .primary
+                                              .withOpacity(0.5))),
+                                  child: Icon(Icons.panorama_horizontal_select,
+                                      size: 40.r,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .primary),
+                                ),
                                 SizedBox(height: 8.h),
                                 Text(
                                   "View Property in 360°",
@@ -406,7 +421,7 @@ Widget _featureIcon(Iconify icon, String label, BuildContext context) {
       Container(
           padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.secondary,
+            color: Theme.of(context).colorScheme.primary.withOpacity(0.05),
             borderRadius: BorderRadius.circular(30),
           ),
           child: Skeleton.ignore(child: icon)),
@@ -463,7 +478,8 @@ Widget _buildFacility(IconData icon, String label, BuildContext context) {
     mainAxisSize: MainAxisSize.min,
     children: [
       CircleAvatar(
-        backgroundColor: Theme.of(context).colorScheme.secondary,
+        backgroundColor:
+            Theme.of(context).colorScheme.primary.withOpacity(0.05),
         child: Icon(
           icon,
           size: 30,

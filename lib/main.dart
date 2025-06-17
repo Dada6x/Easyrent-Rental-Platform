@@ -42,8 +42,9 @@ void main() async {
 
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
+
       statusBarColor: Colors.transparent,
-      systemNavigationBarColor: blue,
+      // systemNavigationBarColor: blue,
     ),
   );
   // the payment Card gyroscope 3D shi

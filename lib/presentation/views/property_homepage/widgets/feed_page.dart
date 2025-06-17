@@ -1,3 +1,4 @@
+import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -5,7 +6,7 @@ import 'package:easyrent/core/constants/utils/textStyles.dart';
 import 'package:easyrent/data/models/outer_property_model.dart';
 import 'package:easyrent/presentation/views/property_homepage/views/seeall.dart';
 import 'package:easyrent/presentation/views/property_homepage/widgets/filterChips.dart';
-import 'package:easyrent/presentation/views/property_homepage/widgets/home_searchbar.dart';
+import 'package:easyrent/presentation/views/property_homepage/widgets/searchbar.dart';
 import 'package:easyrent/presentation/views/property_homepage/widgets/property_card_big.dart';
 import 'package:easyrent/presentation/views/property_homepage/widgets/property_card_smoll.dart';
 
@@ -51,14 +52,33 @@ class FeedPage extends StatelessWidget {
         ),
         SizedBox(
           height: 320.h,
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount: 3,
+          // child: ListView.builder(
+          //   scrollDirection: Axis.horizontal,
+          //   itemCount: 3,
+          //   itemBuilder: (context, index) {
+          //     final property = properties[index];
+
+          //     return PropertyCardBig(
+          //       //TODO do the null safety shit
+          //       id: property.id!,
+          //       imagePath: property.firstImage!,
+          //       city: property.location!.city!,
+          //       streetName: property.location!.street!,
+          //       price: property.price!,
+          //       rating: 4.5,
+          //       title: property.location!.country!,
+          //     );
+          //   },
+          // ),
+          //! swiper 
+          child: Swiper(
+            itemCount: 4,
+            autoplay: true,
+            curve: Curves.linear,
+            viewportFraction: 0.7,
             itemBuilder: (context, index) {
               final property = properties[index];
-
               return PropertyCardBig(
-                //TODO do the null safety shit
                 id: property.id!,
                 imagePath: property.firstImage!,
                 city: property.location!.city!,

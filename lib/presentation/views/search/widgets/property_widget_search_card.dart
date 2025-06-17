@@ -47,7 +47,7 @@ class PropertyWidgetSearchCard extends StatelessWidget {
             margin: const EdgeInsets.only(bottom: 16),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(16),
-              color: Theme.of(context).colorScheme.secondary,
+              color: Theme.of(context).colorScheme.primary.withOpacity(0.05),
             ),
             child: Row(
               children: [
@@ -72,7 +72,10 @@ class PropertyWidgetSearchCard extends StatelessWidget {
                           padding: EdgeInsets.symmetric(
                               horizontal: 6.w, vertical: 2.h),
                           decoration: BoxDecoration(
-                            color: Theme.of(context).colorScheme.secondary,
+                            color: Theme.of(context)
+                                .colorScheme
+                                .primary
+                                .withOpacity(0.05),
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Row(

@@ -21,7 +21,7 @@ class NotificationsPage extends StatelessWidget {
             shape: ContinuousRectangleBorder(
                 borderRadius: BorderRadius.circular(20.r),
                 side: BorderSide(
-                  color: Theme.of(context).colorScheme.outline,
+      color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
                 )),
             tileColor: Theme.of(context).colorScheme.secondary,
             title: Text(

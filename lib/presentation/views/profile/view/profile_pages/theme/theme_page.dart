@@ -124,9 +124,6 @@ class ThemePage extends StatelessWidget {
               final appController = Get.find<AppController>();
               appController.setPrimaryColor(color);
             },
-            tileColor: selected
-                ? Theme.of(context).colorScheme.secondary.withOpacity(0.3)
-                : Theme.of(context).colorScheme.secondary.withOpacity(0.1),
             leading: CircleAvatar(
               radius: 18.sp,
               backgroundColor: color,
@@ -181,7 +178,6 @@ class MiniPhonePreview extends StatelessWidget {
                       BorderRadius.vertical(top: Radius.circular(23.r)),
                 ),
               ),
-
               Container(
                 height: height * 0.08,
                 padding: EdgeInsets.symmetric(horizontal: width * 0.06),
@@ -193,7 +189,6 @@ class MiniPhonePreview extends StatelessWidget {
                   color: colorScheme.onPrimary,
                 ),
               ),
-
               Expanded(
                 child: Center(
                   child: SizedBox(
@@ -207,7 +202,6 @@ class MiniPhonePreview extends StatelessWidget {
                   ),
                 ),
               ),
-
               Align(
                 alignment: Alignment.bottomRight,
                 child: Container(

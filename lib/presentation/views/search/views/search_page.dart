@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:easyrent/core/constants/utils/textStyles.dart';
 import 'package:easyrent/presentation/views/property_homepage/widgets/filterChips.dart';
-import 'package:easyrent/presentation/views/property_homepage/widgets/home_searchbar.dart';
+import 'package:easyrent/presentation/views/property_homepage/widgets/searchbar.dart';
 import 'package:easyrent/presentation/views/search/widgets/property_widget_search_card.dart';
 import 'package:easyrent/presentation/views/search/widgets/search_appbar.dart';
 

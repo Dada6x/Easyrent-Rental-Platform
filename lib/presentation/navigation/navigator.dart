@@ -58,7 +58,8 @@ class _HomeScreenNavigatorState extends State<HomeScreenNavigator> {
               decoration: BoxDecoration(
                 border: Border(
                   top: BorderSide(
-                    color: Theme.of(context).colorScheme.outline,
+                    color:
+                        Theme.of(context).colorScheme.primary.withOpacity(0.1),
                     width: 1.5.r,
                   ),
                 ),

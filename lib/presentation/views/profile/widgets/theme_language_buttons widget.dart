@@ -3,35 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:easyrent/core/app/controller/app_controller.dart';
 
-class ThemeLanguageRow extends StatelessWidget {
-  const ThemeLanguageRow({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Row(
-      children: [
-        ThemeToggleButton(),
-        LanguageToggleButton(),
-      ],
-    );
-  }
-}
-
-class LanguageToggleButton extends StatelessWidget {
-  const LanguageToggleButton({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final AppController appController = Get.find<AppController>();
-    return IconButton(
-      onPressed: () {
-        appController.isArabic.value = !appController.isArabic.value;
-        appController.changeLang(appController.isArabic.value ? 'en' : 'ar');
-      },
-      icon:  Icon(Icons.translate, color: Theme.of(context).colorScheme.primary),
-    );
-  }
-}
 
 class ThemeToggleButton extends StatefulWidget {
   const ThemeToggleButton({super.key});
