@@ -24,7 +24,7 @@ class Userrepo {
     try {
       final response = await api.get(
         // EndPoints.login,
-        "https://run.mocky.io/v3/7c80766d-8cae-4594-bc7e-a72ee8739920",
+        "7c80766d-8cae-4594-bc7e-a72ee8739920",
         // data: {
         //   ApiKey.phone: number,
         //   ApiKey.password: password,
@@ -146,7 +146,7 @@ class Userrepo {
     try {
       final response = await api.get(
           // "https://run.mocky.io/v3/cd9ce080-4a73-44ce-95d1-e16c399fb7fe", // with image
-          "https://run.mocky.io/v3/f0a9efb6-22af-4047-9198-3f933d8b2076" //with null image
+          "f0a9efb6-22af-4047-9198-3f933d8b2076" //with null image
           );
       debug.i("Profile Request ${response.statusCode}");
       if (response.statusCode == 200) {
@@ -168,7 +168,7 @@ class Userrepo {
   }
 }
 
-// helper funs ... so funny hehehe :D (help)
+// helper funs ... so funny hehehe :D (help).
 Future<void> saveToken(String token) async {
   final prefs = await SharedPreferences.getInstance();
   await prefs.setString('token', token);

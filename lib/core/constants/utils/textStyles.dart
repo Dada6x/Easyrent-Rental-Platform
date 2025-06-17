@@ -57,7 +57,7 @@ class AppTextStyles {
       fontSize: 18.sp, fontFamily: "Rubik", fontWeight: FontWeight.w800);
   //!------------------------------16------------------------------------
   static TextStyle h16light = TextStyle(
-      fontSize: 16.sp, fontFamily: "Rubik", fontWeight: FontWeight.w300);
+      fontSize: 16.r, fontFamily: "Rubik", fontWeight: FontWeight.w300);
   static TextStyle h16regular = TextStyle(
       fontSize: 16.sp, fontFamily: "Rubik", fontWeight: FontWeight.w400);
   static TextStyle h16medium = TextStyle(

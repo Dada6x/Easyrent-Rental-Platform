@@ -4,7 +4,10 @@ import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:iconify_flutter_plus/iconify_flutter_plus.dart';
+import 'package:iconify_flutter_plus/icons/mdi.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:easyrent/core/constants/colors.dart';
 import 'package:easyrent/core/constants/utils/error_loading_mssg.dart';
@@ -15,20 +18,21 @@ import 'package:easyrent/data/models/outer_property_model.dart';
 import 'package:easyrent/main.dart';
 import 'package:easyrent/presentation/views/property_homepage/controller/propertiy_controller.dart';
 
-class Maps extends StatefulWidget {
-  const Maps({super.key});
+class MapPage extends StatefulWidget {
+  const MapPage({super.key});
 
   @override
-  State<Maps> createState() => _MapsState();
+  State<MapPage> createState() => _MapPageState();
 }
 
-class _MapsState extends State<Maps> {
+class _MapPageState extends State<MapPage> {
   final MapController _mapController = MapController();
   bool _isSwiperVisible = true;
 
   @override
   void initState() {
     super.initState();
+    _goToMyLocation;
   }
 
   @override
@@ -42,6 +46,41 @@ class _MapsState extends State<Maps> {
       _mapController.move(
           LatLng(property.location!.lat!, property.location!.lon!), 11);
     }
+  }
+
+  LatLng? _userLocation;
+
+  Future<void> _goToMyLocation() async {
+    bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      Get.snackbar("Location Disabled", "Please enable location services.");
+      return;
+    }
+
+    LocationPermission permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        Get.snackbar("Permission Denied", "Location permission is required.");
+        return;
+      }
+    }
+
+    if (permission == LocationPermission.deniedForever) {
+      Get.snackbar(
+          "Permission Permanently Denied", "Enable location from settings.");
+      return;
+    }
+
+    final position = await Geolocator.getCurrentPosition(
+      desiredAccuracy: LocationAccuracy.high,
+    );
+
+    setState(() {
+      _userLocation = LatLng(position.latitude, position.longitude);
+    });
+
+    _mapController.move(_userLocation!, 15);
   }
 
   final controller = Get.find<PropertiesController>();
@@ -85,47 +124,58 @@ class _MapsState extends State<Maps> {
                   subdomains: const ['a', 'b', 'c'],
                 ),
                 MarkerLayer(
-                  markers: properties
-                      .where((p) => p.location != null)
-                      .map(
-                        (property) => Marker(
-                          width: 30.w,
-                          height: 30.h,
-                          point: LatLng(
-                            property.location!.lat!,
-                            property.location!.lon!,
-                          ),
-                          child: GestureDetector(
-                            onTap: () {
-                              _goToProperty(property);
-                              setState(() {
-                                _isSwiperVisible = true;
-                              });
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .primary
-                                    .withOpacity(
-                                        0.15), // Light translucent background
-                                shape: BoxShape
-                                    .circle, // or BoxShape.rectangle with borderRadius
-                                border: Border.all(
+                  markers: [
+                    // Property Markers
+                    ...properties.where((p) => p.location != null).map(
+                          (property) => Marker(
+                            width: 30.w,
+                            height: 30.h,
+                            point: LatLng(
+                              property.location!.lat!,
+                              property.location!.lon!,
+                            ),
+                            child: GestureDetector(
+                              onTap: () {
+                                _goToProperty(property);
+                                setState(() {
+                                  _isSwiperVisible = true;
+                                });
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .primary
+                                      .withOpacity(0.15),
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
                                     color:
                                         Theme.of(context).colorScheme.primary,
-                                    width: 1.5),
-                              ),
-                              child: Icon(
-                                Icons.circle,
-                                size: 24.r,
-                                color: Theme.of(context).colorScheme.primary,
+                                    width: 1.5,
+                                  ),
+                                ),
+                                child: Icon(
+                                  Icons.circle,
+                                  size: 24.r,
+                                  color: Theme.of(context).colorScheme.primary,
+                                ),
                               ),
                             ),
                           ),
                         ),
-                      )
-                      .toList(),
+                    // Current user location marker
+                    if (_userLocation != null)
+                      Marker(
+                        width: 40.w,
+                        height: 40.h,
+                        point: _userLocation!,
+                        child: Iconify(
+                          Mdi.location,
+                          color: Theme.of(context).colorScheme.primary,
+                          size: 40.r,
+                        ),
+                      ),
+                  ],
                 ),
               ],
             ),
@@ -211,7 +261,7 @@ class _MapsState extends State<Maps> {
             right: 20.w,
             child: FloatingActionButton(
               backgroundColor: Theme.of(context).colorScheme.primary,
-              onPressed: () {},
+              onPressed: _goToMyLocation,
               child: const Icon(
                 Icons.my_location,
               ),

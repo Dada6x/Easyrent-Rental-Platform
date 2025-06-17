@@ -4,11 +4,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:iconify_flutter_plus/iconify_flutter_plus.dart';
 import 'package:iconify_flutter_plus/icons/bi.dart';
+import 'package:iconify_flutter_plus/icons/ri.dart';
 import 'package:easyrent/core/app/controller/app_controller.dart';
 import 'package:easyrent/core/constants/colors.dart';
 import 'package:easyrent/core/constants/utils/offline_page.dart';
 import 'package:easyrent/core/constants/utils/textStyles.dart';
-import 'package:easyrent/presentation/views/map/maps.dart';
+import 'package:easyrent/presentation/views/map/map_page.dart';
 import 'package:easyrent/presentation/views/profile/view/profile.dart';
 import 'package:easyrent/presentation/views/profile/view/profile_pages/notifications/views/notifications_drawer.dart';
 import 'package:easyrent/presentation/views/property_homepage/views/homePage.dart';
@@ -27,7 +28,7 @@ class _HomeScreenNavigatorState extends State<HomeScreenNavigator> {
 
   final List<Widget> _pages = [
     Homepage(),
-    const Maps(),
+    const MapPage(),
     const Search(),
     const Profile(),
   ];
@@ -100,12 +101,12 @@ class _HomeScreenNavigatorState extends State<HomeScreenNavigator> {
                       label: 'Map'.tr),
                   BottomNavigationBarItem(
                       activeIcon: Iconify(
-                        Bi.search,
+                        Ri.search_fill,
                         color: Theme.of(context).colorScheme.primary,
                         size: 30.sp,
                       ),
                       icon: Iconify(
-                        Bi.search,
+                        Ri.search_2_line,
                         color: grey,
                         size: 30.sp,
                       ),

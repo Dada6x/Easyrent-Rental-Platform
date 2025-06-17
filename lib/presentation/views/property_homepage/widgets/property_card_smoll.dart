@@ -43,7 +43,7 @@ class PropertyCardSmall extends StatelessWidget {
             );
           },
           child: Card(
-            color: Theme.of(context).colorScheme.secondary,
+            color: Theme.of(context).colorScheme.primary.withOpacity(0.05),
             elevation: 0,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16.r),

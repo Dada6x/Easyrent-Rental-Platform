@@ -52,33 +52,14 @@ class FeedPage extends StatelessWidget {
         ),
         SizedBox(
           height: 320.h,
-          // child: ListView.builder(
-          //   scrollDirection: Axis.horizontal,
-          //   itemCount: 3,
-          //   itemBuilder: (context, index) {
-          //     final property = properties[index];
-
-          //     return PropertyCardBig(
-          //       //TODO do the null safety shit
-          //       id: property.id!,
-          //       imagePath: property.firstImage!,
-          //       city: property.location!.city!,
-          //       streetName: property.location!.street!,
-          //       price: property.price!,
-          //       rating: 4.5,
-          //       title: property.location!.country!,
-          //     );
-          //   },
-          // ),
-          //! swiper 
-          child: Swiper(
-            itemCount: 4,
-            autoplay: true,
-            curve: Curves.linear,
-            viewportFraction: 0.7,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: 3,
             itemBuilder: (context, index) {
               final property = properties[index];
+
               return PropertyCardBig(
+                //TODO do the null safety shit
                 id: property.id!,
                 imagePath: property.firstImage!,
                 city: property.location!.city!,
@@ -89,6 +70,28 @@ class FeedPage extends StatelessWidget {
               );
             },
           ),
+          //! swiper 
+          // child: Swiper(
+          //   itemCount: 4,
+          //   autoplay: true,
+          //   curve: Curves.linear,
+          //   viewportFraction: 0.679,
+          //   scale: 0.73,
+          //   itemBuilder: (context, index) {
+          //     final property = properties[index];
+          //     return PropertyCardBig(
+          //       id: property.id!,
+          //       imagePath: property.firstImage!,
+          //       city: property.location!.city!,
+          //       streetName: property.location!.street!,
+          //       price: property.price!,
+          //       rating: 4.5,
+          //       title: property.location!.country!,
+          //     );
+          //   },
+          // ),
+        ), SizedBox(
+          height: 5.h,
         ),
         const PropertyFilterChips(),
         SizedBox(

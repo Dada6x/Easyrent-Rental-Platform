@@ -1,5 +1,5 @@
 class EndPoints {
-  static String baseUrl = "http://localhost:3000";
+  static String baseUrl = "https://run.mocky.io/v3/";
   static String login = "/auth/login";
   static String Logout = "auth/logout";
   static String registerUser = "/user/register";
