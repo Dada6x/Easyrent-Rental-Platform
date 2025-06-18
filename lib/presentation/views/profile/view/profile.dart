@@ -1,9 +1,11 @@
+import 'package:easyrent/feedback.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:iconify_flutter_plus/iconify_flutter_plus.dart';
 import 'package:iconify_flutter_plus/icons/bi.dart';
+import 'package:iconify_flutter_plus/icons/ic.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:motion/motion.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -261,6 +263,14 @@ class Profile extends StatelessWidget {
                   size: 29.sp,
                 ),
                 destination_widget: const InviteFriendPage()),
+            customListTile(
+                string: "Feed Back ".tr,
+                leading: Iconify(
+                  Ic.feedback,
+                  color: Theme.of(context).colorScheme.primary,
+                  size: 29.sp,
+                ),
+                destination_widget: const FeedbackPage()),
             customListTile(
                 subtitle: "Beta",
                 string: "AI Agent ".tr,

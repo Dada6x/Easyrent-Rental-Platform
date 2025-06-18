@@ -1,9 +1,11 @@
 import 'package:card_swiper/card_swiper.dart';
+import 'package:easyrent/core/constants/utils/pages/report_page.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:iconify_flutter_plus/iconify_flutter_plus.dart';
+import 'package:iconify_flutter_plus/icons/material_symbols.dart';
 import 'package:iconify_flutter_plus/icons/ph.dart';
 import 'package:iconify_flutter_plus/icons/tabler.dart';
 import 'package:like_button/like_button.dart';
@@ -65,27 +67,52 @@ class PropertyDetailsPage extends StatelessWidget {
                         autoplay: true,
                       ),
                     ),
-                    //! share buttons and favorite
+                    //! share buttons and favorite and report
                     Padding(
                       padding:
                           const EdgeInsets.only(top: 60, left: 15, right: 15),
                       child: Row(
                         children: [
-                          _circleButton(Icons.arrow_back, () {
+                          //back
+                          _circleButton(
+                              Iconify(
+                                MaterialSymbols.arrow_back,
+                                size: 28.sp,
+                                color: white,
+                              ), () {
                             Get.back();
                           }),
                           const Spacer(),
+                          //! favorite
                           const LikeButton(),
                           SizedBox(
                             width: 12.w,
                           ), //
-                          _circleButton(Icons.share, () async {
+                          //! share
+                          _circleButton(
+                              Iconify(
+                                MaterialSymbols.share,
+                                size: 28.sp,
+                                color: white,
+                              ), () async {
                             final shareText = _buildShareText(property);
                             await SharePlus.instance
                                 .share(ShareParams(text: shareText));
                           }),
-
                           SizedBox(width: 12.w),
+                          //! report
+                          _circleButton(
+                              Iconify(
+                                Tabler.dots_vertical,
+                                size: 28.sp,
+                                color: white,
+                              ), () async {
+                            Get.to(ReportPage(
+                              propertyId: property.id ?? 0,
+                              propertyImage: property.propertyImages![1],
+                              title: property.title ?? "Unexpected Error",
+                            ));
+                          })
                         ],
                       ),
                     ),
@@ -236,6 +263,9 @@ class PropertyDetailsPage extends StatelessWidget {
                                 Text(
                                   "View Property in 360°",
                                   style: AppTextStyles.h16semi.copyWith(
+                                      decoration: TextDecoration.underline,
+                                      decorationColor:
+                                          Theme.of(context).colorScheme.primary,
                                       color: Theme.of(context)
                                           .colorScheme
                                           .primary),
@@ -309,9 +339,11 @@ class PropertyDetailsPage extends StatelessWidget {
                             SizedBox(
                               width: 10.w,
                             ),
-                            Text(
-                              "${property.location!.country} ,${property.location!.city} ,${property.location!.quarter},${property.location!.street}",
-                              overflow: TextOverflow.ellipsis,
+                            Expanded(
+                              child: Text(
+                                "${property.location!.country} ,${property.location!.city} ,${property.location!.quarter},${property.location!.street}",
+                                overflow: TextOverflow.ellipsis,
+                              ),
                             ),
                           ],
                         ),
@@ -396,14 +428,10 @@ class PropertyDetailsPage extends StatelessWidget {
     });
   }
 
-  Widget _circleButton(IconData icon, VoidCallback onPressed) {
+  Widget _circleButton(Iconify icon, VoidCallback onPressed) {
     return GestureDetector(
       onTap: onPressed,
-      child: Icon(
-        icon,
-        size: 28.sp,
-        color: white,
-      ),
+      child: icon,
     );
   }
 }
