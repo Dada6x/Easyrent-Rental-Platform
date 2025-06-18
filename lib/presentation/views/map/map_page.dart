@@ -28,6 +28,7 @@ class MapPage extends StatefulWidget {
 class _MapPageState extends State<MapPage> {
   final MapController _mapController = MapController();
   bool _isSwiperVisible = true;
+  bool _isLocating = false;
 
   @override
   void initState() {
@@ -51,8 +52,11 @@ class _MapPageState extends State<MapPage> {
   LatLng? _userLocation;
 
   Future<void> _goToMyLocation() async {
+    setState(() => _isLocating = true);
+
     bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
+      setState(() => _isLocating = false);
       Get.snackbar("Location Disabled", "Please enable location services.");
       return;
     }
@@ -61,12 +65,14 @@ class _MapPageState extends State<MapPage> {
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
+        setState(() => _isLocating = false);
         Get.snackbar("Permission Denied", "Location permission is required.");
         return;
       }
     }
 
     if (permission == LocationPermission.deniedForever) {
+      setState(() => _isLocating = false);
       Get.snackbar(
           "Permission Permanently Denied", "Enable location from settings.");
       return;
@@ -78,6 +84,7 @@ class _MapPageState extends State<MapPage> {
 
     setState(() {
       _userLocation = LatLng(position.latitude, position.longitude);
+      _isLocating = false;
     });
 
     _mapController.move(_userLocation!, 15);
@@ -350,6 +357,15 @@ class _MapPageState extends State<MapPage> {
               },
             ),
           ),
+          if (_isLocating)
+            Positioned.fill(
+              child: Container(
+                color: Colors.black.withOpacity(0.2),
+                child: const Center(
+                  child: CircularProgressIndicator(),
+                ),
+              ),
+            ),
         ],
       );
     }));

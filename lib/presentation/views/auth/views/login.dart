@@ -3,6 +3,7 @@ import 'package:easyrent/core/constants/colors.dart';
 import 'package:easyrent/core/services/api/dio_consumer.dart';
 import 'package:easyrent/core/constants/utils/textStyles.dart';
 import 'package:easyrent/data/repos/userRepo.dart';
+import 'package:easyrent/main.dart';
 import 'package:easyrent/presentation/views/auth/views/forget_password.dart';
 import 'package:easyrent/presentation/views/auth/views/signup.dart';
 import 'package:easyrent/core/constants/utils/button.dart';
@@ -56,8 +57,8 @@ class LoginPage extends StatelessWidget {
                         Get.to(() => ForgetPasswordPage());
                       },
                       child: Text('Forgot Password?',
-                          style: AppTextStyles.h14regular
-                              .copyWith(color: Theme.of(context).colorScheme.primary))),
+                          style: AppTextStyles.h14regular.copyWith(
+                              color: Theme.of(context).colorScheme.primary))),
                 ),
                 //@ LOGIN BUTTON :O
                 CustomButton(
@@ -111,8 +112,7 @@ class LoginPage extends StatelessWidget {
       );
       return;
     }
-    var api = DioConsumer(Dio());
-    Userrepo(api).loginUser(
+    userREPO.loginUser(
       number: _numberController.text,
       password: _passwordController.text,
     );

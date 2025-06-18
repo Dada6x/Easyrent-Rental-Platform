@@ -47,7 +47,6 @@ class AppController extends GetxController {
             break;
           } else {
             Get.rawSnackbar(
-              
               message: "You're connected back",
               margin: const EdgeInsets.all(12),
               borderRadius: 8,

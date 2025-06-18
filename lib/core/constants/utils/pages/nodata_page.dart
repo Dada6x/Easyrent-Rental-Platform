@@ -1,9 +1,9 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:easyrent/core/constants/assets.dart';
 import 'package:easyrent/core/constants/colors.dart';
 import 'package:easyrent/core/constants/svgColorReplacer.dart';
 import 'package:easyrent/core/constants/utils/textStyles.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class noDataPage extends StatelessWidget {
   const noDataPage({super.key});

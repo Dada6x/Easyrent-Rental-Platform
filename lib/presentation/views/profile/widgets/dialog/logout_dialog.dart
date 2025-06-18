@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:easyrent/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:easyrent/core/constants/colors.dart';
@@ -48,7 +49,7 @@ void showDeleteDialog(BuildContext context) {
                   Expanded(
                     child: TextButton(
                       onPressed: () {
-                        Userrepo(DioConsumer(Dio())).logoutUser();
+                        userREPO.logoutUser();
                       },
                       style: TextButton.styleFrom(
                         backgroundColor: red,

@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:easyrent/core/constants/utils/rawSnackBar.dart';
 import 'package:easyrent/core/services/api/api_consumer.dart';
 import 'package:easyrent/core/services/api/end_points.dart';
 import 'package:easyrent/core/services/api/errors/error_model.dart';
@@ -49,8 +50,10 @@ class Userrepo {
           },
         );
       }
+      showErrorSnackbar("Something went wrong. Please try again later.");
       return const Left('Unexpected error during login');
     } on ServerException catch (e) {
+      showErrorSnackbar(" exception ${e.errorModel.message}");
       debug.e("Server Exception: ${e.errorModel.message}");
       return Left(e.errorModel.message);
     }
@@ -77,11 +80,11 @@ class Userrepo {
       if (response.statusCode == 200) {
         Get.off(() => const VerificationCodePage());
       }
+      showErrorSnackbar("Something went wrong. Please try again later.");
       return const Left('Unexpected error');
-      // must show the user snack bar
     } on ServerException catch (e) {
       debug.e("Exception $e");
-      // must show the user snack bar
+      showErrorSnackbar(" exception ${e.errorModel.message}");
       return Left(e.errorModel.message);
     }
   }
@@ -97,7 +100,7 @@ class Userrepo {
         // },
       );
       if (response.statusCode == 200) {
-        debug.t("code is true and verified hhehe ");
+        debug.t("code is true and verified ");
         final token = response.data['accessToken'];
         await saveToken(token);
         userPref?.setBool('isLoggedIn', true);
@@ -112,9 +115,12 @@ class Userrepo {
           },
         );
       }
+      showErrorSnackbar("Something went wrong. Please try again later.");
       return const Left('Unexpected error');
     } on ServerException catch (e) {
       debug.e("Exception $e");
+      showErrorSnackbar(" exception ${e.errorModel.message}");
+
       return Left(e.errorModel.message);
     }
   }
@@ -138,9 +144,11 @@ class Userrepo {
       }
     } on ServerException catch (e) {
       debug.e("ServerException: $e");
+      showErrorSnackbar(" exception ${e.errorModel.message}");
       return Left(e);
     } catch (e) {
       debug.e("Unexpected exception: $e");
+      showErrorSnackbar("Something went wrong. Please try again later.");
       return Left(ServerException(errorModel: ErrorModel(4, e.toString())));
     }
   }
@@ -163,12 +171,13 @@ class Userrepo {
       return const Right('User Logged Out');
     } on ServerException catch (e) {
       debug.e("Exception $e");
+      showErrorSnackbar(" exception ${e.errorModel.message}");
       return Left(e.errorModel.message);
     }
   }
 }
 
-// helper funs ... so funny hehehe :D (help).
+//@ helper funs ... so funny hehehe :D (help).
 Future<void> saveToken(String token) async {
   final prefs = await SharedPreferences.getInstance();
   await prefs.setString('token', token);

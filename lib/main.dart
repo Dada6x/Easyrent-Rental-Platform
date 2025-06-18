@@ -1,6 +1,9 @@
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
+import 'package:dio/dio.dart';
 import 'package:easyrent/core/app/notifications/notificationsApi.dart';
 import 'package:easyrent/core/constants/colors.dart';
+import 'package:easyrent/core/services/api/dio_consumer.dart';
+import 'package:easyrent/data/repos/userRepo.dart';
 import 'package:easyrent/presentation/views/property_homepage/controller/propertiy_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -30,6 +33,7 @@ var debug = Logger(
 SharedPreferences? userPref;
 
 bool isOffline = !Get.find<AppController>().isOffline.value;
+  final userREPO = Userrepo(DioConsumer(Dio()));
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -42,7 +46,6 @@ void main() async {
 
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
-
       statusBarColor: Colors.transparent,
       // systemNavigationBarColor: blue,
     ),
