@@ -1,3 +1,5 @@
+import 'package:easyrent/core/constants/assets.dart';
+import 'package:easyrent/core/constants/svgColorReplacer.dart';
 import 'package:easyrent/core/constants/utils/divider.dart';
 import 'package:easyrent/presentation/views/profile/view/profile_pages/theme/theme_page.dart';
 import 'package:easyrent/presentation/views/profile/widgets/custome_list_tile.dart';
@@ -17,16 +19,28 @@ class SecurityPage extends StatelessWidget {
       padding: EdgeInsets.all(8.r),
       child: Column(
         children: [
+          ThemedSvgReplacer(
+              assetPath: security,
+              themeColor: Theme.of(context).colorScheme.primary,
+              height: 220.h,
+              width: double.infinity),
           customListTile(
               string: 'Change Password'.tr,
-              leading:  Iconify(Ph.password,color: Theme.of(context).colorScheme.primary,),
+              leading: Iconify(
+                Ph.password,
+                color: Theme.of(context).colorScheme.primary,
+              ),
               destination_widget: const ThemePage()),
           customListTile(
             string: 'Change Phone Number'.tr,
-            leading:  Iconify(Bi.phone,color: Theme.of(context).colorScheme.primary,),
+            leading: Iconify(
+              Bi.phone,
+              color: Theme.of(context).colorScheme.primary,
+            ),
             destination_widget: const ThemePage(),
           ),
-          const CustomDivider()
+          const CustomDivider(),
+          const Spacer()
         ],
       ),
     );

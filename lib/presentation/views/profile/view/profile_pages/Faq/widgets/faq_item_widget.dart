@@ -1,4 +1,3 @@
-
 import 'package:easyrent/core/constants/colors.dart';
 import 'package:easyrent/core/constants/utils/textStyles.dart';
 import 'package:flutter/material.dart';
@@ -25,16 +24,16 @@ class FAQItem extends StatelessWidget {
         collapsedShape: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
             borderSide: BorderSide(
-              color: Theme.of(context).colorScheme.outline,
+              color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
             )),
         shape: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
             borderSide: BorderSide(
-              color: Theme.of(context).colorScheme.outline,
+              color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
             )),
         textColor: Theme.of(context).colorScheme.primary,
-        backgroundColor: Theme.of(context).colorScheme.secondary,
-        collapsedBackgroundColor: Theme.of(context).colorScheme.secondary,
+        backgroundColor: Theme.of(context).colorScheme.primary.withOpacity(0.05),
+        collapsedBackgroundColor: Theme.of(context).colorScheme.primary.withOpacity(0.05),
         expansionAnimationStyle: AnimationStyle(curve: Curves.easeIn),
         title: Text(
           question,

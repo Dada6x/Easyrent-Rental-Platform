@@ -18,7 +18,6 @@ class PaymentMethod extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // // Summary
           Text(
             "You're paying for:",
             style: AppTextStyles.h16medium,
@@ -38,7 +37,7 @@ class PaymentMethod extends StatelessWidget {
                 shadow: true,
                 glare: true,
                 borderRadius: BorderRadius.circular(25.r),
-                child: const CreditCardWidget(), // keep your visual card
+                child: const CreditCardWidget(),
               ),
             ),
           ),
@@ -52,12 +51,9 @@ class PaymentMethod extends StatelessWidget {
               ),
             ),
           ),
-
-          const SizedBox(height: 16),
-
-          const SizedBox(height: 30),
-
-          // Pay button
+          SizedBox(height: 250.h),
+          // Spacer(),
+          // const Spacer(),
           SizedBox(
             width: double.infinity,
             height: 50,
@@ -78,34 +74,20 @@ class PaymentMethod extends StatelessWidget {
           ),
           const SizedBox(height: 16),
 
-          // Stripe note
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
-              Icon(Icons.lock, size: 16, color: Colors.grey),
-              SizedBox(width: 6),
-              Text("Payments are securely processed by Stripe",
-                  style: TextStyle(color: Colors.grey, fontSize: 12)),
+            children: [
+              Icon(Icons.lock,
+                  size: 16, color: Theme.of(context).colorScheme.primary),
+              const SizedBox(width: 6),
+              const Text("Payments are securely processed by Stripe",
+                  style: TextStyle(color: grey, fontSize: 12)),
             ],
           ),
+          SizedBox(
+            height: 20.h,
+          )
         ],
-      ),
-    );
-  }
-
-  Widget _buildTextField(String label, TextEditingController controller,
-      {TextInputType keyboardType = TextInputType.text,
-      bool obscureText = false}) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8),
-      child: TextField(
-        controller: controller,
-        keyboardType: keyboardType,
-        obscureText: obscureText,
-        decoration: InputDecoration(
-          labelText: label,
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10)),
-        ),
       ),
     );
   }

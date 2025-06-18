@@ -72,10 +72,7 @@ class PropertyWidgetSearchCard extends StatelessWidget {
                           padding: EdgeInsets.symmetric(
                               horizontal: 6.w, vertical: 2.h),
                           decoration: BoxDecoration(
-                            color: Theme.of(context)
-                                .colorScheme
-                                .primary
-                                .withOpacity(0.05),
+                            color:Theme.of(context).colorScheme.primary.withOpacity(0.05),
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Row(

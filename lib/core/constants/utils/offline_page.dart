@@ -61,7 +61,7 @@ class OfflinePage extends StatelessWidget {
                             ),
                         TextSpan(
                             text:
-                                ", Make Sure to be  connected to internet then try again .",
+                                ", Please Make Sure to be connected to internet then try again.",
                             style: AppTextStyles.h16medium),
                       ],
                     ),

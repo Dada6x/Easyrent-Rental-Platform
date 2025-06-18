@@ -20,7 +20,7 @@ class InviteFriendPage extends StatelessWidget {
             ThemedSvgReplacer(
                 assetPath: invite,
                 themeColor: Theme.of(context).colorScheme.primary,
-                height: 220.h,
+                height: 250.h,
                 width: double.infinity),
             SizedBox(height: 32.h),
             Text("Invite Your Friends", style: AppTextStyles.h32medium),
