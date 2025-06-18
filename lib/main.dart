@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:easyrent/core/app/notifications/notificationsApi.dart';
 import 'package:easyrent/core/constants/colors.dart';
 import 'package:easyrent/core/services/api/dio_consumer.dart';
+import 'package:easyrent/data/repos/propertiesRepo.dart';
 import 'package:easyrent/data/repos/userRepo.dart';
 import 'package:easyrent/presentation/views/property_homepage/controller/propertiy_controller.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +34,8 @@ var debug = Logger(
 SharedPreferences? userPref;
 
 bool isOffline = !Get.find<AppController>().isOffline.value;
-  final userREPO = Userrepo(DioConsumer(Dio()));
+final userDio = Userrepo(DioConsumer(Dio()));
+final PropertyDio = PropertiesRepo(DioConsumer(Dio()));
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

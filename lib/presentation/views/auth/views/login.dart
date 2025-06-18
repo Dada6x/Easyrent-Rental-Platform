@@ -112,7 +112,7 @@ class LoginPage extends StatelessWidget {
       );
       return;
     }
-    userREPO.loginUser(
+    userDio.loginUser(
       number: _numberController.text,
       password: _passwordController.text,
     );

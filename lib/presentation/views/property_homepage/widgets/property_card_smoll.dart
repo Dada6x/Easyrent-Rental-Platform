@@ -1,4 +1,3 @@
-import 'package:easyrent/data/repos/propertiesRepo.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,6 +7,7 @@ import 'package:easyrent/core/app/controller/app_controller.dart';
 import 'package:easyrent/core/constants/colors.dart';
 import 'package:easyrent/core/constants/utils/error_loading_mssg.dart';
 import 'package:easyrent/core/constants/utils/textStyles.dart';
+import 'package:easyrent/main.dart';
 import 'package:easyrent/presentation/views/property_homepage/views/property_details_page.dart';
 
 class PropertyCardSmall extends StatelessWidget {
@@ -36,7 +36,7 @@ class PropertyCardSmall extends StatelessWidget {
         containersColor: Theme.of(context).colorScheme.onTertiary,
         child: RawMaterialButton(
           onPressed: () async {
-            final property = await PropertiesRepo.propertyDetailsById(id);
+            final property = await PropertyDio.propertyDetailsById(id);
             Get.to(
               () => PropertyDetailsPage(property: property),
               duration: const Duration(milliseconds: 600),

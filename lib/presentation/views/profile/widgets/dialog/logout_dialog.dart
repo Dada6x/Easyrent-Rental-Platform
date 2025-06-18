@@ -49,7 +49,7 @@ void showDeleteDialog(BuildContext context) {
                   Expanded(
                     child: TextButton(
                       onPressed: () {
-                        userREPO.logoutUser();
+                        userDio.logoutUser();
                       },
                       style: TextButton.styleFrom(
                         backgroundColor: red,

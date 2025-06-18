@@ -1,7 +1,6 @@
 import 'package:easyrent/core/constants/utils/pages/error_page.dart';
 import 'package:easyrent/core/constants/utils/pages/nodata_page.dart';
 import 'package:easyrent/data/models/favourite_model.dart';
-import 'package:easyrent/data/repos/propertiesRepo.dart';
 import 'package:easyrent/main.dart';
 import 'package:easyrent/presentation/views/profile/view/profile_pages/favourite/widget/property_widget_card_favourite.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +19,7 @@ class _MyFavouritePageState extends State<MyFavouritePage> {
   @override
   void initState() {
     super.initState();
-    _propertiesFuture = PropertiesRepo.getFavoriteProperties();
+    _propertiesFuture = PropertyDio.getFavoriteProperties();
   }
 
   // fav page list empty -> prop Repo ->getfavourite fetch ⟶ return list to the Model ⟶the list is now full we display it in the builder

@@ -9,7 +9,7 @@ import 'package:easyrent/core/app/controller/app_controller.dart';
 import 'package:easyrent/core/constants/colors.dart';
 import 'package:easyrent/core/constants/utils/error_loading_mssg.dart';
 import 'package:easyrent/core/constants/utils/textStyles.dart';
-import 'package:easyrent/data/repos/propertiesRepo.dart';
+import 'package:easyrent/main.dart';
 import 'package:easyrent/presentation/views/property_homepage/views/property_details_page.dart';
 
 class PropertyWidgetSearchCard extends StatelessWidget {
@@ -34,7 +34,7 @@ class PropertyWidgetSearchCard extends StatelessWidget {
       return Bounce(
         onTapUp: (p0) async {
           SystemSound.play(SystemSoundType.click);
-          final property = await PropertiesRepo.propertyDetailsById(id);
+          final property = await PropertyDio.propertyDetailsById(id);
           Get.to(
             () => PropertyDetailsPage(property: property),
             duration: const Duration(milliseconds: 600),

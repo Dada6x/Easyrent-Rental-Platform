@@ -141,7 +141,7 @@ class _SignupPageState extends State<SignupPage> {
                       );
                       return;
                     }
-                    userREPO.signUpUser(
+                    userDio.signUpUser(
                       userName: name,
                       number: phone,
                       password: password,
