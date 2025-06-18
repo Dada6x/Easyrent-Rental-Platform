@@ -7,6 +7,7 @@ import 'package:iconify_flutter_plus/iconify_flutter_plus.dart';
 import 'package:iconify_flutter_plus/icons/ph.dart';
 import 'package:iconify_flutter_plus/icons/tabler.dart';
 import 'package:like_button/like_button.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:easyrent/core/app/controller/app_controller.dart';
 import 'package:easyrent/core/constants/assets.dart';
@@ -74,8 +75,16 @@ class PropertyDetailsPage extends StatelessWidget {
                             Get.back();
                           }),
                           const Spacer(),
-                          const LikeButton(), //
-                          _circleButton(Icons.share, () {}),
+                          const LikeButton(),
+                          SizedBox(
+                            width: 12.w,
+                          ), //
+                          _circleButton(Icons.share, () async {
+                            final shareText = _buildShareText(property);
+                            await SharePlus.instance
+                                .share(ShareParams(text: shareText));
+                          }),
+
                           SizedBox(width: 12.w),
                         ],
                       ),
@@ -356,7 +365,9 @@ class PropertyDetailsPage extends StatelessWidget {
                                     backgroundColor:
                                         Theme.of(context).colorScheme.primary,
                                   ),
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    // Get.to(() => const PaymentMethod());
+                                  },
                                   child: Text(
                                     "Book Now".tr,
                                     style: AppTextStyles.h16semi
@@ -494,4 +505,16 @@ Widget _buildFacility(IconData icon, String label, BuildContext context) {
       ),
     ],
   );
+}
+
+String _buildShareText(PropertyModel property) {
+  return '''
+Hey! I found this beautiful home on EasyRent that you might love.
+
+It has ${property.rooms} bedrooms, ${property.bathrooms} bathrooms, and a great location at
+Latitude: ${property.location?.lat ?? 'N/A'}, Longitude: ${property.location?.lon ?? 'N/A'}.
+
+Check it out here: https://your-app-link.com/property/${property.id}
+''';
+//TODO make the endpoint Here
 }

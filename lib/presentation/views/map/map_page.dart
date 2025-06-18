@@ -127,7 +127,7 @@ class _MapPageState extends State<MapPage> {
               ),
               children: [
                 TileLayer(
-                  urlTemplate: EndPoints.openstreetmap,
+                  urlTemplate: EndPoints.openStreetMap,
                   subdomains: const ['a', 'b', 'c'],
                 ),
                 MarkerLayer(

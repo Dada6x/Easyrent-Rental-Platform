@@ -21,7 +21,7 @@ class NotificationsPage extends StatelessWidget {
             shape: ContinuousRectangleBorder(
                 borderRadius: BorderRadius.circular(20.r),
                 side: BorderSide(
-      color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                  color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
                 )),
             tileColor: Theme.of(context).colorScheme.secondary,
             title: Text(
@@ -39,12 +39,19 @@ class NotificationsPage extends StatelessWidget {
               inactiveTrackColor: Theme.of(context).colorScheme.secondary,
             ),
           ),
+          SwitchListTile(
+            value: notificationsEnabled,
+            onChanged: (val) {},
+            title: const Text("Save this card for future use"),
+            activeColor: Colors.green,
+            contentPadding: EdgeInsets.zero,
+          ),
           SizedBox(
             height: 15.h,
           ),
           const CustomDivider(),
           IconButton(
-              onPressed: () async{
+              onPressed: () async {
                 await NotificationsService().showNotification(
                   id: 12,
                   title: "Hello HELLOO ",
@@ -52,14 +59,6 @@ class NotificationsPage extends StatelessWidget {
                 );
               },
               icon: const Icon(Icons.message)),
-              
-                 IconButton(
-                  onPressed: () async {
-                    await NotificationsService().showNotification(
-                        title: "habit name here ", body: "Check this out !!!");
-                  },
-                  icon: const Icon(Icons.notifications),
-                ),
         ],
       ),
     );
