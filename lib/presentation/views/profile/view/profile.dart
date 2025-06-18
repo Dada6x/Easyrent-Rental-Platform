@@ -1,4 +1,4 @@
-import 'package:easyrent/feedback.dart';
+import 'package:easyrent/presentation/views/profile/view/profile_pages/feedback/feedback.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

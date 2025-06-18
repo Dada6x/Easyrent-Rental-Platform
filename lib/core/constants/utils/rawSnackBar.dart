@@ -40,7 +40,7 @@ void showSnackbarWithContext(String message, BuildContext context) {
     backgroundColor: Theme.of(context).colorScheme.surface,
     margin: EdgeInsets.all(22.r),
     borderRadius: 12.r,
-    duration: const Duration(seconds: 6),
+    duration: const Duration(seconds: 3),
     snackStyle: SnackStyle.FLOATING,
   );
 }
