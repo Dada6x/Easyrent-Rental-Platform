@@ -1,3 +1,4 @@
+import 'package:easyrent/data/Session/app_session.dart';
 import 'package:easyrent/main.dart';
 import 'package:get/get.dart';
 import 'package:easyrent/data/models/outer_property_model.dart';
@@ -12,12 +13,15 @@ class PropertiesController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    debug.w("Fetching Data in the GETX Controller ");
 
-    fetchProperties();
+    if (AppSession().user != null) {
+      fetchProperties();
+    }
   }
 
   Future<void> fetchProperties() async {
+    debug.w("Fetching Data in the GETX Controller ");
+
     try {
       isLoading(true);
       hasError(false);

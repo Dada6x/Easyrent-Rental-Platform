@@ -1,18 +1,16 @@
 import 'dart:async';
 import 'package:dio/dio.dart';
-import 'package:easyrent/core/services/api/dio_consumer.dart';
-import 'package:easyrent/core/services/api/end_points.dart';
-import 'package:easyrent/data/repos/userRepo.dart';
-import 'package:easyrent/main.dart';
-import 'package:easyrent/presentation/navigation/navigator.dart';
-import 'package:easyrent/core/constants/utils/button.dart';
-import 'package:easyrent/presentation/views/auth/widgets/empty_search_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:easyrent/core/constants/colors.dart';
+import 'package:easyrent/core/constants/utils/button.dart';
 import 'package:easyrent/core/constants/utils/textStyles.dart';
+import 'package:easyrent/core/services/api/dio_consumer.dart';
+import 'package:easyrent/data/repos/userRepo.dart';
+import 'package:easyrent/presentation/navigation/navigator.dart';
+import 'package:easyrent/presentation/views/auth/widgets/empty_search_bar.dart';
 
 class VerificationCodePage extends StatefulWidget {
   const VerificationCodePage({super.key});
@@ -34,48 +32,33 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
     super.initState();
     _startTimer();
   }
-  //! its working but not clean , also i need to fetch the user at this point
 
-  Future<void> sendVerificationCode() async {
-    try {
-      //TODO use the verifyCode Function in the user Repo
-      //TODO ID
-      //TODO DIOCONSUMER API SHIT
-      final response = await DioConsumer(Dio()).post(
-        EndPoints.verifyCode,
-        data: {
-          ApiKey.code: _pinController.text.trim(),
-        },
-      );
+//! just for the color of the shits
+  Future<void> getVerificationCodeResult() async {
+    final code = int.tryParse(_pinController.text);
+    if (code == null) return;
 
-      if (response.statusCode == 200) {
-        //! in order to transfer this into another repo i need the emit state of the shit here
-        // like if status code is 200 emit succses state to the pin codes
-        final token = response.data['accessToken'];
-        debug.i("$token");
-        await saveToken(token);
-        setState(() {
-          _isCodeValid = true;
-        });
-        // await Future.delayed(const Duration(milliseconds: 600));
-        userPref?.setBool('isLoggedIn', true);
-        Get.off(() => const HomeScreenNavigator());
-        //! WE MAKE AN NEW USER TO DO SHIT FOR US HEHEHE
-      } else {
+    final result = await Userrepo(DioConsumer(Dio())).verifyCode(code: code);
+    result.fold(
+      (errorMessage) {
         setState(() {
           _isCodeValid = false;
         });
-      }
-      //TODO add server exceptions
-    } catch (e) {
-      setState(() {
-        _isCodeValid = false;
-      });
-      Get.rawSnackbar(
-        title: "Invalid or expired verification code",
-        snackPosition: SnackPosition.BOTTOM,
-      );
-    }
+        Get.rawSnackbar(
+          title: "Invalid or expired verification code",
+          message: errorMessage,
+          snackPosition: SnackPosition.BOTTOM,
+        );
+      },
+      (user) async {
+        setState(() {
+          _isCodeValid = true;
+        });
+        await Future.delayed(const Duration(seconds: 1));
+        if (!mounted) return;
+        Get.off(() => const HomeScreenNavigator());
+      },
+    );
   }
 
   void _startTimer() {
@@ -166,7 +149,7 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
                   },
                   onCompleted: (value) async {
                     if (value.length == 5) {
-                      await sendVerificationCode();
+                      await getVerificationCodeResult();
                     }
                   },
                 ),
@@ -176,7 +159,7 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
                   hint: "Verify",
                   function: () async {
                     if (_pinController.text.length == 5) {
-                      await sendVerificationCode();
+                      await getVerificationCodeResult();
                     } else {
                       Get.snackbar("Error", "Please enter a 5-digit code",
                           snackPosition: SnackPosition.BOTTOM);

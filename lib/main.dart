@@ -57,7 +57,6 @@ void main() async {
     builder: (context, child) {
       Get.put(AppController());
       Get.put(PropertiesController());
-      debug.i("is the Application Offline : $isOffline");
       debug.d("application Started !!");
       return ThemeProvider(
         duration: const Duration(milliseconds: 700),

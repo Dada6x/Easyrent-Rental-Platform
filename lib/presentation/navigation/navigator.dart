@@ -1,4 +1,5 @@
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
+import 'package:easyrent/presentation/views/property_homepage/controller/propertiy_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -41,11 +42,11 @@ class _HomeScreenNavigatorState extends State<HomeScreenNavigator> {
 
   // late Future<List<PropertyModel>> _propertiesFuture;
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   _propertiesFuture = PropertiesRepo.getProperties();
-  // }
+  @override
+  void initState() {
+    super.initState();
+    Get.find<PropertiesController>().fetchProperties();
+  }
 
   @override
   Widget build(BuildContext context) {

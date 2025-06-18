@@ -69,7 +69,7 @@ class _SplashScreenState extends State<SplashScreen>
     if (userPref?.getBool("isLoggedIn") == true) {
       debug.f("User is Logged in so im fetching his Data ");
       var api = DioConsumer(Dio());
-      Userrepo(api).profile();
+      Userrepo(api).getProfile();
     } else {
       debug.w("User is Not Logged in so im Not fetching his Data ");
     }

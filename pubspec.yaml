@@ -59,6 +59,7 @@ dependencies:
   geolocator: ^11.0.0
   shared_preferences: ^2.3.3
   flutter_chat_ui: any
+  share_plus: any
   skeletonizer: ^1.4.3
   webview_flutter: ^4.2.2
   bounce: ^1.0.2

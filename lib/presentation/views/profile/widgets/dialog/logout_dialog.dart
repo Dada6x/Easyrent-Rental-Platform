@@ -1,11 +1,10 @@
-
-import 'package:easyrent/core/constants/colors.dart';
-import 'package:easyrent/core/constants/utils/textStyles.dart';
-import 'package:easyrent/main.dart';
-import 'package:easyrent/presentation/views/auth/views/login.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
+import 'package:easyrent/core/constants/colors.dart';
+import 'package:easyrent/core/constants/utils/textStyles.dart';
+import 'package:easyrent/core/services/api/dio_consumer.dart';
+import 'package:easyrent/data/repos/userRepo.dart';
 
 void showDeleteDialog(BuildContext context) {
   showDialog(
@@ -34,7 +33,10 @@ void showDeleteDialog(BuildContext context) {
                       child: TextButton(
                           onPressed: () => Navigator.pop(context),
                           style: TextButton.styleFrom(
-                            backgroundColor: Theme.of(context).colorScheme.primary,
+                            backgroundColor: Theme.of(context)
+                                .colorScheme
+                                .primary
+                                .withOpacity(0.2),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8.r),
                             ),
@@ -46,9 +48,7 @@ void showDeleteDialog(BuildContext context) {
                   Expanded(
                     child: TextButton(
                       onPressed: () {
-                        userPref?.setBool('isLoggedIn', false);
-                        Get.off(() => LoginPage());
-                        // Navigator.pop(context);
+                        Userrepo(DioConsumer(Dio())).logoutUser();
                       },
                       style: TextButton.styleFrom(
                         backgroundColor: red,
@@ -70,4 +70,3 @@ void showDeleteDialog(BuildContext context) {
     },
   );
 }
-

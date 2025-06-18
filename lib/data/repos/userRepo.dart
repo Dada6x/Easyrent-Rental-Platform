@@ -37,7 +37,7 @@ class Userrepo {
         await saveToken(token);
         await userPref?.setBool('isLoggedIn', true);
         //! fetching Profile data
-        final profileResult = await profile();
+        final profileResult = await getProfile();
         return profileResult.fold(
           (e) {
             debug.e("Failed to fetch profile after login");
@@ -56,7 +56,7 @@ class Userrepo {
     }
   }
 
-//!-----------------------Sign Up---------------------------------->
+//!-----------------------Register ---------------------------------->
   Future<Either<String, String>> signUpUser({
     required String number,
     required String userName,
@@ -64,17 +64,53 @@ class Userrepo {
     required Map<String, double> latLang,
   }) async {
     try {
-      final response = await api.post(
-        EndPoints.registerUser,
-        data: {
-          ApiKey.phone: number,
-          ApiKey.password: password,
-          ApiKey.userName: userName,
-          ApiKey.pointsDto: latLang,
-        },
-      );
+      final response = await api.get(
+          // EndPoints.registerUser,
+          "7c80766d-8cae-4594-bc7e-a72ee8739920"
+          // data: {
+          //   ApiKey.phone: number,
+          //   ApiKey.password: password,
+          //   ApiKey.userName: userName,
+          //   ApiKey.pointsDto: latLang,
+          // },
+          );
       if (response.statusCode == 200) {
         Get.off(() => const VerificationCodePage());
+      }
+      return const Left('Unexpected error');
+      // must show the user snack bar
+    } on ServerException catch (e) {
+      debug.e("Exception $e");
+      // must show the user snack bar
+      return Left(e.errorModel.message);
+    }
+  }
+
+//!-----------------------Verify Code---------------------------------->
+  Future<Either<String, User>> verifyCode({required int code}) async {
+    try {
+      final response = await api.get(
+        // EndPoints.verifyCode,
+        "7c80766d-8cae-4594-bc7e-a72ee8739920",
+        // data: {
+        //   ApiKey.code: code,
+        // },
+      );
+      if (response.statusCode == 200) {
+        debug.t("code is true and verified hhehe ");
+        final token = response.data['accessToken'];
+        await saveToken(token);
+        userPref?.setBool('isLoggedIn', true);
+        final profileResult = await getProfile();
+        return profileResult.fold(
+          (e) {
+            debug.e("Failed to fetch profile after verify pin code ");
+            return const Left("Failed to load profile");
+          },
+          (_) {
+            return Right(AppSession().user!);
+          },
+        );
       }
       return const Left('Unexpected error');
     } on ServerException catch (e) {
@@ -83,66 +119,8 @@ class Userrepo {
     }
   }
 
-//! i need to make an Fetch User when the app initialized after we know that he has an token in the device
-//! maybe store some Data in the sharedPref as username or image Url. and everyTime the app is loaded .
-
-//!-----------------------Log OUt ---------------------------------->
-  Future<Either<String, String>> logoutUser() async {
-    try {
-      final response = await api.post(
-        EndPoints.Logout,
-      );
-      if (response.statusCode == 200) {
-        debug.i("Status Code is ${response.statusCode}");
-        userPref?.setBool('isLoggedIn', false);
-        deleteToken();
-        Get.off(() => LoginPage());
-      }
-      debug.t("User Logged out ");
-      return const Right('User Logged Out');
-    } on ServerException catch (e) {
-      debug.e("Exception $e");
-      return Left(e.errorModel.message);
-    }
-  }
-
-//!-----------------------Verify Code---------------------------------->
-// ! now i want the state of the application via Bloc
-// emit sucres or false state for the color of the pin codes
-  // Future<Either<String, User>> verifyCode({
-  //   required int code,
-  // }) async {
-  //   try {
-  //     final response = await api.post(
-  //       EndPoints.verifyCode,
-  //       data: {
-  //         ApiKey.code: code,
-  //       },
-  //     );
-  //     if (response.statusCode == 200) {
-  //       final token = response.data['accessToken'];
-  //       await saveToken(token);
-  //       userPref?.setBool('isLoggedIn', true);
-  //       Get.off(() => const HomeScreenNavigator());
-
-  //       // Profile
-  //       final profileResponse = await api.get(
-  //         EndPoints.me,
-  //       );
-  //       if (profileResponse.statusCode == 200) {
-  //         debug.w("New User Created !");
-  //         final user = User.fromJson(profileResponse);
-  //         return Right(user);
-  //       }
-  //     }
-  //     return const Left('Unexpected error');
-  //   } on ServerException catch (e) {
-  //     debug.e("Exception $e");
-  //     return Left(e.errorModel.message);
-  //   }
-  // }
-
-  Future<Either<ServerException, User>> profile() async {
+//!-----------------------Get Profile Info ---------------------------------->
+  Future<Either<ServerException, User>> getProfile() async {
     try {
       final response = await api.get(
           // "https://run.mocky.io/v3/cd9ce080-4a73-44ce-95d1-e16c399fb7fe", // with image
@@ -164,6 +142,28 @@ class Userrepo {
     } catch (e) {
       debug.e("Unexpected exception: $e");
       return Left(ServerException(errorModel: ErrorModel(4, e.toString())));
+    }
+  }
+
+//!-----------------------Log OUt ---------------------------------->
+  Future<Either<String, String>> logoutUser() async {
+    try {
+      final response = await api.get(
+        // EndPoints.Logout,
+        "7c80766d-8cae-4594-bc7e-a72ee8739920",
+      );
+      if (response.statusCode == 200) {
+        debug.i("Status Code is ${response.statusCode}");
+        userPref?.setBool('isLoggedIn', false);
+        deleteToken();
+        // AppSession().user = null;
+        Get.off(() => LoginPage());
+      }
+      debug.t("User Logged out ");
+      return const Right('User Logged Out');
+    } on ServerException catch (e) {
+      debug.e("Exception $e");
+      return Left(e.errorModel.message);
     }
   }
 }

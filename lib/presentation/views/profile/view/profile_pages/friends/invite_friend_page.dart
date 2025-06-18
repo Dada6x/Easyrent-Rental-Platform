@@ -4,6 +4,7 @@ import 'package:easyrent/core/constants/utils/textStyles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:easyrent/core/constants/utils/button.dart';
+import 'package:share_plus/share_plus.dart';
 
 class InviteFriendPage extends StatelessWidget {
   const InviteFriendPage({super.key});
@@ -29,7 +30,20 @@ class InviteFriendPage extends StatelessWidget {
             const Spacer(),
             CustomButton(
               hint: "Share Now",
-              function: () async {},
+              function: () async {
+                const String shareText =
+                    'Check out this awesome app! Download it now:\nhttps://your-app-link.com';
+                await SharePlus.instance.share(ShareParams(text: shareText));
+              },
+            ),
+
+            MaterialButton(
+              child: Text("SHARE "),
+              onPressed: () async {
+                const String shareText =
+                    'Check out this awesome app! Download it now:\nhttps://your-app-link.com';
+                await SharePlus.instance.share(ShareParams(text: shareText));
+              },
             )
           ],
         ),
