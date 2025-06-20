@@ -1,0 +1,24 @@
+{
+    "id": 1,
+    "phone": "0980817760",
+    "username": "Yahea Dada",
+    "location": {
+        "country": "سوريا",
+        "governorate": "محافظة ريف دمشق",
+        "city": "ضاحية قدسيا السكنية الجديدة",
+        "quarter": null,
+        "street": "unnamed road",
+        "lat": 33.5368,
+        "lon": 36.1989
+    },
+    "age": 18,
+    "userType": "super_admin",
+    "isAccountVerified": true,
+    "totalVoteScore": 0,
+    "totalViewCount": 0,
+    "createdAt": "2025-05-25T19:13:51.125Z",
+    "updatedAt": "2025-05-25T19:14:49.000Z",
+    "profileImage": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYM5hemVVh_lELysOe1y4pYqP3U9y20O7ohZd_uizFetX755VJXsRiBctAToR_bwCeESI&usqp=CAU",
+    "planId": null,
+    "hasUsedTrial": false
+}
