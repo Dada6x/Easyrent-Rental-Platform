@@ -6,20 +6,20 @@ import 'package:easyrent/presentation/views/profile/view/profile_pages/favourite
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class MyFavouritePage extends StatefulWidget {
-  const MyFavouritePage({super.key});
+class MyFavoritePage extends StatefulWidget {
+  const MyFavoritePage({super.key});
 
   @override
-  State<MyFavouritePage> createState() => _MyFavouritePageState();
+  State<MyFavoritePage> createState() => _MyFavoritePageState();
 }
 
 late Future<List<FavoritePropertyModel>> _propertiesFuture;
 
-class _MyFavouritePageState extends State<MyFavouritePage> {
+class _MyFavoritePageState extends State<MyFavoritePage> {
   @override
   void initState() {
     super.initState();
-    _propertiesFuture = PropertyDio.getFavoriteProperties();
+    _propertiesFuture = propertyDio.getFavoriteProperties();
   }
 
   // fav page list empty -> prop Repo ->getfavourite fetch ⟶ return list to the Model ⟶the list is now full we display it in the builder

@@ -36,7 +36,7 @@ class PropertyCardSmall extends StatelessWidget {
         containersColor: Theme.of(context).colorScheme.onTertiary,
         child: RawMaterialButton(
           onPressed: () async {
-            final property = await PropertyDio.propertyDetailsById(id);
+            final property = await propertyDio.propertyDetailsById(id);
             Get.to(
               () => PropertyDetailsPage(property: property),
               duration: const Duration(milliseconds: 600),

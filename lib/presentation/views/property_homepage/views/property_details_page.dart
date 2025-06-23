@@ -1,5 +1,8 @@
 import 'package:card_swiper/card_swiper.dart';
-import 'package:easyrent/core/constants/utils/pages/report_page.dart';
+import 'package:easyrent/core/constants/utils/pages/error_page.dart';
+import 'package:easyrent/presentation/views/property_homepage/controller/propertiy_controller.dart';
+import 'package:easyrent/presentation/views/property_homepage/widgets/property_card_big.dart';
+import 'package:easyrent/presentation/views/search/widgets/property_widget_search_card.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -16,6 +19,7 @@ import 'package:easyrent/core/constants/assets.dart';
 import 'package:easyrent/core/constants/colors.dart';
 import 'package:easyrent/core/constants/utils/divider.dart';
 import 'package:easyrent/core/constants/utils/error_loading_mssg.dart';
+import 'package:easyrent/core/constants/utils/pages/report_page.dart';
 import 'package:easyrent/core/constants/utils/textStyles.dart';
 import 'package:easyrent/data/models/propertyModel.dart';
 import 'package:easyrent/presentation/views/property_homepage/widgets/agent_widget.dart';
@@ -38,7 +42,6 @@ class PropertyDetailsPage extends StatelessWidget {
         body: SingleChildScrollView(
           child: Skeletonizer(
             // ignoreContainers: true,
-
             enabled: !Get.find<AppController>().isOffline.value,
             enableSwitchAnimation: true,
             // effect: ShimmerEffect(),
@@ -102,17 +105,37 @@ class PropertyDetailsPage extends StatelessWidget {
                           SizedBox(width: 12.w),
                           //! report
                           _circleButton(
-                              Iconify(
-                                Tabler.dots_vertical,
-                                size: 28.sp,
-                                color: white,
-                              ), () async {
-                            Get.to(ReportPage(
-                              propertyId: property.id ?? 0,
-                              propertyImage: property.propertyImages![1],
-                              title: property.title ?? "Unexpected Error",
-                            ));
-                          })
+                            Iconify(
+                              Tabler.dots_vertical,
+                              size: 28.sp,
+                              color: white,
+                            ),
+                            () async {
+                              final selected = await showMenu<String>(
+                                context: context,
+                                position: const RelativeRect.fromLTRB(
+                                    100, 100, 0, 0), // temporary position
+                                items: [
+                                  const PopupMenuItem<String>(
+                                    value: 'report',
+                                    child: Text('Report a problem'),
+                                  ),
+                                  const PopupMenuItem<String>(
+                                    value: 'help',
+                                    child: Text('Help'),
+                                  ),
+                                ],
+                              );
+
+                              if (selected == 'report') {
+                                Get.to(ReportPage(
+                                  propertyId: property.id ?? 0,
+                                  propertyImage: property.propertyImages![1],
+                                  title: property.title ?? "Unexpected Error",
+                                ));
+                              } else if (selected == 'help') {}
+                            },
+                          )
                         ],
                       ),
                     ),
@@ -164,11 +187,46 @@ class PropertyDetailsPage extends StatelessWidget {
                               width: 5.w,
                             ),
                             Text(
-                              //! rating and reviews
                               "${property.priorityScore} (${property.viewCount} reviews )",
+                              overflow: TextOverflow.ellipsis,
+                              softWrap: false,
                               style:
                                   AppTextStyles.h14medium.copyWith(color: grey),
-                            )
+                            ),
+                            const Spacer(),
+                            Container(
+                              height: 56.h,
+                              decoration: BoxDecoration(
+                                color: Theme.of(context).colorScheme.primary,
+                                borderRadius: BorderRadius.circular(16.r),
+                              ),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  IconButton(
+                                    icon: const Icon(
+                                      Icons.arrow_upward_sharp,
+                                    ),
+                                    onPressed: () {},
+                                    iconSize: 30.r,
+                                    constraints: const BoxConstraints(),
+                                  ),
+                                  VerticalDivider(
+                                    thickness: 1,
+                                    indent: 10.w,
+                                    endIndent: 10.w,
+                                  ),
+                                  IconButton(
+                                    icon: const Icon(
+                                      Icons.arrow_downward_sharp,
+                                    ),
+                                    onPressed: () {},
+                                    iconSize: 30.r,
+                                  ),
+                                ],
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -322,8 +380,8 @@ class PropertyDetailsPage extends StatelessWidget {
                       const CustomDivider(),
                       _Headers(text: "Gallery".tr),
                       GalleryWidget(images: property.propertyImages ?? []),
-                      _Headers(text: "Location".tr),
-                      //! Location
+                      _Headers(text: "You Might Also Like :".tr),
+                      //! Locatio
                       const CustomDivider(),
 
                       Padding(
@@ -362,6 +420,39 @@ class PropertyDetailsPage extends StatelessWidget {
                       SizedBox(
                         height: 10.h,
                       ),
+                      //TODO if you're going to make it make new widget and add these
+                      // final controller = Get.find<PropertiesController>();
+                      // final properties = controller.properties;
+                      // _Headers(text: "You Might Also Like :".tr),
+                      // SizedBox(
+                      //   height: 120,
+                      //   width: double.infinity,
+                      //   child: ListView.builder(
+                      //     scrollDirection: Axis.horizontal,
+                      //     itemCount: 3,
+                      //     itemBuilder: (context, index) {
+                      //       final property = properties[index];
+
+                      //       return Padding(
+                      //         padding: EdgeInsets.only(right: 12.w),
+                      //         child: SizedBox(
+                      //           width: 250.w,
+                      //           child: PropertyWidgetSearchCard(
+                      //             id: property.id!,
+                      //             imagePath: property.firstImage!,
+                      //             location:
+                      //                 property.location?.country ?? "Unknown",
+                      //             price: property.price!,
+                      //             rating: 4.5,
+                      //             title:
+                      //                 property.location?.country ?? "Unknown",
+                      //           ),
+                      //         ),
+                      //       );
+                      //     },
+                      //   ),
+                      // ),
+
                       //! property Price
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 8.h),

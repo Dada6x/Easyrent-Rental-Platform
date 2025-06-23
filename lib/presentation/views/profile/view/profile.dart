@@ -1,34 +1,47 @@
-import 'package:easyrent/presentation/views/profile/view/profile_pages/feedback/feedback.dart';
+import 'dart:io';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:iconify_flutter_plus/iconify_flutter_plus.dart';
 import 'package:iconify_flutter_plus/icons/bi.dart';
+import 'package:iconify_flutter_plus/icons/fe.dart';
 import 'package:iconify_flutter_plus/icons/ic.dart';
+import 'package:iconify_flutter_plus/icons/mdi.dart';
+import 'package:iconify_flutter_plus/icons/ri.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:motion/motion.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:easyrent/core/constants/assets.dart';
+import 'package:easyrent/core/constants/colors.dart';
 import 'package:easyrent/core/constants/utils/divider.dart';
 import 'package:easyrent/core/constants/utils/textStyles.dart';
 import 'package:easyrent/data/Session/app_session.dart';
 import 'package:easyrent/presentation/views/profile/view/profile_pages/Faq/view/faq.dart';
 import 'package:easyrent/presentation/views/profile/view/profile_pages/chatbot/Ai_chatBot.dart';
 import 'package:easyrent/presentation/views/profile/view/profile_pages/favourite/view/favourite_page.dart';
+import 'package:easyrent/presentation/views/profile/view/profile_pages/feedback/feedback.dart';
 import 'package:easyrent/presentation/views/profile/view/profile_pages/friends/invite_friend_page.dart';
 import 'package:easyrent/presentation/views/profile/view/profile_pages/language/view/language.dart';
 import 'package:easyrent/presentation/views/profile/view/profile_pages/my_booking/views/my_booking.dart';
 import 'package:easyrent/presentation/views/profile/view/profile_pages/notifications/views/notifications_page.dart';
 import 'package:easyrent/presentation/views/profile/view/profile_pages/payment/views/payment.dart';
+import 'package:easyrent/presentation/views/profile/view/profile_pages/plans/plans_page.dart';
 import 'package:easyrent/presentation/views/profile/view/profile_pages/security/view/security_page.dart';
 import 'package:easyrent/presentation/views/profile/view/profile_pages/theme/theme_page.dart';
 import 'package:easyrent/presentation/views/profile/widgets/custome_list_tile.dart';
 import 'package:easyrent/presentation/views/profile/widgets/dialog/logout_dialog.dart';
 import 'package:easyrent/presentation/views/profile/widgets/profileappbar.dart';
 
-class Profile extends StatelessWidget {
+class Profile extends StatefulWidget {
   const Profile({super.key});
+
+  @override
+  State<Profile> createState() => _ProfileState();
+}
+
+class _ProfileState extends State<Profile> {
+  XFile? _selectedImage;
 
   @override
   Widget build(BuildContext context) {
@@ -62,7 +75,10 @@ class Profile extends StatelessWidget {
                             child: CircleAvatar(
                               radius: 85.sp,
                               backgroundColor: Colors.transparent,
-                              child: ClipOval(
+                              child: _selectedImage != null
+                                  //! EDiTED
+/*
+child: ClipOval(
                                 child: AppSession().user?.profileImage != null
                                     ? FancyShimmerImage(
                                         boxFit: BoxFit.cover,
@@ -76,6 +92,36 @@ class Profile extends StatelessWidget {
                                         fit: BoxFit.cover,
                                       ),
                               ),
+*/
+//old code do not touch might explode 💣
+
+                                  ? ClipOval(
+                                      child: Image.file(
+                                        File(_selectedImage!.path),
+                                        fit: BoxFit.cover,
+                                        width: 170.sp,
+                                        height: 170.sp,
+                                      ),
+                                    )
+                                  : AppSession().user?.profileImage != null
+                                      ? ClipOval(
+                                          child: FancyShimmerImage(
+                                            width: 170.sp,
+                                            height: 170.sp,
+                                            boxFit: BoxFit.cover,
+                                            imageUrl: AppSession()
+                                                .user!
+                                                .profileImage!,
+                                          ),
+                                        )
+                                      : ClipOval(
+                                        child: Image.asset(
+                                            width: 170.sp,
+                                            height: 170.sp,
+                                            avatar2,
+                                            fit: BoxFit.cover,
+                                          ),
+                                      ),
                             ),
                           ),
                           Visibility(
@@ -105,7 +151,19 @@ class Profile extends StatelessWidget {
                                                   source: ImageSource.camera,
                                                 );
                                                 if (image != null) {
-                                                  // Handle the selected image from camera
+                                                  final XFile? image =
+                                                      await picker.pickImage(
+                                                          source: ImageSource
+                                                              .camera);
+                                                  if (image != null) {
+                                                    setState(() {
+                                                      _selectedImage = image;
+                                                    });
+
+                                                    // await userDio
+                                                    //     .uploadUserImage(image);
+                                                  }
+
                                                   // You can set it to your CircleAvatar later when you're ready
                                                 }
                                               },
@@ -127,7 +185,18 @@ class Profile extends StatelessWidget {
                                                   source: ImageSource.gallery,
                                                 );
                                                 if (image != null) {
-                                                  // Handle the selected image from gallery
+                                                  final XFile? image =
+                                                      await picker.pickImage(
+                                                          source: ImageSource
+                                                              .gallery);
+                                                  if (image != null) {
+                                                    setState(() {
+                                                      _selectedImage = image;
+                                                    });
+                                                    // await userDio
+                                                    //     .uploadUserImage(image);
+                                                  }
+
                                                   // You can set it to your CircleAvatar later when you're ready
                                                 }
                                               },
@@ -188,6 +257,16 @@ class Profile extends StatelessWidget {
               ),
               destination_widget: const MyBooking(),
             ),
+            customListTile(
+              string: "Vip ".tr,
+              leading: Iconify(
+                Mdi.crown,
+                color: orange,
+                //! make it the Color of the plan
+                size: 29.sp,
+              ),
+              destination_widget: const SubscriptionPage(),
+            ),
             //! payment
             customListTile(
               string: "Payments".tr,
@@ -206,7 +285,7 @@ class Profile extends StatelessWidget {
                   color: Theme.of(context).colorScheme.primary,
                   size: 29.sp,
                 ),
-                destination_widget: const MyFavouritePage()),
+                destination_widget: const MyFavoritePage()),
             const CustomDivider(),
             //! Notifications
             customListTile(
@@ -282,7 +361,7 @@ class Profile extends StatelessWidget {
                 destination_widget: const Ai_ChatBot()),
             const CustomDivider(),
             //! LogOut
-            customListRedTile("Logout".tr, Icons.logout, () {
+            customListRedTile("Logout".tr, Iconify(Mdi.logout,size: 29.sp,color: red,), () {
               showDeleteDialog(context);
             }),
             Padding(

@@ -68,8 +68,7 @@ class _SplashScreenState extends State<SplashScreen>
     //! fetch the User Profile During the SplashScreen only if hes Logged in
     if (userPref?.getBool("isLoggedIn") == true) {
       debug.f("User is Logged in so im fetching his Data ");
-      var api = DioConsumer(Dio());
-      Userrepo(api).getProfile();
+      userDio.getProfile();
     } else {
       debug.w("User is Not Logged in so im Not fetching his Data ");
     }
@@ -111,7 +110,7 @@ class _SplashScreenState extends State<SplashScreen>
                         position: _textSlideAnimation,
                         child: Opacity(
                           opacity: _textOpacityAnimation.value,
-                          child: Text("Find your Ideal Home",
+                          child: Text("Your Getaway To Perfect Homes",
                               style: AppTextStyles.h24medium.copyWith(
                                 color: white,
                                 shadows: [

@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:dio/dio.dart';
+import 'package:easyrent/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -7,13 +7,12 @@ import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:easyrent/core/constants/colors.dart';
 import 'package:easyrent/core/constants/utils/button.dart';
 import 'package:easyrent/core/constants/utils/textStyles.dart';
-import 'package:easyrent/core/services/api/dio_consumer.dart';
-import 'package:easyrent/data/repos/userRepo.dart';
 import 'package:easyrent/presentation/navigation/navigator.dart';
 import 'package:easyrent/presentation/views/auth/widgets/empty_search_bar.dart';
 
 class VerificationCodePage extends StatefulWidget {
-  const VerificationCodePage({super.key});
+  final int id;
+  const VerificationCodePage({super.key, required this.id});
 
   @override
   State<VerificationCodePage> createState() => _VerificationCodePageState();
@@ -38,7 +37,7 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
     final code = int.tryParse(_pinController.text);
     if (code == null) return;
 
-    final result = await Userrepo(DioConsumer(Dio())).verifyCode(code: code);
+    final result = await userDio.verifyCode(code: code, userId: widget.id);
     result.fold(
       (errorMessage) {
         setState(() {

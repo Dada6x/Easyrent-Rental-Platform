@@ -36,7 +36,7 @@ Widget customListTile(
 
 Widget customListRedTile(
   String string,
-  IconData? leading,
+  Iconify? leading,
   Function destination,
 ) {
   return RawMaterialButton(
@@ -44,11 +44,8 @@ Widget customListRedTile(
       destination();
     },
     child: ListTile(
-      leading: Icon(
-        leading,
-        color: red,
-        size: 29.r,
-      ),
+      iconColor: grey,
+      leading: leading,
       title: Text(string, style: AppTextStyles.h18medium.copyWith(color: red)),
       trailing: Icon(
         Icons.arrow_forward_ios,

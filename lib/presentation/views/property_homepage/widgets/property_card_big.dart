@@ -37,7 +37,7 @@ class PropertyCardBig extends StatelessWidget {
         tapDelay: const Duration(milliseconds: 150),
         onTapUp: (p0) async {
           SystemSound.play(SystemSoundType.click);
-          final property = await PropertyDio.propertyDetailsById(id);
+          final property = await propertyDio.propertyDetailsById(id);
           Get.to(
             () => PropertyDetailsPage(property: property),
             duration: const Duration(milliseconds: 600),

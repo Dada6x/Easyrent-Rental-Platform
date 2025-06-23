@@ -17,7 +17,7 @@ class PropertyWidgetSearchCard extends StatelessWidget {
   final String location;
   final String imagePath;
   final double rating;
-  final int price;
+  final double price;
   final int id;
   const PropertyWidgetSearchCard(
       {super.key,
@@ -34,7 +34,7 @@ class PropertyWidgetSearchCard extends StatelessWidget {
       return Bounce(
         onTapUp: (p0) async {
           SystemSound.play(SystemSoundType.click);
-          final property = await PropertyDio.propertyDetailsById(id);
+          final property = await propertyDio.propertyDetailsById(id);
           Get.to(
             () => PropertyDetailsPage(property: property),
             duration: const Duration(milliseconds: 600),
@@ -72,7 +72,10 @@ class PropertyWidgetSearchCard extends StatelessWidget {
                           padding: EdgeInsets.symmetric(
                               horizontal: 6.w, vertical: 2.h),
                           decoration: BoxDecoration(
-                            color:Theme.of(context).colorScheme.primary.withOpacity(0.05),
+                            color: Theme.of(context)
+                                .colorScheme
+                                .primary
+                                .withOpacity(0.05),
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Row(

@@ -1,6 +1,4 @@
 
-import 'package:easyrent/core/services/api/end_points.dart';
-
 class ErrorModel {
   //!  // THIS COULD BE DIFFRENT DEPENDING ON THE RESPONSE OF API
   final int statusCode;
@@ -8,10 +6,11 @@ class ErrorModel {
 
   const ErrorModel(this.statusCode, this.message);
   //wtf is factory
+
   factory ErrorModel.fromJson(Map<String, dynamic> jsonData) {
     return ErrorModel(
-      jsonData[ApiKey.status],
-      jsonData[ApiKey.errorMessage],
+      jsonData['statusCode'] ?? 0,
+      jsonData['message'] ?? 'Unknown error',
     );
   }
 }

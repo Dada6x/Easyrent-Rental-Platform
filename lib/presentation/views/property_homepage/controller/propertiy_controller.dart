@@ -24,7 +24,7 @@ class PropertiesController extends GetxController {
     try {
       isLoading(true);
       hasError(false);
-      final result = await PropertyDio.getProperties();
+      final result = await propertyDio.getProperties();
       properties.assignAll(result);
     } catch (e) {
       hasError(true);

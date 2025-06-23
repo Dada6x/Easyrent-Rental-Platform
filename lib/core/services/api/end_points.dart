@@ -1,11 +1,23 @@
 class EndPoints {
-  static String baseUrl = "https://run.mocky.io/v3/";
+  static String baseUrl = "http://192.168.1.4:3000/";
   static String login = "/auth/login";
-  static String Logout = "auth/logout";
-  static String registerUser = "/user/register";
-  static String verifyCode = "/user/verify///!code";
-  static String favourite = "/favorite";
+  // static String Logout = "auth/logout";
   static String me = "/auth/me";
+  static String registerUser = "/user/register";
+  static String reset_forgetPassword = "/auth/reset";
+  static String resetPasswordAfterReset = "/auth/reset///!Code";
+
+  static String verifyCode(int id) => "/user/verify/$id";
+  static String reSendCode = "//user/resend///!code";
+
+  static String resetPassword = "//user/";
+  static String updateUserName = "//user/";
+  static String deleteMe = "//user/";
+  // static String verifyCode = "/user/verify///!code";
+  // static String verifyCode = "/user/verify///!code";
+  // static String verifyCode = "/user/verify///!code";
+
+  static String favourite = "/favorite";
   static String tokenTime = "/auth/tokenTime";
 
   static String openStreetMap =
@@ -20,8 +32,8 @@ class EndPoints {
 }
 
 class ApiKey {
-  static String status = "status"; // must be the same with the response
-  static String email = "email";
+  // static String status = "statusCode"; // must be the same with the response
+  // static String email = "email";
   static String password = "password";
   static String confirmPassword = "ConfirmPassword";
   static String userName = "username";
@@ -36,7 +48,7 @@ class ApiKey {
   // static String token = "token";
 
   static String token = "token";
-  static String errorMessage = "errorMessage";
+  // static String errorMessage = "message";
 
   const ApiKey();
 }
