@@ -60,9 +60,9 @@ class ForgetPasswordPage extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: () {
                     // TODO: Implement reset password logic
-                    //TODO BIG PROPLEM HERE 
-                    Get.to(() => const VerificationCodePage(id:3));
-                    //! there is another request called Reset account 
+                    //TODO BIG PROPLEM HERE
+                    Get.to(() => const VerificationCodePage(userId: 3));
+                    //! there is another request called Reset account
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: blue,

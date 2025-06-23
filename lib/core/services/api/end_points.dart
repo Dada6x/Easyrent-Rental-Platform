@@ -8,7 +8,7 @@ class EndPoints {
   static String resetPasswordAfterReset = "/auth/reset///!Code";
 
   static String verifyCode(int id) => "/user/verify/$id";
-  static String reSendCode = "//user/resend///!code";
+  static String resendCode(int id) => "/user/resend/$id";
 
   static String resetPassword = "//user/";
   static String updateUserName = "//user/";

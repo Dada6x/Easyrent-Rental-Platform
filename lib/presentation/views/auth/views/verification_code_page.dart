@@ -11,8 +11,8 @@ import 'package:easyrent/presentation/navigation/navigator.dart';
 import 'package:easyrent/presentation/views/auth/widgets/empty_search_bar.dart';
 
 class VerificationCodePage extends StatefulWidget {
-  final int id;
-  const VerificationCodePage({super.key, required this.id});
+  final int userId;
+  const VerificationCodePage({super.key, required this.userId});
 
   @override
   State<VerificationCodePage> createState() => _VerificationCodePageState();
@@ -37,7 +37,7 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
     final code = int.tryParse(_pinController.text);
     if (code == null) return;
 
-    final result = await userDio.verifyCode(code: code, userId: widget.id);
+    final result = await userDio.verifyCode(code: code, userId: widget.userId);
     result.fold(
       (errorMessage) {
         setState(() {
@@ -79,9 +79,7 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
   void _onResendCode() {
     if (_canResend) {
       _startTimer();
-      // Add resend API call here if needed
-
-//! AAAAAAAAAAAAAAAAAAAAAAAAADDDDDDDDDDDDDDDDDDDDDDD THE RESEND CODE PLEASEEEEEEE
+      userDio.resendCode(userId: widget.userId);
     }
   }
 
@@ -116,7 +114,7 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
                 Text("Verification", style: AppTextStyles.h32semi),
                 SizedBox(height: 10.h),
                 Text(
-                  "Enter the 5-digit code sent to your email",
+                  "Enter the 5-digit code sent to you",
                   style: AppTextStyles.h16light.copyWith(color: grey),
                 ),
                 SizedBox(height: 40.h),

@@ -18,7 +18,7 @@ class ApiInterceptor extends Interceptor {
     if (token != null) {
       options.headers['Authorization'] = 'Bearer $token';
     } else {
-      options.headers['Authorization'] = 'Null^^';
+      // options.headers['Authorization'] = 'Bearer $Null';
       debug.i('No token found in SharedPreferences.');
     }
 

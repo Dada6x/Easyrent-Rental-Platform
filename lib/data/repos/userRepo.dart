@@ -82,7 +82,7 @@ class Userrepo {
       if (response.statusCode == 201 || response.statusCode == 200) {
         //! take the Id
         final id = response.data['userId'];
-        Get.off(() => VerificationCodePage(id: id));
+        Get.off(() => VerificationCodePage(userId: id));
         return const Right("User Registered waiting to verify");
       }
       showErrorSnackbar("Something went wrong. Please try again later.");
@@ -132,8 +132,6 @@ class Userrepo {
     try {
       final response = await api.get(
         EndPoints.me,
-        // "https://webhook.site/88ab4100-6655-400f-a481-831106855c0d", // with image
-        // "f0a9efb6-22af-4047-9198-3f933d8b2076" //with null image
       );
       debug.i("Profile Request ${response.statusCode}");
       if (response.statusCode == 200) {
@@ -207,6 +205,24 @@ class Userrepo {
     } catch (e) {
       debug.e("Unknown Exception: $e");
       return const Left("Unknown error occurred");
+    }
+  }
+
+//   //!-----------------------ResendCode---------------------------------->
+  Future<Either<String, void>> resendCode({required int userId}) async {
+    try {
+      final response = await api.get(
+        EndPoints.resendCode(userId),
+      );
+      if (response.statusCode == 201 || response.statusCode == 200) {
+        debug.t("code Resent");
+        return right(null);
+      }
+      showErrorSnackbar("Something went wrong. Please try again later.");
+      return const Left('Unexpected error');
+    } on ServerException catch (e) {
+      debug.e("Exception ${e.errorModel.message}");
+      return Left(e.errorModel.message);
     }
   }
 }

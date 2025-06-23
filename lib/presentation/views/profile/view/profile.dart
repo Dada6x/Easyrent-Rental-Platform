@@ -5,10 +5,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:iconify_flutter_plus/iconify_flutter_plus.dart';
 import 'package:iconify_flutter_plus/icons/bi.dart';
-import 'package:iconify_flutter_plus/icons/fe.dart';
 import 'package:iconify_flutter_plus/icons/ic.dart';
 import 'package:iconify_flutter_plus/icons/mdi.dart';
-import 'package:iconify_flutter_plus/icons/ri.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:motion/motion.dart';
 import 'package:skeletonizer/skeletonizer.dart';
@@ -53,7 +51,9 @@ class _ProfileState extends State<Profile> {
             SizedBox(
               height: 26.h,
             ),
-
+            // AppSession().user!.userType == "super_admin"
+            //     ? const Text("Admin")
+            //     : const SizedBox(),
             Material(
               shadowColor: Colors.transparent,
               child: Motion(
@@ -115,13 +115,13 @@ child: ClipOval(
                                           ),
                                         )
                                       : ClipOval(
-                                        child: Image.asset(
+                                          child: Image.asset(
                                             width: 170.sp,
                                             height: 170.sp,
                                             avatar2,
                                             fit: BoxFit.cover,
                                           ),
-                                      ),
+                                        ),
                             ),
                           ),
                           Visibility(
@@ -361,7 +361,13 @@ child: ClipOval(
                 destination_widget: const Ai_ChatBot()),
             const CustomDivider(),
             //! LogOut
-            customListRedTile("Logout".tr, Iconify(Mdi.logout,size: 29.sp,color: red,), () {
+            customListRedTile(
+                "Logout".tr,
+                Iconify(
+                  Mdi.logout,
+                  size: 29.sp,
+                  color: red,
+                ), () {
               showDeleteDialog(context);
             }),
             Padding(
@@ -379,6 +385,7 @@ child: ClipOval(
   }
 }
 
+// ignore: camel_case_types
 class Scaffold_page extends StatelessWidget {
   final Widget widget;
   final String title;
