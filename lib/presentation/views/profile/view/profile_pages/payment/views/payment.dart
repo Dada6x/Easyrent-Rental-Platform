@@ -6,7 +6,11 @@ import 'package:easyrent/presentation/views/web_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:local_auth/local_auth.dart';
 import 'package:motion/motion.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:local_auth/local_auth.dart';
 
 class PaymentMethod extends StatelessWidget {
   const PaymentMethod({super.key});
@@ -89,6 +93,65 @@ class PaymentMethod extends StatelessWidget {
           )
         ],
       ),
+    );
+  }
+}
+
+class SecurePaymentWrapper extends StatefulWidget {
+  const SecurePaymentWrapper({super.key});
+
+  @override
+  State<SecurePaymentWrapper> createState() => _SecurePaymentWrapperState();
+}
+
+class _SecurePaymentWrapperState extends State<SecurePaymentWrapper> {
+  final LocalAuthentication auth = LocalAuthentication();
+  bool _isAuthenticated = false;
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(const Duration(milliseconds: 100), _authenticateUser);
+  }
+
+  Future<void> _authenticateUser() async {
+    try {
+      final canCheckBiometrics = await auth.canCheckBiometrics;
+      final isDeviceSupported = await auth.isDeviceSupported();
+
+      if (!canCheckBiometrics && !isDeviceSupported) {
+        Get.snackbar(
+            "Not Supported", "Authentication is not supported on this device");
+        Get.back();
+        return;
+      }
+
+      final authenticated = await auth.authenticate(
+        localizedReason: 'Please authenticate to access payment page',
+        options: const AuthenticationOptions(
+          biometricOnly: false, // Allow device PIN/pattern/password fallback
+          stickyAuth: false,
+        ),
+      );
+
+      if (authenticated) {
+        setState(() => _isAuthenticated = true);
+      } else {
+        Get.snackbar("Access Denied", "Authentication failed");
+        Get.back();
+      }
+    } catch (e) {
+      Get.snackbar("Authentication error", e.toString());
+      Get.back();
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: _isAuthenticated
+          ? const PaymentMethod()
+          : const Center(child: CircularProgressIndicator()),
     );
   }
 }

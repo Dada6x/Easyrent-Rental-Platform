@@ -51,7 +51,7 @@ class _ProfileState extends State<Profile> {
             SizedBox(
               height: 26.h,
             ),
-            Text(AppSession().user!.userType),
+            Text(AppSession().user?.userType??"hhdad"),
             // AppSession().user!.userType == "super_admin"
             //     ? const Text("Admin")
             //     : const SizedBox(),
@@ -276,7 +276,7 @@ child: ClipOval(
                 color: Theme.of(context).colorScheme.primary,
                 size: 29.sp,
               ),
-              destination_widget: const PaymentMethod(),
+              destination_widget: const SecurePaymentWrapper(),
             ),
             //! favorite Page
             customListTile(
