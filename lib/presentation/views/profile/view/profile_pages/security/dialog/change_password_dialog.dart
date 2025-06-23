@@ -107,8 +107,6 @@ void showChangePasswordDialog(BuildContext context) {
                                   Navigator.pop(context);
                                   await Future.delayed(
                                       const Duration(milliseconds: 300));
-                                  showSuccessSnackbar(
-                                      "Password updated successfully!");
                                 },
                               );
                             },

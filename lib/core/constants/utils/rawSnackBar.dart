@@ -4,38 +4,11 @@ import 'package:get/get.dart';
 import 'package:easyrent/core/constants/colors.dart';
 import 'package:easyrent/core/constants/utils/textStyles.dart';
 
-class GlobalSnackbar extends StatelessWidget {
-  final String message;
 
-  const   GlobalSnackbar({
-    super.key,
-    required this.message,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    Future.delayed(Duration(milliseconds: 1),() {
-      Get.rawSnackbar(
-        messageText: Text(
-          message,
-          style: AppTextStyles.h16medium
-              .copyWith(color: Theme.of(context).colorScheme.primary),
-        ),
-        snackPosition: SnackPosition.BOTTOM,
-        backgroundColor: Theme.of(context).colorScheme.surface,
-        margin: EdgeInsets.all(22.r),
-        borderRadius: 12.r,
-        duration: const Duration(seconds: 3),
-        snackStyle: SnackStyle.FLOATING,
-      );
-    });
-
-    return const SizedBox.shrink(); // just to satisfy the widget tree
-  }
-}
 
 void showErrorSnackbar(String message) {
   Get.rawSnackbar(
+    isDismissible: true,
     message: message,
     snackPosition: SnackPosition.BOTTOM,
     backgroundColor: red,

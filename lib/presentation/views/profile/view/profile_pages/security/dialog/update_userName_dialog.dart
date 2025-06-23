@@ -64,7 +64,6 @@ void showUpdateUsernameDialog(BuildContext context) {
                       CustomTextfield(
                         hint: "New Username",
                         controller: usernameController,
-                        
                       ),
                     ],
                     SizedBox(height: 24.h),
@@ -117,13 +116,15 @@ void showUpdateUsernameDialog(BuildContext context) {
                                   Navigator.pop(context);
                                   await Future.delayed(
                                       const Duration(milliseconds: 300));
-                                  showSuccessSnackbar(
-                                      "Username updated successfully!");
+                                  userDio.getProfile();
+                                  
+                                  //! i think i need to Make an USer Controller so the values Update
                                 },
                               );
                             },
                             style: TextButton.styleFrom(
-                              backgroundColor: blue,
+                              backgroundColor:
+                                  Theme.of(context).colorScheme.primary,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(8.r),
                               ),
