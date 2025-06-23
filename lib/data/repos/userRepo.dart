@@ -225,6 +225,73 @@ class Userrepo {
       return Left(e.errorModel.message);
     }
   }
+
+//   //!-----------------------update UserName---------------------------------->
+  Future<Either<String, String>> updateUsername({
+    required String currentPassword,
+    required String newUsername,
+    required BuildContext context,
+  }) async {
+    try {
+      final response = await api.patch(
+        EndPoints.update,
+        data: {
+          'myPassword': currentPassword,
+          'username': newUsername,
+        },
+      );
+
+      if (response.statusCode == 200) {
+        showSnackbarWithContext("UserName updated successfully", context);
+        return const Right("Username updated successfully");
+      }
+      return const Left("Unexpected error");
+    } on ServerException catch (e) {
+      return Left(e.errorModel.message);
+    }
+  }
+
+  //   //!-----------------------Update PassWord---------------------------------->
+  Future<Either<String, String>> updatePassword({
+    required String currentPassword,
+    required String newPassword,
+    required BuildContext context,
+  }) async {
+    try {
+      final response = await api.patch(
+        EndPoints.update,
+        data: {
+          'myPassword': currentPassword,
+          'password': newPassword,
+        },
+      );
+
+      if (response.statusCode == 200) {
+        showSnackbarWithContext("Password updated successfully", context);
+        return const Right("Password updated successfully");
+      }
+      return const Left("Unexpected error");
+    } on ServerException catch (e) {
+      return Left(e.errorModel.message);
+    }
+  }
+  //   //!-----------------------Delete Account---------------------------------->
+
+  Future<Either<String, void>> deleteAccount({required String password}) async {
+    try {
+      final response = await api.delete(
+        EndPoints.update,
+        data: {'password': password},
+      );
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        return right(null);
+      }
+      return const Left("Unexpected error");
+    } on ServerException catch (e) {
+      return Left(e.errorModel.message);
+    }
+  }
 }
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$

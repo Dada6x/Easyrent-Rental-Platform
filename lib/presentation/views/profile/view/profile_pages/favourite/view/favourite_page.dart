@@ -39,17 +39,20 @@ class _MyFavoritePageState extends State<MyFavoritePage> {
                   child: const Center(child: CircularProgressIndicator()),
                 );
               }
+
               if (snapshot.hasError) {
                 debug.i(snapshot.error);
                 return const Center(child: ErrorPage());
               }
-              if (!snapshot.hasData) {
+
+              final properties = snapshot.data;
+
+              if (properties == null || properties.isEmpty) {
                 return const Center(child: noDataPage());
               }
-              final properties = snapshot.data!;
+
               return Expanded(
                 child: ListView.builder(
-                  scrollDirection: Axis.vertical,
                   itemCount: properties.length,
                   itemBuilder: (context, index) {
                     final property = properties[index];
@@ -57,10 +60,10 @@ class _MyFavoritePageState extends State<MyFavoritePage> {
                       imagePath: property.property?.propertyImage ?? "",
                       city: property.property?.location?.city ?? "unKnown",
                       quarter: property.property?.location?.quarter ?? "",
-                      area: property.property!.area ?? 0,
+                      area: property.property?.area ?? 0,
                       numberOfBaths: property.property?.bathrooms ?? 0,
                       numberOfBeds: property.property?.floorNumber ?? 0,
-                      title: "Fav TItle ",
+                      title: "Fav TItle",
                       priorityScore: property.property?.priorityScore ?? 0,
                     );
                   },

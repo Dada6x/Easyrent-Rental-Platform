@@ -7,15 +7,17 @@ import 'package:easyrent/core/constants/utils/textStyles.dart';
 import 'package:easyrent/presentation/views/profile/view/profile.dart';
 
 Widget customListTile(
-    {required String string,
+
+    {
+      required String string,
     required Iconify? leading,
-    required Widget destination_widget,
+    Widget? destination_widget,
     String? subtitle}) {
   return ListTile(
     onTap: () {
       Get.to(() => Scaffold_page(
             title: string,
-            widget: destination_widget,
+            widget: destination_widget ?? const SizedBox(),
           ));
     },
     subtitle: subtitle != null

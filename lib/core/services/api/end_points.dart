@@ -12,7 +12,7 @@ class EndPoints {
 
   static String resetPassword = "//user/";
   static String updateUserName = "//user/";
-  static String deleteMe = "//user/";
+  static String update = "/user/";
   // static String verifyCode = "/user/verify///!code";
   // static String verifyCode = "/user/verify///!code";
   // static String verifyCode = "/user/verify///!code";
@@ -22,7 +22,7 @@ class EndPoints {
 
   static String openStreetMap =
       "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
-  static String fetchAllProperties = "/getAllPropereties";
+  static String getPropertyById(int id) => "/property/$id";
 
   // static String getUserData(id) {
   //   return "ddwdwdwdwdwdwd/user/$id";

@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 
 class CustomTextfield extends StatefulWidget {
   final String hint;
-  final Icon icon;
+  final Icon? icon;
   final TextEditingController controller;
   final bool isPassword;
   final bool isPhoneNumber;
@@ -15,7 +15,7 @@ class CustomTextfield extends StatefulWidget {
   const CustomTextfield({
     super.key,
     required this.hint,
-    required this.icon,
+    this.icon,
     required this.controller,
     this.isPassword = false,
     this.isPhoneNumber = false,

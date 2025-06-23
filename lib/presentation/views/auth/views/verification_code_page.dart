@@ -7,7 +7,6 @@ import 'package:pin_code_fields/pin_code_fields.dart';
 import 'package:easyrent/core/constants/colors.dart';
 import 'package:easyrent/core/constants/utils/button.dart';
 import 'package:easyrent/core/constants/utils/textStyles.dart';
-import 'package:easyrent/presentation/navigation/navigator.dart';
 import 'package:easyrent/presentation/views/auth/widgets/empty_search_bar.dart';
 
 class VerificationCodePage extends StatefulWidget {
@@ -32,6 +31,14 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
     _startTimer();
   }
 
+    @override
+  void dispose() {
+    _timer?.cancel();
+    _pinController.dispose();
+    super.dispose();
+  }
+
+
 //! just for the color of the shits
   Future<void> getVerificationCodeResult() async {
     final code = int.tryParse(_pinController.text);
@@ -44,6 +51,7 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
           _isCodeValid = false;
         });
         Get.rawSnackbar(
+
           title: "Invalid or expired verification code",
           message: errorMessage,
           snackPosition: SnackPosition.BOTTOM,
@@ -55,7 +63,7 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
         });
         await Future.delayed(const Duration(seconds: 1));
         if (!mounted) return;
-        Get.off(() => const HomeScreenNavigator());
+        Get.offNamed("/homePage");
       },
     );
   }
@@ -89,12 +97,6 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
     return Theme.of(context).colorScheme.outline;
   }
 
-  @override
-  void dispose() {
-    _timer?.cancel();
-    _pinController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -209,3 +211,7 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
     );
   }
 }
+
+// when the user close the app and hes still awaiting verification 
+// save his Id as sharedPref
+// save flag as sharedPref like hes verification that goes in the splashScreen

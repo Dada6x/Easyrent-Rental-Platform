@@ -1,4 +1,5 @@
 import 'package:easyrent/core/services/api/dio_consumer.dart';
+import 'package:easyrent/core/services/api/end_points.dart';
 import 'package:easyrent/core/services/api/errors/exceptions.dart';
 import 'package:easyrent/data/models/favourite_model.dart';
 import 'package:easyrent/data/models/outer_property_model.dart';
@@ -33,7 +34,9 @@ class PropertiesRepo {
   //!------------------------ get Favorite properties------------------------------->
   Future<List<FavoritePropertyModel>> getFavoriteProperties() async {
     try {
-      final response = await api.get("1ae42e8e-c236-4b6f-bd9b-07f8460fd350");
+      final response = await api.get(
+        EndPoints.favourite,
+      );
       if (response.statusCode == 200) {
         debug.t(
             "Fetch Favorite Properties status code  ${response.statusCode} ");
@@ -56,7 +59,9 @@ class PropertiesRepo {
   //!------------------------ get Properties Details ------------------------------->
   Future<PropertyModel> propertyDetailsById(int id) async {
     try {
-      final response = await api.get("d1f40a97-b320-4f37-b971-16134922a910");
+      final response = await api.get(
+        EndPoints.getPropertyById(id),
+      );
       if (response.statusCode == 200) {
         debug.i(
             "Fetched property with id $id, status code ${response.statusCode}");
