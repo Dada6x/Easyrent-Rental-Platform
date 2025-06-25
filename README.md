@@ -15,14 +15,9 @@ EasyRent is a cross-platform mobile application designed to simplify the way use
 - **Map Integration**: View property locations using interactive maps.
 - **360° Panoramic Views**: Virtually tour properties with immersive panoramic images.
 
-### 🏷️ Property Listing
-- **User Listings**: Allow landlords and agents to list properties with photos, pricing, and descriptions.
-- **Premium Listings**: Highlight featured properties with a subscription-based upgrade using Stripe.
-
 ### 💳 Payment & Security
 - **Stripe Integration**: Secure payment system for subscriptions and premium features.
 - **Vault System**: Secure storage for credit card information.
-- **Offline Support**: Access saved listings and data even without an internet connection.
 
 ### 🧠 UI/UX & Performance
 - **Responsive Design**: Clean, modern interface adaptable to all screen sizes.
@@ -32,29 +27,11 @@ EasyRent is a cross-platform mobile application designed to simplify the way use
 
 ---
 
-## 📱 Technologies Used
-
-- **Flutter** – Cross-platform development
-- **Dart** – Programming language
-- **GetX** – State management and routing
-- **Firebase** – Backend services
-- **Stripe API** – Payment processing
-- **Custom Map Services & 360° View Libraries**
-
----
-
 ## 🛠️ Architecture
 
 - **Clean Architecture**: Separation of concerns across presentation, domain, and data layers.
 - **Service-Based Approach**: Modular services for authentication, payments, and property data.
 - **Secure Local Storage**: Vault-based encryption for sensitive data.
-
----
-
-## 📌 Related Projects
-
-- 📆 [Habitly – Habit Tracker & Personal Growth App (2025/4 – 2025/5)]  
-- 🛒 [SpeedOrder – E-commerce Application (2024/12 – 2025/2)]
 
 ---
 
