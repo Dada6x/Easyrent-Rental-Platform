@@ -3,7 +3,6 @@ import 'package:easyrent/data/Session/app_session.dart';
 import 'package:easyrent/data/models/outer_property_model.dart';
 import 'package:easyrent/main.dart';
 
-// chatgpt done this i was worinkg singletone
 class PropertiesController extends GetxController {
   var properties = <OuterPropertyModel>[].obs;
   var isLoading = true.obs;
@@ -36,5 +35,4 @@ class PropertiesController extends GetxController {
   Future<void> refreshProperties() async {
     await fetchProperties();
   }
-//! how to Pagination
 }

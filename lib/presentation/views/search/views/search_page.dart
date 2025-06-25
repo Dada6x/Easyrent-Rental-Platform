@@ -13,10 +13,7 @@ class Search extends StatefulWidget {
   State<Search> createState() => _SearchState();
 }
 
-//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//! this is pagination or infinite scrolling , it primerly work with the API , to load even more data ,
-//! dont just set it up like this without understanding its concept ,
-//!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 class _SearchState extends State<Search> {
   final ScrollController _scrollController = ScrollController();
   List<int> propertyList = List.generate(9, (index) => index);

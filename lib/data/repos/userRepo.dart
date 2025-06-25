@@ -128,52 +128,47 @@ class Userrepo {
   }
 
 //!-----------------------Get Profile Info ---------------------------------->
-  Future<Either<ServerException, User>> getProfile() async {
-    try {
-      final response = await api.get(
-        EndPoints.me,
-      );
-      debug.i("Profile Request ${response.statusCode}");
-      if (response.statusCode == 200) {
-        final user = User.fromJson(response.data);
-        AppSession().user = user;
-        return Right(user);
-      } else {
-        return Left(ServerException(
-            errorModel:
-                ErrorModel(response.statusCode, response.errorMessage)));
-      }
-    } on ServerException catch (e) {
-      debug.e("ServerException: $e");
-      showErrorSnackbar(" exception ${e.errorModel.message}");
-      return Left(e);
-    } catch (e) {
-      debug.e("Unexpected exception: $e");
-      return Left(ServerException(errorModel: ErrorModel(4, e.toString())));
-    }
-  }
-
-//!-----------------------Log OUt ---------------------------------->
-  // Future<Either<String, String>> logoutUser() async {
+  // Future<Either<ServerException, User>> getProfile() async {
   //   try {
   //     final response = await api.get(
-  //       EndPoints.Logout,
+  //       EndPoints.me,
   //     );
+  //     debug.i("Profile Request ${response.statusCode}");
   //     if (response.statusCode == 200) {
-  //       debug.i("Status Code is ${response.statusCode}");
-  //       userPref?.setBool('isLoggedIn', false);
-  //       deleteToken();
-  //       AppSession().user = null;
-  //       Get.off(() => LoginPage());
+  //       final user = User.fromJson(response.data);
+  //       AppSession().user = user;
+  //       return Right(user);
+  //     } else {
+  //       return Left(ServerException(
+  //           errorModel:
+  //               ErrorModel(response.statusCode, response.errorMessage)));
   //     }
-  //     debug.t("User Logged out ");
-  //     return const Right('User Logged Out');
   //   } on ServerException catch (e) {
-  //     debug.e("Exception $e");
+  //     debug.e("ServerException: $e");
   //     showErrorSnackbar(" exception ${e.errorModel.message}");
-  //     return Left(e.errorModel.message);
+  //     return Left(e);
+  //   } catch (e) {
+  //     debug.e("Unexpected exception: $e");
+  //     return Left(ServerException(errorModel: ErrorModel(4, e.toString())));
   //   }
   // }
+  //! fromJson
+  Future<Either<ServerException, User>> getProfile() async {
+  try {
+    final json = await _loadJson('user.json');
+    final user = User.fromJson(json);
+    AppSession().user = user;
+    return Right(user);
+  } catch (e) {
+    debug.e("Error loading profile: $e");
+    return Left(ServerException(
+      errorModel: ErrorModel(500, "Failed to load profile from mock"),
+    ));
+  }
+}
+
+//!-----------------------Log OUt ---------------------------------->
+
 
   void logout(BuildContext context) {
     userPref?.setBool('isLoggedIn', false);
@@ -332,7 +327,6 @@ class Userrepo {
 // }) async {
 //   try {
 //     await _loadJson('login.json');
-//     Get.off(() => const VerificationCodePage());
 //     return const Right("Signed up");
 //   } catch (e) {
 //     debug.e("Error: $e");
@@ -357,25 +351,12 @@ class Userrepo {
 //     return const Left("Verification failed");
 //   }
 // }
-// Future<Either<ServerException, User>> getProfile() async {
-//   try {
-//     final json = await _loadJson('user.json');
-//     final user = User.fromJson(json);
-//     AppSession().user = user;
-//     return Right(user);
-//   } catch (e) {
-//     debug.e("Error loading profile: $e");
-//     return Left(ServerException(
-//       errorModel: ErrorModel(500, "Failed to load profile from mock"),
-//     ));
-//   }
-// }
+
 // Future<Either<String, String>> logoutUser() async {
 //   try {
 //     await _loadJson('login.json');
 //     userPref?.setBool('isLoggedIn', false);
 //     deleteToken();
-//     Get.off(() => LoginPage());
 //     return const Right("Logged out");
 //   } catch (e) {
 //     debug.e("Error: $e");

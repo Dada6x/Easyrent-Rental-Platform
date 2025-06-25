@@ -264,8 +264,9 @@ class PropertyDetailsPage extends StatelessWidget {
                       //! Agent Widget
                       _Headers(text: "Agent".tr),
                       const AgentWidget(
-                        agentImage: avatar2,
-                        agentName: "Yahea Dada",
+                        //! add if null to show avatar
+                        agentImage: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbrmM6dgWVMTOFm_JQ4_K0xtfD8hOOm1EYrw&s",
+                        agentName: "Will Smith",
                         agentRole: "+96380817760",
                       ),
                       //! Overview
@@ -380,7 +381,7 @@ class PropertyDetailsPage extends StatelessWidget {
                       const CustomDivider(),
                       _Headers(text: "Gallery".tr),
                       GalleryWidget(images: property.propertyImages ?? []),
-                      _Headers(text: "You Might Also Like :".tr),
+                      // _Headers(text: "You Might Also Like :".tr),
                       //! Locatio
                       const CustomDivider(),
 

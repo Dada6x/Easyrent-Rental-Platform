@@ -114,9 +114,11 @@ class _MapPageState extends State<MapPage> {
                 });
               }
             },
+// const apiKey = "YOUR-API-KEY";
             child: FlutterMap(
               mapController: _mapController,
               options: MapOptions(
+                backgroundColor: Theme.of(context).colorScheme.secondary,
                 keepAlive: false,
                 maxZoom: 19,
                 initialCenter: properties.isNotEmpty
@@ -127,7 +129,9 @@ class _MapPageState extends State<MapPage> {
               ),
               children: [
                 TileLayer(
-                  urlTemplate: EndPoints.openStreetMap,
+                  urlTemplate: Get.isDarkMode
+                      ? EndPoints.darkMapTile
+                      : EndPoints.lightMapTile,
                   subdomains: const ['a', 'b', 'c'],
                 ),
                 MarkerLayer(

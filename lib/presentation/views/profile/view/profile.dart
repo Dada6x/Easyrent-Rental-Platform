@@ -51,7 +51,7 @@ class _ProfileState extends State<Profile> {
             SizedBox(
               height: 26.h,
             ),
-            Text(AppSession().user?.userType??"hhdad"),
+            // Text(AppSession().user?.userType??"hhdad"),
             // AppSession().user!.userType == "super_admin"
             //     ? const Text("Admin")
             //     : const SizedBox(),

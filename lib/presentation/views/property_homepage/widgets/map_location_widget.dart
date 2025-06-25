@@ -21,7 +21,7 @@ class CurrentLocationMap extends StatelessWidget {
         ),
         children: [
           TileLayer(
-            urlTemplate: EndPoints.openStreetMap,
+            urlTemplate: EndPoints.lightMapTile,
             subdomains: const ['a', 'b', 'c'],
             // userAgentPackageName: 'com.example.easyrent',
           ),

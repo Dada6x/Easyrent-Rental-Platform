@@ -19,9 +19,17 @@ class EndPoints {
 
   static String favourite = "/favorite";
   static String tokenTime = "/auth/tokenTime";
+  static String lightMapTile =
+      "https://tile.tracestrack.com/topo__/{z}/{x}/{y}.webp?key=0a3d18b9249fb85601f81da60aa32a24";
+  static String darkMapTile =
+      "https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png?api_key=65e83545-df9f-4a7b-adbd-8a83575d5698";
 
-  static String openStreetMap =
-      "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
+//TODO in Case i run out of requests either make new account on each site or use these: free low quality alternative
+  //! the Open Free One
+  //  https://tile.openstreetmap.org/{z}/{x}/{y}.png
+  //! Dark but so shitty  and free
+// https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png
+
   static String getPropertyById(int id) => "/property/$id";
 
   // static String getUserData(id) {
@@ -52,3 +60,8 @@ class ApiKey {
 
   const ApiKey();
 }
+
+//! for the dark Tile
+//https://client.stadiamaps.com/dashboard/#/property/57470/ 
+//! for the light Tile
+// https://console.tracestrack.com/explorer
