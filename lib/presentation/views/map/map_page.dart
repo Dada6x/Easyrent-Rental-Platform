@@ -133,6 +133,7 @@ class _MapPageState extends State<MapPage> {
                       ? EndPoints.darkMapTile
                       : EndPoints.lightMapTile,
                   subdomains: const ['a', 'b', 'c'],
+                  //  tileProvider: CachingTileProvider(),
                 ),
                 MarkerLayer(
                   markers: [
