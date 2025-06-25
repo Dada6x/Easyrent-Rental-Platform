@@ -1,8 +1,4 @@
 import 'package:card_swiper/card_swiper.dart';
-import 'package:easyrent/core/constants/utils/pages/error_page.dart';
-import 'package:easyrent/presentation/views/property_homepage/controller/propertiy_controller.dart';
-import 'package:easyrent/presentation/views/property_homepage/widgets/property_card_big.dart';
-import 'package:easyrent/presentation/views/search/widgets/property_widget_search_card.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -15,13 +11,14 @@ import 'package:like_button/like_button.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:easyrent/core/app/controller/app_controller.dart';
-import 'package:easyrent/core/constants/assets.dart';
 import 'package:easyrent/core/constants/colors.dart';
 import 'package:easyrent/core/constants/utils/divider.dart';
 import 'package:easyrent/core/constants/utils/error_loading_mssg.dart';
 import 'package:easyrent/core/constants/utils/pages/report_page.dart';
+import 'package:easyrent/core/constants/utils/rawSnackBar.dart';
 import 'package:easyrent/core/constants/utils/textStyles.dart';
 import 'package:easyrent/data/models/propertyModel.dart';
+import 'package:easyrent/main.dart';
 import 'package:easyrent/presentation/views/property_homepage/widgets/agent_widget.dart';
 import 'package:easyrent/presentation/views/property_homepage/widgets/gallery_widget.dart';
 import 'package:easyrent/presentation/views/property_homepage/widgets/map_location_widget.dart';
@@ -57,7 +54,9 @@ class PropertyDetailsPage extends StatelessWidget {
                       child: Swiper(
                         itemCount: property.propertyImages!.length,
                         itemBuilder: (context, index) => FancyShimmerImage(
-                          imageUrl: property.propertyImages![index],
+                          //TODO
+                          imageUrl:
+                              'http://192.168.1.4:3000/property/images/${property.propertyImages![index]}',
                           boxFit: BoxFit.cover,
                           errorWidget: const ErrorLoadingWidget(),
                         ),
@@ -87,7 +86,30 @@ class PropertyDetailsPage extends StatelessWidget {
                           }),
                           const Spacer(),
                           //! favorite
-                          const LikeButton(),
+                          LikeButton(
+                            isLiked: property.isFavorite ?? false,
+                            onTap: (isLiked) async {
+                              final newState = !isLiked;
+
+                              try {
+                                propertyDio.changeFavoriteState(property.id!);
+
+                                showSnackbarWithContext(
+                                  newState
+                                      ? "Property added to Favorites"
+                                      : "Property removed from Favorites",
+                                  context,
+                                );
+
+                                return newState;
+                              } catch (e) {
+                                showSnackbarWithContext(
+                                    "Failed to update favorite", context);
+                                return isLiked; // Return the same state to prevent visual change
+                              }
+                            },
+                          ),
+
                           SizedBox(
                             width: 12.w,
                           ), //
@@ -265,7 +287,8 @@ class PropertyDetailsPage extends StatelessWidget {
                       _Headers(text: "Agent".tr),
                       const AgentWidget(
                         //! add if null to show avatar
-                        agentImage: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbrmM6dgWVMTOFm_JQ4_K0xtfD8hOOm1EYrw&s",
+                        agentImage:
+                            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbrmM6dgWVMTOFm_JQ4_K0xtfD8hOOm1EYrw&s",
                         agentName: "Will Smith",
                         agentRole: "+96380817760",
                       ),

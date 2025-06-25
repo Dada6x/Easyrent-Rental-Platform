@@ -58,7 +58,7 @@ class PropertyCardSmall extends StatelessWidget {
                       child: FancyShimmerImage(
                         height: 140.h,
                         boxFit: BoxFit.cover,
-                        imageUrl: image,
+                        imageUrl: "http://192.168.1.4:3000/property/images/$image",
                         errorWidget: const ErrorLoadingWidget(),
                       ),
                     ),

@@ -128,44 +128,44 @@ class Userrepo {
   }
 
 //!-----------------------Get Profile Info ---------------------------------->
-  // Future<Either<ServerException, User>> getProfile() async {
-  //   try {
-  //     final response = await api.get(
-  //       EndPoints.me,
-  //     );
-  //     debug.i("Profile Request ${response.statusCode}");
-  //     if (response.statusCode == 200) {
-  //       final user = User.fromJson(response.data);
-  //       AppSession().user = user;
-  //       return Right(user);
-  //     } else {
-  //       return Left(ServerException(
-  //           errorModel:
-  //               ErrorModel(response.statusCode, response.errorMessage)));
-  //     }
-  //   } on ServerException catch (e) {
-  //     debug.e("ServerException: $e");
-  //     showErrorSnackbar(" exception ${e.errorModel.message}");
-  //     return Left(e);
-  //   } catch (e) {
-  //     debug.e("Unexpected exception: $e");
-  //     return Left(ServerException(errorModel: ErrorModel(4, e.toString())));
-  //   }
-  // }
-  //! fromJson
   Future<Either<ServerException, User>> getProfile() async {
-  try {
-    final json = await _loadJson('user.json');
-    final user = User.fromJson(json);
-    AppSession().user = user;
-    return Right(user);
-  } catch (e) {
-    debug.e("Error loading profile: $e");
-    return Left(ServerException(
-      errorModel: ErrorModel(500, "Failed to load profile from mock"),
-    ));
+    try {
+      final response = await api.get(
+        EndPoints.me,
+      );
+      debug.i("Profile Request ${response.statusCode}");
+      if (response.statusCode == 200) {
+        final user = User.fromJson(response.data);
+        AppSession().user = user;
+        return Right(user);
+      } else {
+        return Left(ServerException(
+            errorModel:
+                ErrorModel(response.statusCode, response.errorMessage)));
+      }
+    } on ServerException catch (e) {
+      debug.e("ServerException: $e");
+      showErrorSnackbar(" exception ${e.errorModel.message}");
+      return Left(e);
+    } catch (e) {
+      debug.e("Unexpected exception: $e");
+      return Left(ServerException(errorModel: ErrorModel(4, e.toString())));
+    }
   }
-}
+  //! fromJson
+//   Future<Either<ServerException, User>> getProfile() async {
+//   try {
+//     final json = await _loadJson('user.json');
+//     final user = User.fromJson(json);
+//     AppSession().user = user;
+//     return Right(user);
+//   } catch (e) {
+//     debug.e("Error loading profile: $e");
+//     return Left(ServerException(
+//       errorModel: ErrorModel(500, "Failed to load profile from mock"),
+//     ));
+//   }
+// }
 
 //!-----------------------Log OUt ---------------------------------->
 

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:easyrent/core/app/theme/themes.dart';
 import 'package:easyrent/core/constants/colors.dart';
+import 'package:easyrent/core/constants/utils/rawSnackBar.dart';
 import 'package:easyrent/main.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -46,31 +47,33 @@ class AppController extends GetxController {
             isFirstCheck = false;
             break;
           } else {
-            Get.rawSnackbar(
-              message: "You're connected back",
-              margin: const EdgeInsets.all(12),
-              borderRadius: 8,
-              backgroundColor: green,
-              snackPosition: SnackPosition.BOTTOM,
-              duration: const Duration(seconds: 2),
-            );
+            // Get.rawSnackbar(
+            //   message: "You're connected back",
+            //   margin: const EdgeInsets.all(12),
+            //   borderRadius: 8,
+            //   backgroundColor: green,
+            //   snackPosition: SnackPosition.BOTTOM,
+            //   duration: const Duration(seconds: 2),
+            // );
+            showSuccessSnackbar("You're connected back");
             break;
           }
         case InternetStatus.disconnected:
-          isOffline.value = false;
+          // isOffline.value = false;
 
           if (isFirstCheck == true) {
             isFirstCheck = false;
             break;
           } else {
-            Get.rawSnackbar(
-              message: "No internet connection",
-              margin: const EdgeInsets.all(12),
-              borderRadius: 8,
-              backgroundColor: red,
-              snackPosition: SnackPosition.BOTTOM,
-              duration: const Duration(seconds: 2),
-            );
+            // Get.rawSnackbar(
+            //   message: "No internet connection",
+            //   margin: const EdgeInsets.all(12),
+            //   borderRadius: 8,
+            //   backgroundColor: red,
+            //   snackPosition: SnackPosition.BOTTOM,
+            //   duration: const Duration(seconds: 2),
+            // );
+            showErrorSnackbar("No internet connection");
             break;
           }
       }

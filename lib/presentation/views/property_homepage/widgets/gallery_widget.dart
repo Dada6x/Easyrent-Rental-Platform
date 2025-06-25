@@ -32,7 +32,7 @@ class GalleryWidget extends StatelessWidget {
                       width: 330.w,
                       height: 200.h,
                       child: FancyShimmerImage(
-                        imageUrl: images[index],
+                        imageUrl: "http://192.168.1.4:3000/property/images/${images[index]}",
                         boxFit: BoxFit.cover,
                         errorWidget: const ErrorLoadingWidget(),
                       ),

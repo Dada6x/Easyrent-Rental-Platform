@@ -1,3 +1,4 @@
+
 import 'location_model.dart';
 
 class PropertyModel {
@@ -26,6 +27,15 @@ class PropertyModel {
   int? priorityScore;
   String? createdAt;
   String? updatedAt;
+  bool? isFavorite;
+  bool? voteValue;
+  String? firstImage;
+  int? priorityScoreRate;
+  int? acceptCount;
+  String? status;
+
+  User? user;
+  PriorityScoreEntity? priorityScoreEntity;
 
   PropertyModel({
     this.rooms,
@@ -70,17 +80,26 @@ class PropertyModel {
     title = json['title'];
     description = json['description'];
     price = json['price'];
-    location = json['location'] != null
-        ? Location.fromJson(json['location'])
-        : null;
+    location =
+        json['location'] != null ? Location.fromJson(json['location']) : null;
     isForRent = json['isForRent'];
     state = json['state'];
     propertyImage = json['propertyImage'];
+    isFavorite = json['isFavorite'];
+    voteValue = json['voteValue'];
+    firstImage = json['firstImage'];
+    priorityScoreRate = json['priorityScoreRate'];
+    acceptCount = json['acceptCount'];
+    status = json['status'];
+
+    user = json['user'] != null ? User.fromJson(json['user']) : null;
+    priorityScoreEntity = json['priorityScoreEntity'] != null
+        ? PriorityScoreEntity.fromJson(json['priorityScoreEntity'])
+        : null;
 
     // 🔧 Fix: Safely convert List<dynamic> to List<String>
-    propertyImages = (json['propertyImages'] as List?)
-        ?.map((e) => e.toString())
-        .toList();
+    propertyImages =
+        (json['propertyImages'] as List?)?.map((e) => e.toString()).toList();
 
     // 🔧 Fix: Safely convert List<dynamic> to List<Map<String, String>>
     panoramaImages = (json['panoramaImages'] as List?)
@@ -92,5 +111,39 @@ class PropertyModel {
     priorityScore = json['priorityScore'];
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
+  }
+}
+
+class PriorityScoreEntity {
+  int? adminsScoreRate;
+  int? suitabilityScoreRate;
+  int? voteScoreRate;
+
+  PriorityScoreEntity({
+    this.adminsScoreRate,
+    this.suitabilityScoreRate,
+    this.voteScoreRate,
+  });
+
+  factory PriorityScoreEntity.fromJson(Map<String, dynamic> json) {
+    return PriorityScoreEntity(
+      adminsScoreRate: json['adminsScoreRate'],
+      suitabilityScoreRate: json['suitabilityScoreRate'],
+      voteScoreRate: json['voteScoreRate'],
+    );
+  }
+}
+
+class User {
+  int? id;
+  String? username;
+
+  User({this.id, this.username});
+
+  factory User.fromJson(Map<String, dynamic> json) {
+    return User(
+      id: json['id'],
+      username: json['username'],
+    );
   }
 }

@@ -4,8 +4,6 @@ import 'package:get/get.dart';
 import 'package:easyrent/core/constants/colors.dart';
 import 'package:easyrent/core/constants/utils/textStyles.dart';
 
-
-
 void showErrorSnackbar(String message) {
   Get.rawSnackbar(
     isDismissible: true,
@@ -22,6 +20,7 @@ void showErrorSnackbar(String message) {
 
 void showSuccessSnackbar(String message) {
   Get.rawSnackbar(
+    isDismissible: true,
     message: message,
     snackPosition: SnackPosition.BOTTOM,
     backgroundColor: green,
@@ -33,6 +32,7 @@ void showSuccessSnackbar(String message) {
 }
 
 void showSnackbarWithContext(String message, BuildContext context) {
+  //! add an icon
   Get.rawSnackbar(
     messageText: Text(
       message,

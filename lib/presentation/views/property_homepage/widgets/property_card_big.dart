@@ -65,7 +65,7 @@ class PropertyCardBig extends StatelessWidget {
                           height: 340.h,
                           width: 250.w,
                           boxFit: BoxFit.cover,
-                          imageUrl: imagePath,
+                          imageUrl: "http://192.168.1.4:3000/property/images/$imagePath",
                           errorWidget: const ErrorLoadingWidget()),
                       //! Gradient Overlay
                       Positioned.fill(

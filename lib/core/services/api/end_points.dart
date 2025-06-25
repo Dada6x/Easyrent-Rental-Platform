@@ -5,13 +5,17 @@ class EndPoints {
   static String me = "/auth/me";
   static String registerUser = "/user/register";
   static String reset_forgetPassword = "/auth/reset";
-  static String resetPasswordAfterReset = "/auth/reset///!Code";
+  static String resetPasswordAfterReset(int code) => "/auth/reset/$code";
 
   static String verifyCode(int id) => "/user/verify/$id";
   static String resendCode(int id) => "/user/resend/$id";
 
-  static String resetPassword = "//user/";
-  static String updateUserName = "//user/";
+  static String changeFavoriteState(int id) => "/favorite/$id";
+  static String getAllProperties = "/property/all";
+
+  static String getTopProperties = "/property/top/4";
+  // static String updateUserName = "//user/";
+  //! this used to update password and update userName
   static String update = "/user/";
   // static String verifyCode = "/user/verify///!code";
   // static String verifyCode = "/user/verify///!code";
@@ -25,10 +29,10 @@ class EndPoints {
       "https://tiles.stadiamaps.com/tiles/alidade_smooth_dark/{z}/{x}/{y}{r}.png?api_key=65e83545-df9f-4a7b-adbd-8a83575d5698";
 
 //TODO in Case i run out of requests either make new account on each site or use these: free low quality alternative
-  //! the Open Free One
-  //  https://tile.openstreetmap.org/{z}/{x}/{y}.png
-  //! Dark but so shitty  and free
-// https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png
+  static String openFreeTileLight =
+      "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
+  static String openFreeTileDark =
+      "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png";
 
   static String getPropertyById(int id) => "/property/$id";
 
