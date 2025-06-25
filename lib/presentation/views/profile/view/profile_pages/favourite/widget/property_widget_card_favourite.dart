@@ -166,6 +166,7 @@ class _PropertyCardFavoriteState extends State<PropertyCardFavorite> {
                               context,
                             );
                             setState(() {
+                              
                               isvisable = !isvisable;
                             });
                             return newState;
