@@ -34,6 +34,7 @@ void showSuccessSnackbar(String message) {
 void showSnackbarWithContext(String message, BuildContext context) {
   //! add an icon
   Get.rawSnackbar(
+    isDismissible: true,
     messageText: Text(
       message,
       style: AppTextStyles.h16medium

@@ -3,7 +3,7 @@ import 'package:easyrent/core/constants/assets.dart';
 import 'package:easyrent/core/constants/colors.dart';
 import 'package:easyrent/core/constants/utils/textStyles.dart';
 import 'package:easyrent/core/services/api/dio_consumer.dart';
-import 'package:easyrent/data/repos/userRepo.dart';
+import 'package:easyrent/data/repos/user_repo.dart';
 import 'package:easyrent/main.dart';
 import 'package:easyrent/presentation/navigation/introduction_screen.dart';
 import 'package:flutter/material.dart';

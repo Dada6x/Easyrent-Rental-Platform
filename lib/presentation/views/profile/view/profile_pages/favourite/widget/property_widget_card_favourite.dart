@@ -78,7 +78,7 @@ class _PropertyCardFavoriteState extends State<PropertyCardFavorite> {
                             height: 120.h,
                             width: 120.w,
                             boxFit: BoxFit.cover,
-                            imageUrl: widget.imagePath,
+                            imageUrl: "http://192.168.1.4:3000/property/images/${widget.imagePath}",
                             errorWidget: const ErrorLoadingWidget(),
                           ),
                         ],
@@ -166,7 +166,6 @@ class _PropertyCardFavoriteState extends State<PropertyCardFavorite> {
                               context,
                             );
                             setState(() {
-                              
                               isvisable = !isvisable;
                             });
                             return newState;

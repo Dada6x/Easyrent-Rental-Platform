@@ -29,7 +29,7 @@ AppBar homePageAppbar() {
               child: AppSession().user?.profileImage != null
                   ? FancyShimmerImage(
                       boxFit: BoxFit.cover,
-                      imageUrl: AppSession().user!.profileImage!,
+                      imageUrl: "http://192.168.1.4:3000/user/images/${AppSession().user!.profileImage}",
                       errorWidget: const Icon(Icons.error))
                   : Image.asset(
                       width: 56.w,

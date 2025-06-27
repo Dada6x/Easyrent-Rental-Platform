@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 // primary colors!
 const blue = Color(0xFF0061FF);
 const red = Color(0xFFF75555);
+// const pink = Colors(0xFFFF4080);
 const green = Color(0xFF4CD964);
 const orange = Colors.orange;
 const white = Colors.white;

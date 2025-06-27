@@ -13,8 +13,11 @@ import 'package:skeletonizer/skeletonizer.dart';
 import 'package:easyrent/core/constants/assets.dart';
 import 'package:easyrent/core/constants/colors.dart';
 import 'package:easyrent/core/constants/utils/divider.dart';
+import 'package:easyrent/core/constants/utils/error_loading_mssg.dart';
+import 'package:easyrent/core/constants/utils/rawSnackBar.dart';
 import 'package:easyrent/core/constants/utils/textStyles.dart';
 import 'package:easyrent/data/Session/app_session.dart';
+import 'package:easyrent/main.dart';
 import 'package:easyrent/presentation/views/profile/view/profile_pages/Faq/view/faq.dart';
 import 'package:easyrent/presentation/views/profile/view/profile_pages/chatbot/Ai_chatBot.dart';
 import 'package:easyrent/presentation/views/profile/view/profile_pages/favourite/view/favourite_page.dart';
@@ -76,53 +79,36 @@ class _ProfileState extends State<Profile> {
                             child: CircleAvatar(
                               radius: 85.sp,
                               backgroundColor: Colors.transparent,
-                              child: _selectedImage != null
-                                  //! EDiTED
-/*
-child: ClipOval(
-                                child: AppSession().user?.profileImage != null
-                                    ? FancyShimmerImage(
-                                        boxFit: BoxFit.cover,
-                                        imageUrl:
-                                            AppSession().user!.profileImage!,
-                                        // errorWidget: const Icon(Icons.error)
-                                      )
-                                    : Image.asset(
-                                        width: 170.sp,
-                                        avatar2,
-                                        fit: BoxFit.cover,
-                                      ),
-                              ),
-*/
-//old code do not touch might explode 💣
-
-                                  ? ClipOval(
-                                      child: Image.file(
+                              child: ClipOval(
+                                child: _selectedImage != null
+                                    ? Image.file(
                                         File(_selectedImage!.path),
                                         fit: BoxFit.cover,
                                         width: 170.sp,
                                         height: 170.sp,
-                                      ),
-                                    )
-                                  : AppSession().user?.profileImage != null
-                                      ? ClipOval(
-                                          child: FancyShimmerImage(
+                                      )
+                                    : (AppSession()
+                                                .user
+                                                ?.profileImage
+                                                ?.isNotEmpty ??
+                                            false)
+                                        ? FancyShimmerImage(
                                             width: 170.sp,
                                             height: 170.sp,
                                             boxFit: BoxFit.cover,
-                                            imageUrl: AppSession()
-                                                .user!
-                                                .profileImage!,
-                                          ),
-                                        )
-                                      : ClipOval(
-                                          child: Image.asset(
+                                            errorWidget:
+                                                const ErrorLoadingWidget(),
+                                            //TODO REMOVE ITTTT
+                                            imageUrl:
+                                                "http://192.168.1.4:3000/user/images/${AppSession().user!.profileImage}",
+                                          )
+                                        : Image.asset(
+                                            avatar2,
                                             width: 170.sp,
                                             height: 170.sp,
-                                            avatar2,
                                             fit: BoxFit.cover,
                                           ),
-                                        ),
+                              ),
                             ),
                           ),
                           Visibility(
@@ -145,27 +131,27 @@ child: ClipOval(
                                             IconButton(
                                               onPressed: () async {
                                                 Get.back();
-                                                final ImagePicker picker =
-                                                    ImagePicker();
+                                                final picker = ImagePicker();
                                                 final XFile? image =
                                                     await picker.pickImage(
                                                   source: ImageSource.camera,
                                                 );
+
                                                 if (image != null) {
-                                                  final XFile? image =
-                                                      await picker.pickImage(
-                                                          source: ImageSource
-                                                              .camera);
-                                                  if (image != null) {
-                                                    setState(() {
-                                                      _selectedImage = image;
-                                                    });
-
-                                                    // await userDio
-                                                    //     .uploadUserImage(image);
-                                                  }
-
-                                                  // You can set it to your CircleAvatar later when you're ready
+                                                  final result = await userDio
+                                                      .uploadUserImage(image);
+                                                  result.fold(
+                                                    (error) =>
+                                                        showErrorSnackbar(
+                                                            error),
+                                                    (success) {
+                                                      showSuccessSnackbar(
+                                                          success);
+                                                      setState(() {
+                                                        _selectedImage = image;
+                                                      });
+                                                    },
+                                                  );
                                                 }
                                               },
                                               icon: Icon(
@@ -173,32 +159,33 @@ child: ClipOval(
                                                 color: Theme.of(context)
                                                     .colorScheme
                                                     .primary,
-                                                semanticLabel: "camera",
+                                                semanticLabel: "Camera",
                                               ),
                                             ),
                                             IconButton(
                                               onPressed: () async {
                                                 Get.back();
-                                                final ImagePicker picker =
-                                                    ImagePicker();
+                                                final picker = ImagePicker();
                                                 final XFile? image =
                                                     await picker.pickImage(
                                                   source: ImageSource.gallery,
                                                 );
-                                                if (image != null) {
-                                                  final XFile? image =
-                                                      await picker.pickImage(
-                                                          source: ImageSource
-                                                              .gallery);
-                                                  if (image != null) {
-                                                    setState(() {
-                                                      _selectedImage = image;
-                                                    });
-                                                    // await userDio
-                                                    //     .uploadUserImage(image);
-                                                  }
 
-                                                  // You can set it to your CircleAvatar later when you're ready
+                                                if (image != null) {
+                                                  final result = await userDio
+                                                      .uploadUserImage(image);
+                                                  result.fold(
+                                                    (error) =>
+                                                        showErrorSnackbar(
+                                                            error),
+                                                    (success) {
+                                                      showSuccessSnackbar(
+                                                          success);
+                                                      setState(() {
+                                                        _selectedImage = image;
+                                                      });
+                                                    },
+                                                  );
                                                 }
                                               },
                                               icon: Icon(
@@ -206,6 +193,7 @@ child: ClipOval(
                                                 color: Theme.of(context)
                                                     .colorScheme
                                                     .primary,
+                                                semanticLabel: "Gallery",
                                               ),
                                             ),
                                           ],

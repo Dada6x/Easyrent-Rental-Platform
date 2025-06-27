@@ -12,9 +12,9 @@ class EndPoints {
 
   static String changeFavoriteState(int id) => "/favorite/$id";
   static String getAllProperties = "/property/all";
-
+  static String uploadProfileImage = "/user/upload-image";
   static String getTopProperties = "/property/top/4";
-  // static String updateUserName = "//user/";
+  static String deleteProfileImage = "/user/remove-img";
   //! this used to update password and update userName
   static String update = "/user/";
   // static String verifyCode = "/user/verify///!code";

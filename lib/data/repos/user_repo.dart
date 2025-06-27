@@ -15,6 +15,10 @@ import 'package:easyrent/data/models/user_model.dart';
 import 'package:easyrent/main.dart';
 import 'package:easyrent/presentation/navigation/navigator.dart';
 import 'package:easyrent/presentation/views/auth/views/verification_code_page.dart';
+// import 'package:dio/dio.dart' hide MultipartFile;
+import 'package:dio/src/multipart_file.dart';
+import 'package:dio/dio.dart' as dio;
+import 'package:get/get_connect/http/src/multipart/multipart_file.dart' as getx;
 
 class Userrepo {
   Userrepo(this.api);
@@ -169,7 +173,6 @@ class Userrepo {
 
 //!-----------------------Log OUt ---------------------------------->
 
-
   void logout(BuildContext context) {
     userPref?.setBool('isLoggedIn', false);
     deleteToken();
@@ -178,12 +181,22 @@ class Userrepo {
     Get.offNamed("/login");
   }
 
-//!-----------------------Upload User Image------------------------->
+//!----------------------Upload User Image------------------------->
   Future<Either<String, String>> uploadUserImage(XFile image) async {
     try {
+      final fileName = image.path.split('/').last;
+
+      final formData = dio.FormData.fromMap({
+        'user-image': await dio.MultipartFile.fromFile(
+          image.path,
+          filename: fileName,
+        ),
+      });
+
       final response = await api.post(
-        "https://webhook.site/e321361a-8f30-46f4-b7f3-9939900aa560",
-        data: {image},
+        EndPoints.uploadProfileImage,
+        data: formData,
+        isFormData: true,
       );
 
       if (response.statusCode == 200) {
@@ -193,13 +206,27 @@ class Userrepo {
       } else {
         return const Left("Unexpected Error");
       }
-    } on ServerException catch (e) {
-      debug.e("ServerException: $e");
-      showErrorSnackbar("Exception: ${e.errorModel.message}");
-      return Left(e.errorModel.message);
     } catch (e) {
-      debug.e("Unknown Exception: $e");
-      return const Left("Unknown error occurred");
+      debug.e("Upload Exception: $e");
+      return const Left("Upload failed");
+    }
+  }
+
+  // delete ImageProfile
+  Future<Either<String, void>> deleteImageProfile() async {
+    try {
+      final response = await api.post(
+        EndPoints.deleteProfileImage,
+      );
+      if (response.statusCode == 200) {
+        debug.t("Profile Image Deleted");
+        showErrorSnackbar("Something went wrong. Please try again later.");
+      }
+      showErrorSnackbar("Something went wrong. Please try again later.");
+      return right(null);
+    } on ServerException catch (e) {
+      debug.e("Exception $e");
+      return Left(e.errorModel.message);
     }
   }
 
