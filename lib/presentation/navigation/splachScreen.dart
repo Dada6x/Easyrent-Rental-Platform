@@ -1,14 +1,12 @@
-import 'package:dio/dio.dart';
-import 'package:easyrent/core/constants/assets.dart';
-import 'package:easyrent/core/constants/colors.dart';
-import 'package:easyrent/core/constants/utils/textStyles.dart';
-import 'package:easyrent/core/services/api/dio_consumer.dart';
-import 'package:easyrent/data/repos/user_repo.dart';
-import 'package:easyrent/main.dart';
-import 'package:easyrent/presentation/navigation/introduction_screen.dart';
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
+import 'package:easyrent/core/constants/assets.dart';
+import 'package:easyrent/core/constants/colors.dart';
+import 'package:easyrent/core/constants/utils/textStyles.dart';
+import 'package:easyrent/main.dart';
+import 'package:easyrent/presentation/navigation/introduction_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -21,8 +19,6 @@ class _SplashScreenState extends State<SplashScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
-  late Animation<double> _textOpacityAnimation;
-  late Animation<Offset> _textSlideAnimation;
 
   @override
   void initState() {
@@ -35,23 +31,6 @@ class _SplashScreenState extends State<SplashScreen>
 
     _animation = Tween<double>(begin: 0.0, end: 1.0).animate(
       CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
-    );
-
-    // Text animations
-    _textOpacityAnimation =
-        Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-      parent: _controller,
-      curve: const Interval(0.5, 1.0, curve: Curves.easeIn),
-    ));
-
-    _textSlideAnimation = Tween<Offset>(
-      begin: const Offset(0, 0.5),
-      end: Offset.zero,
-    ).animate(
-      CurvedAnimation(
-        parent: _controller,
-        curve: const Interval(0.5, 1.0, curve: Curves.easeOut),
-      ),
     );
 
     Future.delayed(const Duration(seconds: 2), () {
@@ -103,27 +82,18 @@ class _SplashScreenState extends State<SplashScreen>
                 children: [
                   Lottie.asset(easyRent),
                   const SizedBox(height: 20),
-                  AnimatedBuilder(
-                    animation: _controller,
-                    builder: (context, child) {
-                      return SlideTransition(
-                        position: _textSlideAnimation,
-                        child: Opacity(
-                          opacity: _textOpacityAnimation.value,
-                          child: Text("Your Getaway To Perfect Homes",
-                              style: AppTextStyles.h24medium.copyWith(
-                                color: white,
-                                shadows: [
-                                  Shadow(
-                                    blurRadius: 10,
-                                    color: Colors.black.withOpacity(0.3),
-                                    offset: const Offset(2, 2),
-                                  ),
-                                ],
-                              )),
+                  AnimatedTextKit(
+                    totalRepeatCount: 1,
+                    isRepeatingAnimation: false,
+                    animatedTexts: [
+                      TyperAnimatedText(
+                        "Your Getaway To Perfect Homes",
+                        textStyle: AppTextStyles.h24medium.copyWith(
+                          color: white,
                         ),
-                      );
-                    },
+                        speed: const Duration(milliseconds: 50),
+                      ),
+                    ],
                   ),
                 ],
               ),

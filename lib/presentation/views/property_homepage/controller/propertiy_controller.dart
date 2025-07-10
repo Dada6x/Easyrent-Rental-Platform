@@ -11,7 +11,6 @@ class PropertiesController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-
     if (AppSession().user != null) {
       fetchProperties();
     }

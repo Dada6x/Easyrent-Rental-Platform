@@ -47,14 +47,6 @@ class AppController extends GetxController {
             isFirstCheck = false;
             break;
           } else {
-            // Get.rawSnackbar(
-            //   message: "You're connected back",
-            //   margin: const EdgeInsets.all(12),
-            //   borderRadius: 8,
-            //   backgroundColor: green,
-            //   snackPosition: SnackPosition.BOTTOM,
-            //   duration: const Duration(seconds: 2),
-            // );
             showSuccessSnackbar("You're connected back");
             break;
           }
@@ -65,14 +57,6 @@ class AppController extends GetxController {
             isFirstCheck = false;
             break;
           } else {
-            // Get.rawSnackbar(
-            //   message: "No internet connection",
-            //   margin: const EdgeInsets.all(12),
-            //   borderRadius: 8,
-            //   backgroundColor: red,
-            //   snackPosition: SnackPosition.BOTTOM,
-            //   duration: const Duration(seconds: 2),
-            // );
             showErrorSnackbar("No internet connection");
             break;
           }

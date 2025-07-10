@@ -1,5 +1,5 @@
 class EndPoints {
-  static String baseUrl = "http://192.168.1.4:3000/";
+  static String baseUrl = "http://192.168.179.50:3000/";
   static String login = "/auth/login";
   // static String Logout = "auth/logout";
   static String me = "/auth/me";

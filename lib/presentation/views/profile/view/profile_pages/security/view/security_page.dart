@@ -34,7 +34,7 @@ class SecurityPage extends StatelessWidget {
               showChangePasswordDialog(context);
             },
             leading: Iconify(
-              Ph.password,
+              Ph.password_bold,
               color: Theme.of(context).colorScheme.primary,
             ),
             iconColor: grey,
@@ -49,7 +49,7 @@ class SecurityPage extends StatelessWidget {
               showUpdateUsernameDialog(context);
             },
             leading: Iconify(
-              Bi.phone,
+              Bi.person_badge,
               color: Theme.of(context).colorScheme.primary,
             ),
             iconColor: grey,
@@ -63,7 +63,7 @@ class SecurityPage extends StatelessWidget {
           customListRedTile(
               "Delete My Account ".tr,
               const Iconify(
-                Mi.delete_alt,
+                Mi.delete,
                 color: red,
               ), () {
             showDeleteAccountDialog(context);

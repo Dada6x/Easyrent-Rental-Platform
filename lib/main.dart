@@ -48,6 +48,7 @@ void main() async {
       // systemNavigationBarColor: blue,
     ),
   );
+
   // the payment Card gyroscope 3D shi
   await Motion.instance.initialize();
   Motion.instance.setUpdateInterval(60.fps);
@@ -99,6 +100,9 @@ void main() async {
   ));
 }
 
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! flutter_animate: ^4.5.2 
+///!!!!!!!!!!!!flutter_custom_carousel: ^0.1.0+1
+//////////////////! use this package for animtations
 /*
 !design architecture
 
@@ -160,9 +164,7 @@ UI triggers an event (e.g., LoadProperties)
 GetXController receives the event and calls the repository
 Repository makes API call through DioConsumer
 API response is converted to model objects
-BLoC emits new state with the data
 UI rebuilds with the new state
-
 -----------------
 !GetX :
 * Localization

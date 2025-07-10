@@ -1,18 +1,15 @@
-import 'package:dio/dio.dart';
-import 'package:easyrent/core/constants/colors.dart';
-import 'package:easyrent/core/services/api/dio_consumer.dart';
-import 'package:easyrent/core/constants/utils/textStyles.dart';
-import 'package:easyrent/data/repos/user_repo.dart';
-import 'package:easyrent/main.dart';
-import 'package:easyrent/presentation/views/auth/views/forget_password.dart';
-import 'package:easyrent/presentation/views/auth/views/signup.dart';
-import 'package:easyrent/core/constants/utils/button.dart';
-import 'package:easyrent/presentation/views/auth/widgets/empty_search_bar.dart';
-import 'package:easyrent/presentation/views/auth/widgets/greeting.dart';
-import 'package:easyrent/core/constants/utils/textFields.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:easyrent/core/constants/colors.dart';
+import 'package:easyrent/core/constants/utils/button.dart';
+import 'package:easyrent/core/constants/utils/textFields.dart';
+import 'package:easyrent/core/constants/utils/textStyles.dart';
+import 'package:easyrent/main.dart';
+import 'package:easyrent/presentation/views/auth/views/forget_password.dart';
+import 'package:easyrent/presentation/views/auth/views/signup.dart';
+import 'package:easyrent/presentation/views/auth/widgets/empty_search_bar.dart';
+import 'package:easyrent/presentation/views/auth/widgets/greeting.dart';
 
 // ignore: must_be_immutable
 class LoginPage extends StatelessWidget {
