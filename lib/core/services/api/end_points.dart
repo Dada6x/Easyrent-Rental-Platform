@@ -1,5 +1,5 @@
 class EndPoints {
-  static String baseUrl = "http://192.168.179.50:3000/";
+  static String baseUrl = "http://192.168.1.3:3000"; // i deleted / from here
   static String login = "/auth/login";
   // static String Logout = "auth/logout";
   static String me = "/auth/me";
@@ -9,7 +9,8 @@ class EndPoints {
 
   static String verifyCode(int id) => "/user/verify/$id";
   static String resendCode(int id) => "/user/resend/$id";
-
+  static String getAllAgents = "/user/agency";
+  static String getAgentDetalsById(int id) => "/user/agency/$id";
   static String changeFavoriteState(int id) => "/favorite/$id";
   static String getAllProperties = "/property/all";
   static String uploadProfileImage = "/user/upload-image";
@@ -66,6 +67,6 @@ class ApiKey {
 }
 
 //! for the dark Tile
-//https://client.stadiamaps.com/dashboard/#/property/57470/ 
+//https://client.stadiamaps.com/dashboard/#/property/57470/
 //! for the light Tile
 // https://console.tracestrack.com/explorer

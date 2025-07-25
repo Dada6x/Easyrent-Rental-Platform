@@ -348,6 +348,7 @@ class _ProfileState extends State<Profile> {
                   size: 29.sp,
                 ),
                 destination_widget: const Ai_ChatBot()),
+
             const CustomDivider(),
             //! LogOut
             customListRedTile(

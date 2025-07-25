@@ -1,11 +1,25 @@
 class Agent {
+  final int id;
   final String name;
-  final String role;
-  final String avatar;
+  final String photo;
+  final double rating;
 
-  const Agent(this.name, this.role, this.avatar);
+  Agent({
+    required this.id,
+    required this.name,
+    required this.photo,
+    required this.rating,
+  });
 
   factory Agent.fromJson(Map<String, dynamic> json) {
-    return Agent(json['name'], json['role'], json['avatar']);
+    return Agent(
+      id: json['id'],
+      name: json['name'],
+      photo: json['photo'],
+      rating: (json['rating'] ?? 0).toDouble(),
+    );
   }
 }
+
+
+//! i think this shit need an list of properties :( 

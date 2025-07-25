@@ -2,10 +2,12 @@ import 'dart:async';
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:easyrent/core/app/theme/themes.dart';
 import 'package:easyrent/core/constants/colors.dart';
-import 'package:easyrent/core/constants/utils/rawSnackBar.dart';
 import 'package:easyrent/main.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:iconify_flutter_plus/iconify_flutter_plus.dart';
+import 'package:iconify_flutter_plus/icons/carbon.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 
 //! this controller manage three things theme , language , and internet connection
@@ -47,7 +49,18 @@ class AppController extends GetxController {
             isFirstCheck = false;
             break;
           } else {
-            showSuccessSnackbar("You're connected back");
+            Get.rawSnackbar(
+              isDismissible: true,
+              message: "You're connected back",
+              snackPosition: SnackPosition.BOTTOM,
+              backgroundColor: green,
+              margin: EdgeInsets.all(16.r),
+              borderRadius: 12.r,
+              duration: const Duration(seconds: 3),
+              icon: const Iconify(Carbon.wifi, color: white),
+              snackStyle: SnackStyle.FLOATING,
+            );
+
             break;
           }
         case InternetStatus.disconnected:
@@ -57,7 +70,17 @@ class AppController extends GetxController {
             isFirstCheck = false;
             break;
           } else {
-            showErrorSnackbar("No internet connection");
+            Get.rawSnackbar(
+              isDismissible: true,
+              message: "No internet connection",
+              snackPosition: SnackPosition.BOTTOM,
+              backgroundColor: red,
+              margin: EdgeInsets.all(16.r),
+              borderRadius: 12.r,
+              duration: const Duration(seconds: 3),
+              icon: const Iconify(Carbon.wifi_off, color: white),
+              snackStyle: SnackStyle.FLOATING,
+            );
             break;
           }
       }
