@@ -50,6 +50,7 @@ dependencies:
   geolocator: ^11.0.0
   get: ^4.7.2
   iconify_flutter_plus: ^1.0.4
+  # https://andronasef.github.io/iconify_flutter/
   image_picker: ^1.1.2
   internet_connection_checker_plus: ^2.6.0
   latlong2: ^0.9.1

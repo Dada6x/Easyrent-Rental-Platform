@@ -9,6 +9,7 @@ class PropertiesController extends GetxController {
   var isLoading = true.obs;
   var hasError = false.obs;
   final agentList = <Agent>[].obs;
+  var searchQuery = ''.obs;
 
   @override
   void onInit() {
@@ -16,7 +17,6 @@ class PropertiesController extends GetxController {
     if (AppSession().user != null) {
       fetchProperties();
     }
-    // fetchAgents();
   }
 
   Future<void> fetchProperties() async {
@@ -46,6 +46,9 @@ class PropertiesController extends GetxController {
       isLoading(false);
     }
   }
+
+
+  
 
   Future<void> refreshProperties() async {
     // await fetchProperties();

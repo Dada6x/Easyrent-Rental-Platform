@@ -16,9 +16,7 @@ import 'package:easyrent/main.dart';
 import 'package:easyrent/presentation/navigation/navigator.dart';
 import 'package:easyrent/presentation/views/auth/views/verification_code_page.dart';
 // import 'package:dio/dio.dart' hide MultipartFile;
-import 'package:dio/src/multipart_file.dart';
 import 'package:dio/dio.dart' as dio;
-import 'package:get/get_connect/http/src/multipart/multipart_file.dart' as getx;
 
 class Userrepo {
   Userrepo(this.api);
@@ -79,8 +77,6 @@ class Userrepo {
           ApiKey.password: password,
           ApiKey.userName: userName,
           ApiKey.pointsDto: latLang,
-          "token":
-              "eqqB3fMARmZEA3c8Qm2iri:APA91bG0VJ7TN6zIPBXO_4nNANeU2YSVKUXMVvuOHUG1y6bBLmJDEoLXv-IHJN2AZyDcRLmVKQS7VXlCGvRxQtW7I3MHelgo9IMdxZ2sxu5K9eaAEs_YWow"
         },
       );
       if (response.statusCode == 201 || response.statusCode == 200) {

@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:easyrent/core/constants/colors.dart';
 import 'package:easyrent/core/constants/utils/error_loading_mssg.dart';
+import 'package:easyrent/data/models/agent_model.dart';
+import 'package:easyrent/main.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -31,10 +32,21 @@ class AgentSearchCard extends StatelessWidget {
           color: Theme.of(context).colorScheme.primary.withOpacity(0.05),
         ),
         child: ListTile(
-          // isThreeLine: true,
-          onTap: () => Get.to(AgentPage(
-            agentId: id,
-          )),
+          onTap: () async {
+            debug.w("get agent details by id : $id");
+            final agent = Agent(
+                id: 1,
+                name: "  Yahea DADA",
+                photo: "dwdawd",
+                rating: 15,
+                properties: []);
+            // = await propertyDio.getAgentsByIdJson(id);
+            Get.to(
+              AgentPage(
+                agent: agent,
+              ),
+            );
+          },
           leading: CircleAvatar(
             radius: 35.4.sp,
             backgroundColor: Theme.of(context).colorScheme.outline,

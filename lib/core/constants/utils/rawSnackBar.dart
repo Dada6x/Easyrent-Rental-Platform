@@ -34,16 +34,16 @@ void showSuccessSnackbar(String message) {
   );
 }
 
-void showSnackbarWithContext(String message, BuildContext context) {
-  //! add an icon
+void showSnackbarWithContext(String message, BuildContext context, {bool isTop = false}) {
   Get.rawSnackbar(
+    leftBarIndicatorColor: Theme.of(context).colorScheme.primary,
     isDismissible: true,
     messageText: Text(
       message,
       style: AppTextStyles.h16medium
           .copyWith(color: Theme.of(context).colorScheme.primary),
     ),
-    snackPosition: SnackPosition.BOTTOM,
+    snackPosition: isTop ? SnackPosition.TOP : SnackPosition.BOTTOM,
     backgroundColor: Theme.of(context).colorScheme.surface,
     margin: EdgeInsets.all(22.r),
     borderRadius: 12.r,
@@ -51,3 +51,4 @@ void showSnackbarWithContext(String message, BuildContext context) {
     snackStyle: SnackStyle.FLOATING,
   );
 }
+

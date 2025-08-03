@@ -1,5 +1,6 @@
 import 'package:bounce/bounce.dart';
 import 'package:card_swiper/card_swiper.dart';
+import 'package:easyrent/core/constants/utils/rawSnackBar.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -57,7 +58,9 @@ class _MapPageState extends State<MapPage> {
     bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
       setState(() => _isLocating = false);
-      Get.snackbar("Location Disabled", "Please enable location services.");
+      showSnackbarWithContext(
+          "Location Disabled  Please enable location services", context,
+          isTop: true);
       return;
     }
 
@@ -66,15 +69,19 @@ class _MapPageState extends State<MapPage> {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
         setState(() => _isLocating = false);
-        Get.snackbar("Permission Denied", "Location permission is required.");
+        showSnackbarWithContext(
+            "Permission Denied Location permission is required.", context,
+            isTop: true);
         return;
       }
     }
 
     if (permission == LocationPermission.deniedForever) {
       setState(() => _isLocating = false);
-      Get.snackbar(
-          "Permission Permanently Denied", "Enable location from settings.");
+      showSnackbarWithContext(
+          "Permission Permanently Denied  Enable location from settings.",
+          context,
+          isTop: true);
       return;
     }
 
@@ -114,7 +121,6 @@ class _MapPageState extends State<MapPage> {
                 });
               }
             },
-// const apiKey = "YOUR-API-KEY";
             child: FlutterMap(
               mapController: _mapController,
               options: MapOptions(

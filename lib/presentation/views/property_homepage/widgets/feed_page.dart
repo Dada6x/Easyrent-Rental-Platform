@@ -23,7 +23,7 @@ class FeedPage extends StatelessWidget {
       children: [
         Padding(
           padding: EdgeInsets.symmetric(vertical: 10.r),
-          child: const CustomSearchBar(),
+          child: CustomSearchBar(),
         ),
         Padding(
           padding: EdgeInsets.symmetric(vertical: 10.r),
@@ -70,7 +70,7 @@ class FeedPage extends StatelessWidget {
               );
             },
           ),
-          //! swiper 
+          //! swiper
           // child: Swiper(
           //   itemCount: 4,
           //   autoplay: true,
@@ -90,7 +90,8 @@ class FeedPage extends StatelessWidget {
           //     );
           //   },
           // ),
-        ), SizedBox(
+        ),
+        SizedBox(
           height: 5.h,
         ),
         const PropertyFilterChips(),

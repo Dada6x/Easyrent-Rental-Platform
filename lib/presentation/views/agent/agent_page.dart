@@ -3,6 +3,7 @@ import 'package:easyrent/core/app/controller/app_controller.dart';
 import 'package:easyrent/core/constants/utils/divider.dart';
 import 'package:easyrent/core/constants/utils/error_loading_mssg.dart';
 import 'package:easyrent/core/constants/utils/textStyles.dart';
+import 'package:easyrent/data/models/agent_model.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -14,7 +15,11 @@ import 'package:skeletonizer/skeletonizer.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AgentPage extends StatelessWidget {
-  const AgentPage({super.key, required int agentId});
+  final Agent agent;
+  const AgentPage({
+    super.key,
+    required this.agent,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -45,14 +50,14 @@ class AgentPage extends StatelessWidget {
                         radius: 70.sp,
                         child: ClipOval(
                           child: FancyShimmerImage(
-                            imageUrl: 'https://i.pravatar.cc/150?img=47',
+                            imageUrl: agent.photo ,
                             errorWidget: const ErrorLoadingWidget(),
                           ),
                         ),
                       ),
                       SizedBox(height: 12.h),
                       Text(
-                        "Sarah Johnson",
+                        agent.name,
                         style: AppTextStyles.h20medium,
                       ),
                       SizedBox(height: 4.h),
@@ -252,5 +257,3 @@ Future<void> launchPhoneCall(String phoneNumber) async {
     throw 'Could not launch phone dialer for $phoneNumber';
   }
 }
-
-

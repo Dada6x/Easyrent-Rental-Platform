@@ -4,12 +4,14 @@ import 'package:easyrent/presentation/views/search/widgets/agent_feed.dart';
 import 'package:easyrent/presentation/views/search/widgets/search_feed.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:easyrent/core/constants/utils/textStyles.dart';
 import 'package:easyrent/presentation/views/property_homepage/widgets/filterChips.dart';
 import 'package:easyrent/presentation/views/property_homepage/widgets/searchbar.dart';
 import 'package:easyrent/presentation/views/search/widgets/search_appbar.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:iconify_flutter_plus/iconify_flutter_plus.dart';
+import 'package:iconify_flutter_plus/icons/material_symbols.dart';
+import 'package:iconify_flutter_plus/icons/mdi.dart';
 
 enum SearchMode { properties, agents }
 
@@ -19,13 +21,13 @@ class Search extends StatefulWidget {
   State<Search> createState() => _SearchState();
 }
 
+
 class _SearchState extends State<Search> {
   final PropertiesController agentController = Get.put(PropertiesController());
 
   SearchMode _searchMode = SearchMode.properties;
 
-  List<int> propertyList = List.generate(9, (index) => index);
-  // List<int> agentList = List.generate(5, (index) => index);
+  // List<int> propertyList = List.generate(9, (index) => index);
 
   @override
   void initState() {
@@ -48,7 +50,7 @@ class _SearchState extends State<Search> {
         child: CustomScrollView(
           slivers: [
             //! search textfield
-            const SliverToBoxAdapter(child: CustomSearchBar()),
+            SliverToBoxAdapter(child: CustomSearchBar()),
             //! agent or prop toggle
             SliverToBoxAdapter(
               child: Padding(
@@ -70,7 +72,10 @@ class _SearchState extends State<Search> {
                       // spacing: 11.w,
                       children: [
                         ChoiceChip(
-                          avatar: const Icon(Icons.person),
+                          avatar: Iconify(MaterialSymbols.real_estate_agent_rounded,
+                              color: _searchMode == SearchMode.agents
+                                  ? white
+                                  : blue),
                           side: BorderSide.none,
                           showCheckmark: false,
                           label: const Text(' Agents '),
@@ -92,7 +97,10 @@ class _SearchState extends State<Search> {
                           },
                         ),
                         ChoiceChip(
-                          avatar: const Icon(Icons.home),
+                          avatar: Iconify(Mdi.house_group,
+                              color: _searchMode == SearchMode.properties
+                                  ? white
+                                  : blue),
                           side: BorderSide.none,
                           showCheckmark: false,
                           label: const Text('Properties'),
@@ -140,7 +148,7 @@ class _SearchState extends State<Search> {
             // ),
             //! Content list
             isPropertyMode
-                ? PropertySearchFeed(propertyList: propertyList)
+                ? PropertySearchFeed(propertyList: [])
                 : Obx(() {
                     if (agentController.isLoading.value) {
                       return const SliverFillRemaining(

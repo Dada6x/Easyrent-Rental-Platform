@@ -17,7 +17,6 @@ class AgentSearchFeed extends StatelessWidget {
             id: agent.id,
             name: agent.name,
             imageUrl: agent.photo,
-            // rating: agent.rating,
           );
         },
         childCount: agentList.length,

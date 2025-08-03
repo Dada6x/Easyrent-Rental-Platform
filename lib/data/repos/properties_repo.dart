@@ -1,4 +1,3 @@
-// import 'dart:convert';
 import 'dart:convert';
 import 'package:easyrent/core/services/api/dio_consumer.dart';
 import 'package:easyrent/core/services/api/end_points.dart';
@@ -21,7 +20,7 @@ class PropertiesRepo {
         EndPoints.getAllProperties,
       );
       if (response.statusCode == 200) {
-        debug.i("Fetch Properties status code  ${response.statusCode} ");
+        debug.i("Fetch Properties status code  ${response.statusCode} ._.");
         var responseData = response.data;
         List tempList = [];
         for (var v in responseData) {
@@ -107,6 +106,7 @@ class PropertiesRepo {
     }
   }
 
+//$ JSON
   Future<List<Agent>> getAgentsJson() async {
     try {
       final String jsonString =
@@ -116,6 +116,41 @@ class PropertiesRepo {
     } catch (e) {
       debug.i("ERROR :$e");
       throw Exception("Failed to load agents from local JSON: $e");
+    }
+  }
+
+  //!------------------------ Get Agents Info By Id  ------------------------------->
+
+  Future<Agent> getAgentsById(int id) async {
+    try {
+      final response = await api.get(EndPoints.getAgentDetalsById(id));
+      if (response.statusCode == 200) {
+        debug.i(
+            "Fetched property with id $id, status code ${response.statusCode}");
+        debug.i(response.data);
+        return Agent.fromJson(response.data);
+      }
+      return Agent.fromJson({});
+    } on ServerException catch (e) {
+      debug.e("Exception $e");
+      return Agent.fromJson({});
+    }
+  }
+
+//$$$ JSON
+  Future<Agent> getAgentsByIdJson(int id) async {
+    try {
+      final response = await api.get(EndPoints.getAgentDetalsById(id));
+      if (response.statusCode == 200) {
+        debug.i(
+            "Fetched property with id $id, status code ${response.statusCode}");
+        debug.i(response.data);
+        return Agent.fromJson(response.data);
+      }
+      return Agent.fromJson({});
+    } on ServerException catch (e) {
+      debug.e("Exception $e");
+      return Agent.fromJson({});
     }
   }
 }
