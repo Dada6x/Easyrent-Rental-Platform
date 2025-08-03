@@ -29,7 +29,9 @@ var debug = Logger(
   errorMethodCount: 3,
   printEmojis: true,
 ));
+
 SharedPreferences? userPref;
+
 bool isOffline = !Get.find<AppController>().isOffline.value;
 final userDio = Userrepo(DioConsumer(Dio()));
 final propertyDio = PropertiesRepo(DioConsumer(Dio()));

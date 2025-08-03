@@ -1,14 +1,15 @@
-import 'package:easyrent/core/constants/colors.dart';
-import 'package:easyrent/core/constants/utils/textStyles.dart';
-import 'package:easyrent/core/constants/utils/button.dart';
-import 'package:easyrent/presentation/views/property_homepage/controller/propertiy_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:easyrent/core/constants/colors.dart';
+import 'package:easyrent/core/constants/utils/button.dart';
+import 'package:easyrent/core/constants/utils/textStyles.dart';
+import 'package:easyrent/presentation/views/property_homepage/controller/propertiy_controller.dart';
 
 class CustomSearchBar extends StatelessWidget {
   final controller = Get.find<PropertiesController>();
-  CustomSearchBar({super.key});
+  CustomSearchBar({super.key, required this.onSearch});
+  final Function(String) onSearch;
 
   @override
   Widget build(BuildContext context) {
@@ -30,9 +31,7 @@ class CustomSearchBar extends StatelessWidget {
                   borderSide: BorderSide.none,
                 ),
               ),
-              onChanged: (value) {
-                controller.searchQuery.value = value;
-              },
+              onSubmitted: onSearch,
             ),
           ),
         ),

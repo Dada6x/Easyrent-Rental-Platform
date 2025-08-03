@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "title": "Modern Apartment in Amsterdam",
+    "location": "Amsterdam",
+    "price": 1200
+  },
+  {
+    "id": 2,
+    "title": "Cozy Studio in Utrecht",
+    "location": "Utrecht",
+    "price": 800
+  }
+]
