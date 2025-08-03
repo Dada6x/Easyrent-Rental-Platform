@@ -2,13 +2,19 @@
   {
     "id": 1,
     "title": "Modern Apartment in Amsterdam",
-    "location": "Amsterdam",
+    "location": {
+      "city": "Amsterdam",
+      "country": "Netherlands"
+    },
     "price": 1200
   },
   {
     "id": 2,
     "title": "Cozy Studio in Utrecht",
-    "location": "Utrecht",
+    "location": {
+      "city": "Utrecht",
+      "country": "Netherlands"
+    },
     "price": 800
   }
 ]

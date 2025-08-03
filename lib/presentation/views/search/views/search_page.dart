@@ -16,7 +16,6 @@ import 'package:easyrent/presentation/views/search/widgets/search_feed.dart';
 class Search extends StatelessWidget {
   const Search({super.key});
 
-
   @override
   Widget build(BuildContext context) {
     final searchController = Get.put(Search_Controller());

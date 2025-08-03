@@ -16,7 +16,7 @@ class PropertySearchFeed extends StatelessWidget {
           return PropertyWidgetSearchCard(
             id: property.id ?? 0,
             title: property.title ?? 'No Title',
-            location: property.location!.governorate??"Unknown" ,
+            location: property.location!.street ?? "Unknown",
             imagePath: property.firstImage ?? '',
             price: 00,
             rating: 55,

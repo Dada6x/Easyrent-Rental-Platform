@@ -6,7 +6,7 @@ import 'package:easyrent/data/models/propertyModel.dart';
 enum SearchMode { properties, agents }
 
 class Search_Controller extends GetxController {
-  final dio = Dio(BaseOptions(baseUrl: 'http://192.168.137.17:3000')); 
+  final dio = Dio(BaseOptions(baseUrl: 'http://192.168.137.17:3000'));
 
   var searchMode = SearchMode.properties.obs;
 
@@ -62,3 +62,4 @@ class Search_Controller extends GetxController {
     errorMessage.value = '';
   }
 }
+
