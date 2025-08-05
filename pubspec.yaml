@@ -47,7 +47,7 @@ dependencies:
   internet_connection_checker_plus: ^2.6.0
   like_button: ^2.0.5
   logger: ^2.5.0
-  geolocator: ^11.0.0
+  # geolocator: ^11.0.0
   image_picker: ^1.1.2
   lottie: any
   motion: ^2.0.1
