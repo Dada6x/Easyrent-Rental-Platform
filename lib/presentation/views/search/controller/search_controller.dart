@@ -63,3 +63,6 @@ class Search_Controller extends GetxController {
   }
 }
 
+
+//! make him make new models instead of this shi i dont even mind 
+//! 
