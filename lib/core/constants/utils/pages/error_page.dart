@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:easyrent/core/constants/assets.dart';
 import 'package:easyrent/core/constants/colors.dart';
@@ -24,7 +25,16 @@ class ErrorPage extends StatelessWidget {
                   .colorScheme
                   .primary, // The color you want to replace with
               originalColors: const ['#0061FF', '#0061ff'], // Colors to replace
-            ),
+            )
+                .animate(
+                  onPlay: (controller) => controller.repeat(reverse: true),
+                )
+                .move(
+                  duration: 2.seconds,
+                  curve: Curves.easeInOut,
+                  begin: const Offset(0, -8),
+                  end: const Offset(0, 6),
+                ),
             const SizedBox(height: 20),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 50),

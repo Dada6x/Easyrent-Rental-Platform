@@ -33,7 +33,7 @@ class ApiService {
       );
 
       if (response.statusCode == 200) {
-        return Right("Image uploaded successfully");
+        return const Right("Image uploaded successfully");
       } else {
         return Left("Upload failed with status: ${response.statusCode}");
       }

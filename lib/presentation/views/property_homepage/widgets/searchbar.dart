@@ -1,12 +1,15 @@
-import 'package:easyrent/core/constants/colors.dart';
-import 'package:easyrent/core/constants/utils/textStyles.dart';
-import 'package:easyrent/core/constants/utils/button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:easyrent/core/constants/colors.dart';
+import 'package:easyrent/core/constants/utils/button.dart';
+import 'package:easyrent/core/constants/utils/textStyles.dart';
+import 'package:easyrent/presentation/views/property_homepage/controller/propertiy_controller.dart';
 
 class CustomSearchBar extends StatelessWidget {
-  const CustomSearchBar({super.key});
+  final controller = Get.find<PropertiesController>();
+  CustomSearchBar({super.key, required this.onSearch});
+  final Function(String) onSearch;
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +31,7 @@ class CustomSearchBar extends StatelessWidget {
                   borderSide: BorderSide.none,
                 ),
               ),
+              onSubmitted: onSearch,
             ),
           ),
         ),
@@ -46,7 +50,9 @@ class CustomSearchBar extends StatelessWidget {
           child: Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              border: Border.all(color: Theme.of(context).colorScheme.primary.withOpacity(0.06)),
+              border: Border.all(
+                  color:
+                      Theme.of(context).colorScheme.primary.withOpacity(0.06)),
               color: Theme.of(context).colorScheme.primary.withOpacity(0.05),
               borderRadius: BorderRadius.circular(12),
             ),

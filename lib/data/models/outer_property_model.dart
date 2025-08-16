@@ -24,7 +24,9 @@ class OuterPropertyModel {
       id: json['id'],
       rooms: json['rooms'],
       bathrooms: json['bathrooms'],
-      price: (json['price'] as num).toDouble(),
+      price: json['price'] is! String
+          ? (json['price'] as num).toDouble()
+          : double.parse(json['price']),
       area: (json['area'] as num).toDouble(),
       firstImage: json['firstImage'],
       location:

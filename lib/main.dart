@@ -3,9 +3,10 @@ import 'package:dio/dio.dart';
 import 'package:easyrent/core/app/notifications/notificationsApi.dart';
 import 'package:easyrent/core/constants/colors.dart';
 import 'package:easyrent/core/services/api/dio_consumer.dart';
-import 'package:easyrent/data/repos/propertiesRepo.dart';
+import 'package:easyrent/data/repos/properties_repo.dart';
 import 'package:easyrent/data/repos/user_repo.dart';
 import 'package:easyrent/presentation/views/property_homepage/controller/propertiy_controller.dart';
+import 'package:easyrent/presentation/views/property_homepage/controller/subscription_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -29,7 +30,9 @@ var debug = Logger(
   errorMethodCount: 3,
   printEmojis: true,
 ));
+
 SharedPreferences? userPref;
+
 bool isOffline = !Get.find<AppController>().isOffline.value;
 final userDio = Userrepo(DioConsumer(Dio()));
 final propertyDio = PropertiesRepo(DioConsumer(Dio()));
@@ -48,6 +51,7 @@ void main() async {
       // systemNavigationBarColor: blue,
     ),
   );
+
   // the payment Card gyroscope 3D shi
   await Motion.instance.initialize();
   Motion.instance.setUpdateInterval(60.fps);
@@ -58,7 +62,8 @@ void main() async {
     builder: (context, child) {
       Get.put(AppController());
       Get.put(PropertiesController());
-      debug.d("application Started !!");
+      Get.put(SubscriptionController());
+      debug.d("application Started0!!");
       return ThemeProvider(
         duration: const Duration(milliseconds: 700),
         initTheme: isDarkTheme
@@ -74,6 +79,7 @@ void main() async {
                       .copyWith(primary: primaryColor),
                 ),
         builder: (_, theme) {
+          
           return GetMaterialApp(
             onInit: () {},
             debugShowCheckedModeBanner: false,
@@ -99,6 +105,9 @@ void main() async {
   ));
 }
 
+//////////////////! use this package for animtations
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! flutter_animate: ^4.5.2 
+///!!!!!!!!!!!!flutter_custom_carousel: ^0.1.0+1
 /*
 !design architecture
 
@@ -160,9 +169,7 @@ UI triggers an event (e.g., LoadProperties)
 GetXController receives the event and calls the repository
 Repository makes API call through DioConsumer
 API response is converted to model objects
-BLoC emits new state with the data
 UI rebuilds with the new state
-
 -----------------
 !GetX :
 * Localization
@@ -183,3 +190,25 @@ https://images.unsplash.com/photo-1505015920881-0f83c2f7c95e?q=80&w=1974&auto=fo
 https://images.unsplash.com/photo-1556020685-ae41abfc9365?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D
 https://images.unsplash.com/photo-1516455590571-18256e5bb9ff?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D
 */
+
+
+
+
+/*!SECTION
+
+
+
+*/
+
+
+
+
+
+//TODO
+//! (1)  Search And Filtering 
+//! (2)  Agent Details By Id 
+//! (3)  Notificationsب
+//! (4)  Profile Image Error
+//! (5)  Upgrade from User to Agent.
+//! (6)  AGENT ROLE ( upload,delete,edit,myProperties) 
+//! (7)  icon for the application.

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:dartz/dartz.dart';
 import 'package:easyrent/core/services/api/end_points.dart';
+import 'package:easyrent/data/models/plan_model.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
@@ -16,9 +17,7 @@ import 'package:easyrent/main.dart';
 import 'package:easyrent/presentation/navigation/navigator.dart';
 import 'package:easyrent/presentation/views/auth/views/verification_code_page.dart';
 // import 'package:dio/dio.dart' hide MultipartFile;
-import 'package:dio/src/multipart_file.dart';
 import 'package:dio/dio.dart' as dio;
-import 'package:get/get_connect/http/src/multipart/multipart_file.dart' as getx;
 
 class Userrepo {
   Userrepo(this.api);
@@ -79,8 +78,6 @@ class Userrepo {
           ApiKey.password: password,
           ApiKey.userName: userName,
           ApiKey.pointsDto: latLang,
-          "token":
-              "eqqB3fMARmZEA3c8Qm2iri:APA91bG0VJ7TN6zIPBXO_4nNANeU2YSVKUXMVvuOHUG1y6bBLmJDEoLXv-IHJN2AZyDcRLmVKQS7VXlCGvRxQtW7I3MHelgo9IMdxZ2sxu5K9eaAEs_YWow"
         },
       );
       if (response.statusCode == 201 || response.statusCode == 200) {
@@ -178,7 +175,7 @@ class Userrepo {
     deleteToken();
     showSnackbarWithContext("We're Going to miss You ", context);
     AppSession().user = null;
-    Get.offNamed("/login");
+    Get.offAll("/login");
   }
 
 //!----------------------Upload User Image------------------------->
@@ -314,6 +311,25 @@ class Userrepo {
       return Left(e.errorModel.message);
     }
   }
+
+//!----------------------- Subscription Plans ---------------------------------->
+
+  Future<List<SubscriptionPlan>> getSubscriptionPlan() async {
+    final response = await api.get(EndPoints.getSubscriptions);
+    return List<SubscriptionPlan>.from(
+        response.data.map((plan) => SubscriptionPlan.fromJson(plan)));
+  }
+
+  Future<dynamic> goToStripePage(int planId) async {
+    PaymentRequest model = PaymentRequest(planId: planId.toString());
+    final response = await api.post(EndPoints.goToStripe, data: model.toJson());
+    debug.d(response.data['url']);
+    return response.data['url'];
+  }
+
+  // Future<dynamic> orderSubsctiption() async{
+  //   final resposne=await api.
+  // }
 }
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
@@ -404,6 +420,11 @@ Future<void> deleteToken() async {
   final prefs = await SharedPreferences.getInstance();
   await prefs.remove('token');
   debug.i("Token Deleted ");
+}
+
+Future<void> setSubscribeSuccess() async {
+  final prefs = await SharedPreferences.getInstance();
+  await prefs.setBool('isSuccess', true);
 }
 
 Future<Map<String, dynamic>> _loadJson(String fileName) async {

@@ -1,4 +1,3 @@
-import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -6,9 +5,9 @@ import 'package:easyrent/core/constants/utils/textStyles.dart';
 import 'package:easyrent/data/models/outer_property_model.dart';
 import 'package:easyrent/presentation/views/property_homepage/views/seeall.dart';
 import 'package:easyrent/presentation/views/property_homepage/widgets/filterChips.dart';
-import 'package:easyrent/presentation/views/property_homepage/widgets/searchbar.dart';
 import 'package:easyrent/presentation/views/property_homepage/widgets/property_card_big.dart';
 import 'package:easyrent/presentation/views/property_homepage/widgets/property_card_smoll.dart';
+import 'package:easyrent/presentation/views/property_homepage/widgets/searchbar.dart';
 
 class FeedPage extends StatelessWidget {
   const FeedPage({
@@ -23,7 +22,9 @@ class FeedPage extends StatelessWidget {
       children: [
         Padding(
           padding: EdgeInsets.symmetric(vertical: 10.r),
-          child: const CustomSearchBar(),
+          child: CustomSearchBar(
+            onSearch: (v) {},
+          ),
         ),
         Padding(
           padding: EdgeInsets.symmetric(vertical: 10.r),
@@ -54,7 +55,7 @@ class FeedPage extends StatelessWidget {
           height: 320.h,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
-            itemCount: 3,
+            itemCount: properties.length,
             itemBuilder: (context, index) {
               final property = properties[index];
 
@@ -70,7 +71,7 @@ class FeedPage extends StatelessWidget {
               );
             },
           ),
-          //! swiper 
+          //! swiper
           // child: Swiper(
           //   itemCount: 4,
           //   autoplay: true,
@@ -90,7 +91,8 @@ class FeedPage extends StatelessWidget {
           //     );
           //   },
           // ),
-        ), SizedBox(
+        ),
+        SizedBox(
           height: 5.h,
         ),
         const PropertyFilterChips(),

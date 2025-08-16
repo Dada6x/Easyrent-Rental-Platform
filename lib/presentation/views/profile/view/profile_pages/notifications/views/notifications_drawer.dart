@@ -1,6 +1,7 @@
-import 'package:easyrent/core/constants/utils/divider.dart';
+import 'package:easyrent/core/constants/assets.dart';
+import 'package:easyrent/core/constants/colors.dart';
+import 'package:easyrent/core/constants/svgColorReplacer.dart';
 import 'package:easyrent/core/constants/utils/textStyles.dart';
-import 'package:easyrent/presentation/views/profile/view/profile_pages/notifications/widgets/notification_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -16,31 +17,56 @@ class NotificationsView extends StatelessWidget {
         width: 300.w,
         height: double.infinity,
         child: Scaffold(
-          appBar: AppBar(
-            leading: IconButton(
-                onPressed: () {
-                  Get.back();
-                },
-                icon:  Icon(Icons.arrow_back_ios_new,size: 20.r,)),
-            centerTitle: true,
-            title: Text(
-              "Notifications ",
-              style: AppTextStyles.h18regular.copyWith(color: Theme.of(context).colorScheme.primary),
+            appBar: AppBar(
+              leading: IconButton(
+                  onPressed: () {
+                    Get.back();
+                  },
+                  icon: Icon(
+                    Icons.arrow_back_ios_new,
+                    size: 20.r,
+                  )),
+              centerTitle: true,
             ),
-          ),
-          body: Padding(
-            padding: EdgeInsets.all(5.0.r),
-            child: const Column(
-              children: [
-                CustomDivider(),
-                NotificationWidget(),
-                NotificationWidget(),
-                NotificationWidget(),
-                NotificationWidget(),
-              ],
+            body: Center(
+              child: Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center, // Add this
+                  children: [
+                    const ThemedSvgReplacer(
+                      assetPath: reading,
+                      themeColor: blue,
+                      height: 300,
+                      width: 250,
+                    ),
+                    SizedBox(height: 10.h),
+                    Text(
+                      "Your inbox is currently empty.",
+                      style: AppTextStyles.h18semi,
+                      textAlign: TextAlign.center, // Add this
+                    ),
+                    const Text(
+                      "We’ll notify you when new\nmessages arrive.",
+                      textAlign: TextAlign.center, // Add this
+                    ),
+                  ],
+                ),
+              ),
+            )
+            //  Padding(
+            //   padding: EdgeInsets.all(5.0.r),
+            //   child: const Column(
+            //     children: [
+            //       CustomDivider(),
+            //       NotificationWidget(),
+            //       NotificationWidget(),
+            //       NotificationWidget(),
+            //       NotificationWidget(),
+            //     ],
+            //   ),
+            // ),
             ),
-          ),
-        ),
       ),
     );
   }

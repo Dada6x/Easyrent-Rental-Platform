@@ -1,4 +1,3 @@
-
 import 'location_model.dart';
 
 class PropertyModel {
@@ -15,7 +14,7 @@ class PropertyModel {
   int? id;
   String? title;
   String? description;
-  int? price;
+  double? price;
   Location? location;
   bool? isForRent;
   String? state;
@@ -79,7 +78,12 @@ class PropertyModel {
     id = json['id'];
     title = json['title'];
     description = json['description'];
-    price = json['price'];
+    price = json['price'] != null
+        ? (json['price'] is int
+            ? (json['price'] as int).toDouble()
+            : json['price'] as double)
+        : 0.0;
+
     location =
         json['location'] != null ? Location.fromJson(json['location']) : null;
     isForRent = json['isForRent'];
@@ -97,11 +101,9 @@ class PropertyModel {
         ? PriorityScoreEntity.fromJson(json['priorityScoreEntity'])
         : null;
 
-    // 🔧 Fix: Safely convert List<dynamic> to List<String>
     propertyImages =
         (json['propertyImages'] as List?)?.map((e) => e.toString()).toList();
 
-    // 🔧 Fix: Safely convert List<dynamic> to List<Map<String, String>>
     panoramaImages = (json['panoramaImages'] as List?)
         ?.map((e) => Map<String, String>.from(e as Map))
         .toList();

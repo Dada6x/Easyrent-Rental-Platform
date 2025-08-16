@@ -8,9 +8,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:local_auth/local_auth.dart';
 import 'package:motion/motion.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:local_auth/local_auth.dart';
 
 class PaymentMethod extends StatelessWidget {
   const PaymentMethod({super.key});

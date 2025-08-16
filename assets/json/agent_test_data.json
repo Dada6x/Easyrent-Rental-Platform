@@ -1,0 +1,14 @@
+[
+  {
+    "id": 1,
+    "name": "John Doe",
+    "photo": "https://randomuser.me/api/portraits/men/32.jpg",
+    "rating": 4.5
+  },
+  {
+    "id": 2,
+    "name": "Jane Smith",
+    "photo": "https://randomuser.me/api/portraits/men/38.jpg",
+    "rating": 4.7
+  }
+]

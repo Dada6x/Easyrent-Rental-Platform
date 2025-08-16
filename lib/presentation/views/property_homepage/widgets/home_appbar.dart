@@ -2,13 +2,12 @@ import 'package:easyrent/core/constants/assets.dart';
 import 'package:easyrent/core/constants/colors.dart';
 import 'package:easyrent/core/constants/utils/textStyles.dart';
 import 'package:easyrent/data/Session/app_session.dart';
-import 'package:easyrent/main.dart';
-import 'package:easyrent/presentation/navigation/navigator.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:skeletonizer/skeletonizer.dart';
+// import 'package:badges/badges.dart' as badges;
 
 AppBar homePageAppbar() {
   return AppBar(
@@ -29,7 +28,8 @@ AppBar homePageAppbar() {
               child: AppSession().user?.profileImage != null
                   ? FancyShimmerImage(
                       boxFit: BoxFit.cover,
-                      imageUrl: "http://192.168.1.4:3000/user/images/${AppSession().user!.profileImage}",
+                      imageUrl:
+                          "http://192.168.1.4:3000/user/images/${AppSession().user!.profileImage}",
                       errorWidget: const Icon(Icons.error))
                   : Image.asset(
                       width: 56.w,
@@ -68,17 +68,11 @@ AppBar homePageAppbar() {
         )
       ],
     ),
-    actions: [
-      const SizedBox(
+    actions: const [
+      SizedBox(
         width: 3,
       ),
-      IconButton(
-          onPressed: () {
-            HomeScreenNavigator.scaffoldKey.currentState?.openEndDrawer();
-          },
-          icon: Icon(Icons.notifications,
-              size: 30.r,
-              color: Color(userPref?.getInt('primaryColor') ?? blue.value))),
+      // NotificationsButton()
     ],
   );
 }
@@ -93,3 +87,25 @@ String getGreeting() {
     return "Good Evening! 🌙".tr;
   }
 }
+
+// class NotificationsButton extends StatelessWidget {
+//   const NotificationsButton({super.key});
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return badges.Badge(
+//       position: badges.BadgePosition.topEnd(end: 1),
+//       showBadge: true,
+//       ignorePointer: false,
+//       onTap: () {},
+//       badgeContent: const Text(""),
+//       child: IconButton(
+//           onPressed: () {
+//             HomeScreenNavigator.scaffoldKey.currentState?.openEndDrawer();
+//           },
+//           icon: Icon(Icons.notifications,
+//               size: 30.r,
+//               color: Color(userPref?.getInt('primaryColor') ?? blue.value))),
+//     );
+//   }
+// }

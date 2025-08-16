@@ -1,4 +1,5 @@
 import 'package:bounce/bounce.dart';
+import 'package:easyrent/core/services/api/end_points.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -65,7 +66,7 @@ class PropertyCardBig extends StatelessWidget {
                           height: 340.h,
                           width: 250.w,
                           boxFit: BoxFit.cover,
-                          imageUrl: "http://192.168.1.4:3000/property/images/$imagePath",
+                          imageUrl: EndPoints.imageUrl(imagePath),
                           errorWidget: const ErrorLoadingWidget()),
                       //! Gradient Overlay
                       Positioned.fill(

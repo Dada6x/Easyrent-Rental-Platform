@@ -1,5 +1,4 @@
 import 'package:easyrent/data/models/outer_property_model.dart';
-import 'package:easyrent/data/models/propertyModel.dart';
 
 class FavoritePropertyModel {
   int? favoriteId;

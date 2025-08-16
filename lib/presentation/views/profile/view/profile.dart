@@ -32,7 +32,7 @@ import 'package:easyrent/presentation/views/profile/view/profile_pages/security/
 import 'package:easyrent/presentation/views/profile/view/profile_pages/theme/theme_page.dart';
 import 'package:easyrent/presentation/views/profile/widgets/custome_list_tile.dart';
 import 'package:easyrent/presentation/views/profile/widgets/dialog/logout_dialog.dart';
-import 'package:easyrent/presentation/views/profile/widgets/profileappbar.dart';
+import 'package:easyrent/presentation/views/profile/widgets/profile_appbar.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -348,6 +348,7 @@ class _ProfileState extends State<Profile> {
                   size: 29.sp,
                 ),
                 destination_widget: const Ai_ChatBot()),
+
             const CustomDivider(),
             //! LogOut
             customListRedTile(

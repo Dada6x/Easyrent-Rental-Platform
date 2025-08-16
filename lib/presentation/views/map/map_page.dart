@@ -1,5 +1,6 @@
 import 'package:bounce/bounce.dart';
 import 'package:card_swiper/card_swiper.dart';
+import 'package:easyrent/core/constants/utils/rawSnackBar.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -28,7 +29,7 @@ class MapPage extends StatefulWidget {
 class _MapPageState extends State<MapPage> {
   final MapController _mapController = MapController();
   bool _isSwiperVisible = true;
-  bool _isLocating = false;
+  final bool _isLocating = false;
 
   @override
   void initState() {
@@ -114,7 +115,6 @@ class _MapPageState extends State<MapPage> {
                 });
               }
             },
-// const apiKey = "YOUR-API-KEY";
             child: FlutterMap(
               mapController: _mapController,
               options: MapOptions(

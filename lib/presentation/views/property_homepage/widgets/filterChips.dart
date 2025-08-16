@@ -38,7 +38,8 @@ class _PropertyFilterChipsState extends State<PropertyFilterChips> {
                 label: Text(filters[index], style: AppTextStyles.h14regular),
                 selected: isSelected,
                 selectedColor: Theme.of(context).colorScheme.primary,
-                backgroundColor: Theme.of(context).colorScheme.primary.withOpacity(0.05),
+                backgroundColor:
+                    Theme.of(context).colorScheme.primary.withOpacity(0.05),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20.r),
                     side: BorderSide(

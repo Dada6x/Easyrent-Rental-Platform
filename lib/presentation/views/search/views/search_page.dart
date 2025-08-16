@@ -1,134 +1,175 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:easyrent/core/constants/utils/textStyles.dart';
+import 'package:get/get.dart';
+import 'package:iconify_flutter_plus/iconify_flutter_plus.dart';
+import 'package:iconify_flutter_plus/icons/material_symbols.dart';
+import 'package:iconify_flutter_plus/icons/mdi.dart';
+import 'package:easyrent/core/constants/colors.dart';
+import 'package:easyrent/core/constants/utils/pages/error_page.dart';
 import 'package:easyrent/presentation/views/property_homepage/widgets/filterChips.dart';
 import 'package:easyrent/presentation/views/property_homepage/widgets/searchbar.dart';
-import 'package:easyrent/presentation/views/search/widgets/property_widget_search_card.dart';
+import 'package:easyrent/presentation/views/search/controller/search_controller.dart';
+import 'package:easyrent/presentation/views/search/widgets/agent_feed.dart';
 import 'package:easyrent/presentation/views/search/widgets/search_appbar.dart';
+import 'package:easyrent/presentation/views/search/widgets/search_feed.dart';
 
-class Search extends StatefulWidget {
+class Search extends StatelessWidget {
   const Search({super.key});
 
   @override
-  State<Search> createState() => _SearchState();
-}
-
-
-class _SearchState extends State<Search> {
-  final ScrollController _scrollController = ScrollController();
-  List<int> propertyList = List.generate(9, (index) => index);
-  bool isLoadingMore = false;
-
-  @override
-  void initState() {
-    super.initState();
-    _scrollController.addListener(_scrollListener);
-  }
-
-  void _scrollListener() {
-    if (_scrollController.position.pixels >=
-            _scrollController.position.maxScrollExtent - 200 &&
-        !isLoadingMore) {
-      _loadMoreData();
-    }
-  }
-
-  Future<void> _loadMoreData() async {
-    setState(() => isLoadingMore = true);
-    await Future.delayed(const Duration(seconds: 2)); // simulate network delay
-
-    final nextItems = List.generate(6, (index) => propertyList.length + index);
-    setState(() {
-      propertyList.addAll(nextItems);
-      isLoadingMore = false;
-    });
-  }
-
-  @override
-  void dispose() {
-    _scrollController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final searchController = Get.put(Search_Controller());
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       appBar: searchAppbar(context),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: CustomScrollView(
-          controller: _scrollController,
-          slivers: [
-            const SliverToBoxAdapter(child: CustomSearchBar()),
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 3.w),
-                child: const PropertyFilterChips(),
-              ),
-            ),
-            SliverToBoxAdapter(
-              child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 6.h),
-                child: Text(
-                  "Found ${propertyList.length} Properties",
-                  style: AppTextStyles.h20semi,
+        padding: EdgeInsets.all(12.r),
+        child: Obx(() {
+          final isPropertyMode =
+              searchController.searchMode.value == SearchMode.properties;
+          return CustomScrollView(
+            keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+            slivers: [
+              //! search textfield
+              SliverToBoxAdapter(
+                child: CustomSearchBar(
+                  onSearch: (query) => searchController.search(query),
                 ),
               ),
-            ),
-            SliverList(
-              delegate: SliverChildBuilderDelegate(
-                (context, index) {
-                  return const PropertyWidgetSearchCard(
-                    id: 1,
-                    title: 'Lucky Lake Apartments',
-                    location: 'Tokyo, Japan',
-                    imagePath:
-                        "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-                    price: 5000,
-                    rating: 4.3,
-                  );
-                },
-                childCount: propertyList.length,
-              ),
-            ),
-            if (isLoadingMore)
-              const SliverToBoxAdapter(
+              //! toggle chips
+              SliverToBoxAdapter(
                 child: Padding(
-                  padding: EdgeInsets.all(16),
-                  child: Center(child: CircularProgressIndicator()),
+                  padding: EdgeInsets.symmetric(vertical: 8.h),
+                  child: Center(
+                    child: Container(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 20.w, vertical: 5.h),
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                          width: 1,
+                          color: Theme.of(context)
+                              .colorScheme
+                              .primary
+                              .withOpacity(0.1),
+                        ),
+                        borderRadius: BorderRadius.circular(12.r),
+                      ),
+                      child: Wrap(
+                        children: [
+                          ChoiceChip(
+                            avatar: Iconify(
+                              MaterialSymbols.real_estate_agent_rounded,
+                              color: searchController.searchMode.value ==
+                                      SearchMode.agents
+                                  ? white
+                                  : blue,
+                            ),
+                            side: BorderSide.none,
+                            showCheckmark: false,
+                            label: const Text(' Agents '),
+                            selected: searchController.searchMode.value ==
+                                SearchMode.agents,
+                            selectedColor:
+                                Theme.of(context).colorScheme.primary,
+                            labelStyle: TextStyle(
+                              color: searchController.searchMode.value ==
+                                      SearchMode.agents
+                                  ? white
+                                  : (Get.isDarkMode ? white : black),
+                            ),
+                            onSelected: (selected) {
+                              if (selected) {
+                                searchController
+                                    .setSearchMode(SearchMode.agents);
+                              }
+                            },
+                          ),
+                          ChoiceChip(
+                            avatar: Iconify(
+                              Mdi.house_group,
+                              color: searchController.searchMode.value ==
+                                      SearchMode.properties
+                                  ? white
+                                  : blue,
+                            ),
+                            side: BorderSide.none,
+                            showCheckmark: false,
+                            label: const Text('Properties'),
+                            selected: searchController.searchMode.value ==
+                                SearchMode.properties,
+                            selectedColor:
+                                Theme.of(context).colorScheme.primary,
+                            labelStyle: TextStyle(
+                              color: searchController.searchMode.value ==
+                                      SearchMode.properties
+                                  ? white
+                                  : (Get.isDarkMode ? white : black),
+                            ),
+                            onSelected: (selected) {
+                              if (selected) {
+                                searchController
+                                    .setSearchMode(SearchMode.properties);
+                              }
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                 ),
               ),
-          ],
-        ),
+              //! filter chips (for properties only)
+              if (isPropertyMode && searchController.propertyList.isNotEmpty)
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding:
+                        EdgeInsets.symmetric(vertical: 10.h, horizontal: 3.w),
+                    child: const PropertyFilterChips(),
+                  ),
+                ),
+              //$ content BODY
+              Obx(() {
+//! Loading
+                if (searchController.isLoading.value) {
+                  return const SliverFillRemaining(
+                    child: Center(child: CircularProgressIndicator()),
+                  );
+                }
+// //! Properties
+//                 if (searchController.propertyList.isEmpty) {
+//                   return const SliverFillRemaining(
+//                     // hasScrollBody: false,
+//                     child: Center(child: noDataPage()),
+//                   );
+//                 }
+// //! AGENT
+//                 if (searchController.agentList.isEmpty) {
+//                   return const SliverFillRemaining(
+//                     child: Center(child: noDataPage()),
+//                   );
+//                 }
+//! error
+                if (searchController.hasError.value) {
+                  return const SliverFillRemaining(
+                    // fillOverscroll: true,
+                    // hasScrollBody: true,
+                    child: Center(child: ErrorPage()),
+                  );
+                }
+//$ found data
+                final isPropertyMode =
+                    searchController.searchMode.value == SearchMode.properties;
+                if (isPropertyMode) {
+                  return PropertySearchFeed(
+                      propertyList: searchController.propertyList.toList());
+                } else {
+                  return AgentSearchFeed(agentList: searchController.agentList);
+                }
+              }),
+            ],
+          );
+        }),
       ),
     );
   }
 }
-
-    //  FutureBuilder<List<PropertyModel>>(
-    //                       future: _propertiesFuture,
-    //                       builder: (context, snapshot) {
-    //                         if (snapshot.connectionState ==
-    //                             ConnectionState.waiting) {
-    //                           return SizedBox(
-    //                             height:
-    //                                 MediaQuery.of(context).size.height * 0.9.h,
-    //                             child: const Center(
-    //                                 child: CircularProgressIndicator()),
-    //                           );
-    //                         }
-    //                         if (snapshot.hasError) {
-    //                           return const Center(child: ErrorPage());
-    //                         }
-    //                         if (!snapshot.hasData ||
-    //                             snapshot.data == null ||
-    //                             snapshot.data!.isEmpty) {
-    //                           return const Center(
-    //                               child: Text("No properties found."));
-    //                         }
-    //                         final properties = snapshot.data!;
-    //                         return FeedPage(
-    //                           properties: properties,
-    //                         );
-    //                       },
-    //                     ),

@@ -10,7 +10,7 @@ import 'package:motion/motion.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
 void showDeleteAccountDialog(BuildContext context) {
-  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
   bool showPasswordField = false;
   bool isLoading = false;
   bool isError = false;
@@ -52,7 +52,7 @@ void showDeleteAccountDialog(BuildContext context) {
                       if (showPasswordField) ...[
                         SizedBox(height: 20.h),
                         TextField(
-                          controller: _passwordController,
+                          controller: passwordController,
                           obscureText: true,
                           decoration: InputDecoration(
                             labelText: "Enter your password",
@@ -98,7 +98,7 @@ void showDeleteAccountDialog(BuildContext context) {
                                 });
 
                                 final result = await userDio.deleteAccount(
-                                  password: _passwordController.text.trim(),
+                                  password: passwordController.text.trim(),
                                 );
 
                                 setState(() => isLoading = false);

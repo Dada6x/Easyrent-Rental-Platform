@@ -33,7 +33,7 @@ class User {
       userType: json['userType'],
       isAccountVerified: json['isAccountVerified'],
       profileImage: json['profileImage'], // could be null
-      planId: json['planId'], // could be null
+      planId: json['plan']['id'], // could be null
     );
   }
 }

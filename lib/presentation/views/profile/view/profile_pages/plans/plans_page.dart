@@ -1,8 +1,22 @@
+import 'dart:async';
+
 import 'package:bounce/bounce.dart';
+import 'package:easyrent/core/constants/utils/enums.dart';
+import 'package:easyrent/core/constants/utils/pages/error_page.dart';
+import 'package:easyrent/core/constants/utils/pages/nodata_page.dart';
+import 'package:easyrent/data/Session/app_session.dart';
+import 'package:easyrent/data/repos/user_repo.dart';
+import 'package:easyrent/main.dart';
+import 'package:easyrent/presentation/views/property_homepage/controller/subscription_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_chat_ui/flutter_chat_ui.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:motion/motion.dart';
+import 'package:app_links/app_links.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+// import 'package:uni_links/uni_links.dart';
 
 class SubscriptionPage extends StatefulWidget {
   const SubscriptionPage({super.key});
@@ -12,7 +26,53 @@ class SubscriptionPage extends StatefulWidget {
 }
 
 class _SubscriptionPageState extends State<SubscriptionPage> {
+  final AppLinks _appLinks = AppLinks();
+  StreamSubscription<Uri?>? _deepLinkSubscription;
+  bool _hasHandledPaymentLink = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _initDeepLinks();
+  }
+
+  Future<void> _initDeepLinks() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    // Cold start
+    final initialLink = prefs.getBool('canRedirect') ?? true
+        ? await _appLinks.getInitialAppLink()
+        : null;
+    if (initialLink != null) {
+      _handleDeepLink(initialLink);
+    }
+
+    _deepLinkSubscription = _appLinks.uriLinkStream.listen(_handleDeepLink);
+  }
+
+  void _handleDeepLink(Uri uri) async {
+    if (uri.scheme == 'myapp' &&
+        uri.host == 'payment' &&
+        !_hasHandledPaymentLink) {
+      _hasHandledPaymentLink = true; // only handle once
+      final status = uri.queryParameters['status'];
+      if (status == 'success' && mounted) {
+        Navigator.pushNamedAndRemoveUntil(
+            context, '/homepage', (Route<dynamic> r) => false);
+        final prefs = await SharedPreferences.getInstance();
+        prefs.setBool('canRedirect', false);
+      }
+    }
+  }
+
+  @override
+  void dispose() {
+    _deepLinkSubscription?.cancel();
+    super.dispose();
+  }
+
   String currentPlan = "Platinum Plan";
+  bool _pendingLogout = false;
 
   void _subscribeToPlan(String plan) {
     setState(() {
@@ -20,71 +80,61 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
     });
   }
 
+  final SubscriptionController planController = Get.find();
+  int userPlanId = AppSession().user!.planId!;
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.all(16.w),
-      child: ListView(
-        children: [
-          _buildPlanCard(
-            context,
-            title: "Basic Plan",
-            duration: "LifeTime",
-            description: "Free",
-            price: "",
-            icon: Icons.lock_open_rounded,
-            color: const Color(0xFFE0F2F1),
-            isCurrent: currentPlan == "Basic Plan",
-            showButton: false,
-          ),
-          _buildPlanCard(
-            context,
-            title: "Trial Plan",
-            duration: "1 day",
-            description: "Trial",
-            price: "Free",
-            icon: Icons.timer_outlined,
-            color: const Color(0xFFFFF8E1),
-            isCurrent: currentPlan == "Trial Plan",
-          ),
-          _buildPlanCard(
-            context,
-            title: "Platinum Plan",
-            duration: "3 months",
-            description:
-                "Publish unlimited properties with priority placement in search results 💎",
-            price: "\$9",
-            icon: Icons.workspace_premium_outlined,
-            color: const Color(0xFFE8EAF6),
-            isCurrent: currentPlan == "Platinum Plan",
-          ),
-          _buildPlanCard(
-            context,
-            title: "VIP Plan",
-            duration: "10 months",
-            description:
-                "Premium features & enhanced property visibility for 10 months 🏅",
-            price: "\$29",
-            icon: Icons.verified_user_outlined,
-            color: const Color(0xFFFCE4EC),
-            isCurrent: currentPlan == "VIP Plan",
-          ),
-        ],
-      ),
+    planController.getSubscriptionPlans();
+    return RefreshIndicator(
+      onRefresh: () => planController.getSubscriptionPlans(),
+      child: Padding(
+          padding: EdgeInsets.all(16.w),
+          child: Obx(() {
+            if (planController.isLoading.value) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            if (planController.hasError.value) {
+              return const ErrorPage();
+            }
+            if (planController.plans.isEmpty) {
+              return const noDataPage();
+            }
+            return ListView.builder(
+                itemCount: planController.plans.length,
+                itemBuilder: (context, index) {
+                  final plan = planController.plans[index];
+                  return _buildPlanCard(context,
+                      planId: plan.id,
+                      isCurrent: plan.id == userPlanId,
+                      title: plan.planType.value,
+                      duration: plan.planDuration,
+                      description: plan.description,
+                      isLoading: planController.isOrderLoading,
+                      price: plan.planPrice.toString(),
+                      icon: plan.planType.icon, onTap: () {
+                    debug.d("yezzir skiii ghhhhhhhh");
+                    planController.orderSubscription(plan.id, context);
+                  }, color: Colors.white);
+                });
+          }
+              )),
     );
   }
 
-  Widget _buildPlanCard(
-    BuildContext context, {
-    required String title,
-    required String duration,
-    required String description,
-    required String price,
-    required IconData icon,
-    required Color color,
-    bool isCurrent = false,
-    bool showButton = true,
-  }) {
+  Widget _buildPlanCard(BuildContext context,
+      {required int planId,
+      required String title,
+      required String duration,
+      required String description,
+      required String price,
+      required IconData icon,
+      required Color color,
+      required RxBool isLoading,
+      bool isCurrent = false,
+      bool showButton = true,
+      required VoidCallback onTap}) {
     final Color primaryColor = Theme.of(context).colorScheme.primary;
 
     void showPlanDialog() {
@@ -118,10 +168,10 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                   SizedBox(height: 12.h),
                   Text(description, style: TextStyle(color: Colors.grey[700])),
                   SizedBox(height: 12.h),
-                  const Text("Features:",
-                      style: TextStyle(fontWeight: FontWeight.bold)),
-                  SizedBox(height: 6.h),
-                  _buildFeatureList(title),
+                  // const Text("Features:",
+                  //     style: TextStyle(fontWeight: FontWeight.bold)),
+                  // SizedBox(height: 6.h),
+                  // _buildFeatureList(title),
                 ],
               ),
             ),
@@ -130,13 +180,32 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                 onPressed: () => Get.back(),
                 child: const Text("Cancel"),
               ),
-              ElevatedButton(
-                onPressed: () {
-                  Get.back();
-                  _subscribeToPlan(title);
-                },
-                child: const Text("Subscribe"),
-              )
+              SizedBox(
+                width: 14.w,
+              ),
+              Obx(() => ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(6)),
+                    backgroundColor:
+                        isLoading.value ? Colors.grey : primaryColor,
+                  ),
+                  onPressed: isLoading.value ? () {} : onTap,
+                  child: isLoading.value
+                      ? Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 26.sp),
+                          child: SizedBox(
+                              width: 20.w,
+                              height: 20.h,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 1.sp,
+                                color: secondary,
+                              )),
+                        )
+                      : const Text(
+                          "Subscribe",
+                          style: TextStyle(color: secondary),
+                        )))
             ],
           ),
         ),

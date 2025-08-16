@@ -4,7 +4,6 @@ import 'package:easyrent/core/constants/utils/textStyles.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:motion/motion.dart';
 
 class AgentWidget extends StatelessWidget {
   final String agentName;
