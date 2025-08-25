@@ -37,12 +37,14 @@ dependencies:
   dartz: ^0.10.1
   dio: ^5.8.0+1
   fancy_shimmer_image: ^2.0.3
-  firebase_messaging: ^14.0.0
+  firebase_messaging: ^16.0.0
+  firebase_core: ^4.0.0
   flutter:
     sdk: flutter
   flutter_animate: ^4.5.2
   flutter_chat_ui: any
   flutter_local_notifications: ^19.0.0
+  cloud_firestore: ^6.0.0
   flutter_map: ^7.0.2
   flutter_screenutil: ^5.9.3
   flutter_svg: ^2.0.17

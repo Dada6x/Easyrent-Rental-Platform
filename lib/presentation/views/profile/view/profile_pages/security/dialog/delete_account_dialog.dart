@@ -70,17 +70,20 @@ void showDeleteAccountDialog(BuildContext context) {
                             child: TextButton(
                               onPressed: () => Navigator.pop(context),
                               style: TextButton.styleFrom(
-                                backgroundColor: Theme.of(context)
-                                    .colorScheme
-                                    .primary
-                                    .withOpacity(0.2),
+                                // backgroundColor: Theme.of(context)
+                                //     .colorScheme
+                                //     .primary
+                                //     .withOpacity(0.2),
                                 shape: RoundedRectangleBorder(
+                                  side: BorderSide(
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .primary),
                                   borderRadius: BorderRadius.circular(8.r),
                                 ),
                               ),
                               child: Text('Cancel',
-                                  style: AppTextStyles.h16medium
-                                      .copyWith(color: white)),
+                                  style: AppTextStyles.h16medium),
                             ),
                           ),
                           SizedBox(width: 12.w),

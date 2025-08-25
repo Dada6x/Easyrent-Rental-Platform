@@ -73,10 +73,8 @@ void showUpdateUsernameDialog(BuildContext context) {
                           child: TextButton(
                             onPressed: () => Navigator.pop(context),
                             style: TextButton.styleFrom(
-                              backgroundColor: Theme.of(context)
-                                  .colorScheme
-                                  .primary
-                                  .withOpacity(0.2),
+                              backgroundColor:
+                                  Theme.of(context).colorScheme.primary,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(8.r),
                               ),
@@ -117,7 +115,7 @@ void showUpdateUsernameDialog(BuildContext context) {
                                   await Future.delayed(
                                       const Duration(milliseconds: 300));
                                   userDio.getProfile();
-                                  
+
                                   //! i think i need to Make an USer Controller so the values Update
                                 },
                               );

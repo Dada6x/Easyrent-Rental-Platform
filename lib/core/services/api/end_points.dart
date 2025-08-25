@@ -52,6 +52,7 @@ class ApiKey {
   static String userName = "username";
   static String phone = "phone";
   static String code = "code";
+  static String fcm_token ="token";
 
   static String pointsDto = "pointsDto";
 

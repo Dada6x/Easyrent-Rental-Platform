@@ -65,8 +65,7 @@ void showChangePasswordDialog(BuildContext context) {
                             style: TextButton.styleFrom(
                               backgroundColor: Theme.of(context)
                                   .colorScheme
-                                  .primary
-                                  .withOpacity(0.2),
+                                  .primary,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(8.r),
                               ),

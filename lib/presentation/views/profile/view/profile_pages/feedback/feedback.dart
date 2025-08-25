@@ -48,7 +48,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
                         "Please share any suggestions, bugs, or ideas you have to improve the app ♡.",
                         style: AppTextStyles.h18medium,
                       ),
-                      SizedBox(height: 18.h),
+                      SizedBox(height: 10.h),
                       Text("Your Feedback", style: AppTextStyles.h12light),
                       SizedBox(height: 8.h),
                       TextField(
@@ -66,7 +66,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
                                       Theme.of(context).colorScheme.primary)),
                         ),
                       ),
-                      SizedBox(height: 20.h),
+                      SizedBox(height: 15.h),
                       Text(" Your Email ", style: AppTextStyles.h12light),
                       SizedBox(height: 8.h),
                       TextField(

@@ -77,6 +77,8 @@ class Userrepo {
           ApiKey.password: password,
           ApiKey.userName: userName,
           ApiKey.pointsDto: latLang,
+          // ApiKey.fcm_token:fcm_token,
+          //TODO for notifications and FCM tokens we kinda need HMS for huwaei devices
         },
       );
       if (response.statusCode == 201 || response.statusCode == 200) {

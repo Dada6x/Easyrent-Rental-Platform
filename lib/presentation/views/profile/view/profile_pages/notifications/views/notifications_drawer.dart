@@ -1,9 +1,11 @@
-import 'package:easyrent/core/constants/assets.dart';
-import 'package:easyrent/core/constants/colors.dart';
-import 'package:easyrent/core/constants/svgColorReplacer.dart';
-import 'package:easyrent/core/constants/utils/textStyles.dart';
+import 'package:easyrent/core/constants/utils/divider.dart';
+import 'package:easyrent/data/Session/app_session.dart';
+import 'package:easyrent/presentation/views/profile/view/profile_pages/notifications/views/zero_notifications.dart';
+import 'package:easyrent/presentation/views/profile/view/profile_pages/notifications/widgets/notification_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:get/get.dart';
 
 class NotificationsView extends StatelessWidget {
@@ -17,56 +19,54 @@ class NotificationsView extends StatelessWidget {
         width: 300.w,
         height: double.infinity,
         child: Scaffold(
-            appBar: AppBar(
-              leading: IconButton(
-                  onPressed: () {
-                    Get.back();
-                  },
-                  icon: Icon(
-                    Icons.arrow_back_ios_new,
-                    size: 20.r,
-                  )),
-              centerTitle: true,
-            ),
-            body: Center(
-              child: Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center, // Add this
-                  children: [
-                    const ThemedSvgReplacer(
-                      assetPath: reading,
-                      themeColor: blue,
-                      height: 300,
-                      width: 250,
-                    ),
-                    SizedBox(height: 10.h),
-                    Text(
-                      "Your inbox is currently empty.",
-                      style: AppTextStyles.h18semi,
-                      textAlign: TextAlign.center, // Add this
-                    ),
-                    const Text(
-                      "We’ll notify you when new\nmessages arrive.",
-                      textAlign: TextAlign.center, // Add this
-                    ),
-                  ],
-                ),
+          appBar: AppBar(
+            leading: IconButton(
+              onPressed: () => Get.back(),
+              icon: Icon(
+                Icons.arrow_back_ios_new,
+                size: 20.r,
               ),
-            )
-            //  Padding(
-            //   padding: EdgeInsets.all(5.0.r),
-            //   child: const Column(
-            //     children: [
-            //       CustomDivider(),
-            //       NotificationWidget(),
-            //       NotificationWidget(),
-            //       NotificationWidget(),
-            //       NotificationWidget(),
-            //     ],
-            //   ),
-            // ),
             ),
+            centerTitle: true,
+          ),
+          body: StreamBuilder<QuerySnapshot>(
+            //! this is the Firebase shit 
+            stream: FirebaseFirestore.instance
+                .collection("notifications")
+                .where("userId", isEqualTo: AppSession().user?.id ?? 0)
+                //! id 
+                .orderBy("timestamp", descending: true)
+                .snapshots(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(child: CircularProgressIndicator());
+              }
+              if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                return const ZeroNotifications();
+              }
+              final docs = snapshot.data!.docs;
+
+              return Padding(
+                padding: EdgeInsets.all(5.0.r),
+                child: ListView.separated(
+                  physics: const BouncingScrollPhysics(),
+                  itemCount: docs.length,
+                  separatorBuilder: (context, index) => CustomDivider(),
+                  itemBuilder: (context, index) {
+                    final notification =
+                        docs[index].data() as Map<String, dynamic>;
+
+                    return NotificationWidget(
+                      title: notification["title"] ?? "No title",
+                      body: notification["body"] ?? "No content",
+                      time: notification["time"] ?? "",
+                    );
+                  },
+                ),
+              );
+            },
+          ),
+        ),
       ),
     );
   }
