@@ -19,7 +19,7 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ^3.5.3
+  sdk: ">=3.5.0 <4.0.0"
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -47,16 +47,18 @@ dependencies:
   flutter_screenutil: ^5.9.3
   flutter_svg: ^2.0.17
   geocoding: ^2.0.4
-  geolocator: ^11.0.0
+  # geolocator: ^11.0.0
   get: ^4.7.2
   iconify_flutter_plus: ^1.0.4
   # https://andronasef.github.io/iconify_flutter/
-  image_picker: ^1.1.2
+  # image_picker: ^1.1.2
   internet_connection_checker_plus: ^2.6.0
   latlong2: ^0.9.1
   like_button: ^2.0.5
   local_auth: ^2.3.0
   logger: ^2.5.0
+  # geolocator: ^11.0.0
+  image_picker: ^1.1.2
   lottie: any
   motion: ^2.0.1
   panorama_viewer: ^2.0.4
@@ -67,6 +69,7 @@ dependencies:
   skeletonizer: ^1.4.3
   url_launcher: any
   webview_flutter: ^4.2.2
+  app_links: ^3.1.0   
 dev_dependencies:
   flutter_lints: ^4.0.0
   flutter_test:

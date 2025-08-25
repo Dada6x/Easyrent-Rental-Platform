@@ -95,8 +95,7 @@ class LoginPage extends StatelessWidget {
     if (phone.isEmpty ||
         password.isEmpty ||
         _numberController.text.length != 10 ||
-        password.length < 6 ||
-        !RegExp(r'[!@#\$&*~]').hasMatch(password)) {
+        password.length < 6) {
       Get.snackbar(
         "Missing Information",
         "All fields are required",

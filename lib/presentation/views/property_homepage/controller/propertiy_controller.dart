@@ -26,8 +26,10 @@ class PropertiesController extends GetxController {
       hasError(false);
       final result = await propertyDio.getProperties();
       properties.assignAll(result);
-    } catch (e) {
+    } catch (e, s) {
       hasError(true);
+      printError(info: e.toString());
+      printError(info: s.toString());
     } finally {
       isLoading(false);
     }
@@ -47,10 +49,7 @@ class PropertiesController extends GetxController {
     }
   }
 
-
-  
-
   Future<void> refreshProperties() async {
-    // await fetchProperties();
+    await fetchProperties();
   }
 }

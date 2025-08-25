@@ -1,3 +1,4 @@
+import 'package:easyrent/core/services/api/end_points.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -58,7 +59,7 @@ class PropertyCardSmall extends StatelessWidget {
                       child: FancyShimmerImage(
                         height: 140.h,
                         boxFit: BoxFit.cover,
-                        imageUrl: "http://192.168.1.4:3000/property/images/$image",
+                        imageUrl:EndPoints.imageUrl(image) ,
                         errorWidget: const ErrorLoadingWidget(),
                       ),
                     ),

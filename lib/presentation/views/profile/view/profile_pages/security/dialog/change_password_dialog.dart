@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:easyrent/core/app/controller/app_controller.dart';
 import 'package:easyrent/core/constants/colors.dart';
-import 'package:easyrent/core/constants/utils/rawSnackBar.dart';
 import 'package:easyrent/core/constants/utils/textStyles.dart';
 import 'package:easyrent/main.dart';
 

@@ -32,11 +32,11 @@ AppBar searchAppbar(BuildContext context) {
         Text("Search for Your Ideal Home".tr, style: AppTextStyles.h16medium),
       ],
     ),
-    actions: [
-      Padding(
-        padding: EdgeInsets.all(8.0.r),
-        child: const NotificationsButton(),
-      )
+    actions: const [
+      // Padding(
+      //   padding: EdgeInsets.all(8.0.r),
+      //   child: const NotificationsButton(),
+      // )
     ],
   );
 }

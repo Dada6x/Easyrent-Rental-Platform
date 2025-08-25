@@ -1,10 +1,12 @@
-import 'package:animated_text_kit/animated_text_kit.dart';
+// import 'package:animated_text_kit/animated_text_kit.dart';
+import 'dart:async';
+
+import 'package:app_links/app_links.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:easyrent/core/constants/assets.dart';
 import 'package:easyrent/core/constants/colors.dart';
-import 'package:easyrent/core/constants/utils/textStyles.dart';
 import 'package:easyrent/main.dart';
 import 'package:easyrent/presentation/navigation/introduction_screen.dart';
 
@@ -19,11 +21,11 @@ class _SplashScreenState extends State<SplashScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
+  
 
   @override
   void initState() {
     super.initState();
-
     _controller = AnimationController(
       duration: const Duration(milliseconds: 1500),
       vsync: this,
@@ -56,6 +58,7 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   void dispose() {
     _controller.dispose();
+
     super.dispose();
   }
 
@@ -82,19 +85,19 @@ class _SplashScreenState extends State<SplashScreen>
                 children: [
                   Lottie.asset(easyRent),
                   const SizedBox(height: 20),
-                  AnimatedTextKit(
-                    totalRepeatCount: 1,
-                    isRepeatingAnimation: false,
-                    animatedTexts: [
-                      TyperAnimatedText(
-                        "Your Getaway To Perfect Homes",
-                        textStyle: AppTextStyles.h24medium.copyWith(
-                          color: white,
-                        ),
-                        speed: const Duration(milliseconds: 50),
-                      ),
-                    ],
-                  ),
+                  // AnimatedTextKit(
+                  //   totalRepeatCount: 1,
+                  //   isRepeatingAnimation: false,
+                  //   animatedTexts: [
+                  //     TyperAnimatedText(
+                  //       "Your Getaway To Perfect Homes",
+                  //       textStyle: AppTextStyles.h24medium.copyWith(
+                  //         color: white,
+                  //       ),
+                  //       speed: const Duration(milliseconds: 50),
+                  //     ),
+                  //   ],
+                  // ),
                 ],
               ),
             ),

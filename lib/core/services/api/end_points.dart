@@ -1,5 +1,7 @@
 class EndPoints {
-  static String baseUrl = "http://192.168.137.17:3000"; // i deleted / from here
+  static String baseUrl = "http://192.168.1.108:3000/";
+  static String imageUrl(String imagePath) =>
+      "${baseUrl}property/images/$imagePath";
   static String login = "/auth/login";
   // static String Logout = "auth/logout";
   static String me = "/auth/me";
@@ -24,6 +26,11 @@ class EndPoints {
 
   static String favourite = "/favorite";
   static String tokenTime = "/auth/tokenTime";
+  static String getSubscriptions = '/plans';
+  static String goToStripe = '/webhook';
+  static String stripeSuccess =
+      'myapp://payment?status=success&session_id={CHECKOUT_SESSION_ID}';
+  static String stripeCancel = 'myapp://payment?status=cancel';
   static String lightMapTile =
       "https://tile.tracestrack.com/topo__/{z}/{x}/{y}.webp?key=0a3d18b9249fb85601f81da60aa32a24";
   static String darkMapTile =
