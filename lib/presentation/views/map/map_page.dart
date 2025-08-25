@@ -5,7 +5,7 @@ import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:geolocator/geolocator.dart';
+// import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:iconify_flutter_plus/iconify_flutter_plus.dart';
 import 'package:iconify_flutter_plus/icons/mdi.dart';
@@ -29,12 +29,12 @@ class MapPage extends StatefulWidget {
 class _MapPageState extends State<MapPage> {
   final MapController _mapController = MapController();
   bool _isSwiperVisible = true;
-  bool _isLocating = false;
+  final bool _isLocating = false;
 
   @override
   void initState() {
     super.initState();
-    _goToMyLocation;
+    // _goToMyLocation;
   }
 
   @override
@@ -52,50 +52,44 @@ class _MapPageState extends State<MapPage> {
 
   LatLng? _userLocation;
 
-  Future<void> _goToMyLocation() async {
-    setState(() => _isLocating = true);
+  // Future<void> _goToMyLocation() async {
+  //   setState(() => _isLocating = true);
 
-    bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      setState(() => _isLocating = false);
-      showSnackbarWithContext(
-          "Location Disabled  Please enable location services", context,
-          isTop: true);
-      return;
-    }
+  //   bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+  //   if (!serviceEnabled) {
+  //     setState(() => _isLocating = false);
+  //     Get.snackbar("Location Disabled", "Please enable location services.");
+  //     return;
+  //   }
 
-    LocationPermission permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        setState(() => _isLocating = false);
-        showSnackbarWithContext(
-            "Permission Denied Location permission is required.", context,
-            isTop: true);
-        return;
-      }
-    }
+  //   LocationPermission permission = await Geolocator.checkPermission();
+  //   if (permission == LocationPermission.denied) {
+  //     permission = await Geolocator.requestPermission();
+  //     if (permission == LocationPermission.denied) {
+  //       setState(() => _isLocating = false);
+  //       Get.snackbar("Permission Denied", "Location permission is required.");
+  //       return;
+  //     }
+  //   }
 
-    if (permission == LocationPermission.deniedForever) {
-      setState(() => _isLocating = false);
-      showSnackbarWithContext(
-          "Permission Permanently Denied  Enable location from settings.",
-          context,
-          isTop: true);
-      return;
-    }
+  //   if (permission == LocationPermission.deniedForever) {
+  //     setState(() => _isLocating = false);
+  //     Get.snackbar(
+  //         "Permission Permanently Denied", "Enable location from settings.");
+  //     return;
+  //   }
 
-    final position = await Geolocator.getCurrentPosition(
-      desiredAccuracy: LocationAccuracy.high,
-    );
+  //   final position = await Geolocator.getCurrentPosition(
+  //     desiredAccuracy: LocationAccuracy.high,
+  //   );
 
-    setState(() {
-      _userLocation = LatLng(position.latitude, position.longitude);
-      _isLocating = false;
-    });
+  //   setState(() {
+  //     _userLocation = LatLng(position.latitude, position.longitude);
+  //     _isLocating = false;
+  //   });
 
-    _mapController.move(_userLocation!, 15);
-  }
+  //   _mapController.move(_userLocation!, 15);
+  // }
 
   final controller = Get.find<PropertiesController>();
 
@@ -279,7 +273,8 @@ class _MapPageState extends State<MapPage> {
             right: 20.w,
             child: FloatingActionButton(
               backgroundColor: Theme.of(context).colorScheme.primary,
-              onPressed: _goToMyLocation,
+              // onPressed: _goToMyLocation,
+              onPressed: () {},
               child: const Icon(
                 Icons.my_location,
               ),

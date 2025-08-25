@@ -22,7 +22,9 @@ class FeedPage extends StatelessWidget {
       children: [
         Padding(
           padding: EdgeInsets.symmetric(vertical: 10.r),
-          child: CustomSearchBar(onSearch: (v){},),
+          child: CustomSearchBar(
+            onSearch: (v) {},
+          ),
         ),
         Padding(
           padding: EdgeInsets.symmetric(vertical: 10.r),
@@ -53,7 +55,7 @@ class FeedPage extends StatelessWidget {
           height: 320.h,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
-            itemCount: 3,
+            itemCount: properties.length,
             itemBuilder: (context, index) {
               final property = properties[index];
 

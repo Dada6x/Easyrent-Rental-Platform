@@ -6,8 +6,7 @@ import 'package:easyrent/core/services/api/dio_consumer.dart';
 import 'package:easyrent/data/repos/properties_repo.dart';
 import 'package:easyrent/data/repos/user_repo.dart';
 import 'package:easyrent/presentation/views/property_homepage/controller/propertiy_controller.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:easyrent/presentation/views/property_homepage/controller/subscription_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -69,6 +68,7 @@ void main() async {
     builder: (context, child) {
       Get.put(AppController());
       Get.put(PropertiesController());
+      Get.put(SubscriptionController());
       debug.d("application Started0!!");
       return ThemeProvider(
         duration: const Duration(milliseconds: 700),
@@ -85,6 +85,7 @@ void main() async {
                       .copyWith(primary: primaryColor),
                 ),
         builder: (_, theme) {
+          
           return GetMaterialApp(
             onInit: () {},
             debugShowCheckedModeBanner: false,

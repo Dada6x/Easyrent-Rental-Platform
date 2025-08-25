@@ -50,4 +50,3 @@ class ErrorPage extends StatelessWidget {
     );
   }
 }
-

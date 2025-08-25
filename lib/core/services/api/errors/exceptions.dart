@@ -42,6 +42,7 @@ void handleDioException(DioException e) {
         case 409: // Conflict
         case 422: // Unprocessable Entity
         case 504: // Gateway Timeout / Server Exception
+        case 500:
           showErrorSnackbar(message);
           throw ServerException(errorModel: ErrorModel.fromJson(data ?? {}));
         default:

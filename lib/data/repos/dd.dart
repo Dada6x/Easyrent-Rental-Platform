@@ -32,13 +32,13 @@
 //         ),
 //       );
 
-//       if (response.statusCode == 200) {
-//         return Right("Image uploaded successfully");
-//       } else {
-//         return Left("Upload failed with status: ${response.statusCode}");
-//       }
-//     } catch (e) {
-//       return Left("Upload error: $e");
-//     }
-//   }
-// }
+      if (response.statusCode == 200) {
+        return const Right("Image uploaded successfully");
+      } else {
+        return Left("Upload failed with status: ${response.statusCode}");
+      }
+    } catch (e) {
+      return Left("Upload error: $e");
+    }
+  }
+}
