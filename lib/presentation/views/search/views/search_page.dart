@@ -1,4 +1,7 @@
 import 'package:easyrent/core/constants/utils/pages/nodata_page.dart';
+import 'package:easyrent/data/models/agent_model.dart';
+import 'package:easyrent/data/models/location_model.dart';
+import 'package:easyrent/data/models/propertyModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -166,6 +169,72 @@ class Search extends StatelessWidget {
                 } else {
                   return AgentSearchFeed(agentList: searchController.agentList);
                 }
+
+                //! Mock Data
+                // final isPropertyMode =
+                //     searchController.searchMode.value == SearchMode.properties;
+
+                // if (isPropertyMode) {
+                //   // Example mock property list
+                //   final mockProperties = [
+                //     PropertyModel(
+                //       id: 1,
+                //       title: 'Luxury Apartment',
+                //       location: Location(
+                //         country: 'Syria',
+                //         governorate: 'Damascus',
+                //         city: 'Damascus',
+                //         quarter: 'Al-Midan',
+                //         street: 'Main Street',
+                //         lat: 33.5,
+                //         lon: 36.3,
+                //       ),
+                //       firstImage: 'https://via.placeholder.com/300',
+                //       price: 1500,
+                //       rooms: 3,
+                //       bathrooms: 2,
+                //     ),
+                //     PropertyModel(
+                //       id: 2,
+                //       title: 'Cozy House',
+                //       location: Location(
+                //         country: 'Syria',
+                //         governorate: 'Aleppo',
+                //         city: 'Aleppo',
+                //         quarter: 'Salahuddin',
+                //         street: 'Second Street',
+                //         lat: 36.2,
+                //         lon: 37.1,
+                //       ),
+                //       firstImage: 'https://via.placeholder.com/300',
+                //       price: 1200,
+                //       rooms: 2,
+                //       bathrooms: 1,
+                //     ),
+                //   ];
+
+                //   return PropertySearchFeed(propertyList: mockProperties);
+                // } else {
+                //   // Example mock agent list
+                //   final mockAgents = [
+                //     Agent(
+                //       id: 1,
+                //       name: 'John Doe',
+                //       photo: 'https://via.placeholder.com/150',
+                //       rating: 4.5,
+                //       properties: [],
+                //     ),
+                //     Agent(
+                //       id: 2,
+                //       name: 'Jane Smith',
+                //       photo: 'https://via.placeholder.com/150',
+                //       rating: 4.2,
+                //       properties: [],
+                //     ),
+                //   ];
+
+                //   return AgentSearchFeed(agentList: mockAgents);
+                // }
               }),
             ],
           );
@@ -174,3 +243,122 @@ class Search extends StatelessWidget {
     );
   }
 }
+
+
+
+
+//#################
+// import 'package:easyrent/presentation/views/search/controller/search_controller.dart';
+// import 'package:flutter/material.dart';
+// import 'package:get/get.dart';
+
+// class Search extends StatelessWidget {
+//   Search({super.key});
+//   final   searchController = Get.put(Search_Controller());
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(title: Text('Search Demo')),
+//       body: Padding(
+//         padding: const EdgeInsets.all(12.0),
+//         child: Obx(() {
+//           final isPropertyMode =
+//               searchController.searchMode.value == SearchMode.properties;
+//           return Column(
+//             children: [
+//               // Search bar
+//               TextField(
+//                 onChanged: (value) => searchController.search(value),
+//                 decoration: InputDecoration(
+//                   hintText: 'Search...',
+//                   border: OutlineInputBorder(),
+//                   suffixIcon: Icon(Icons.search),
+//                 ),
+//               ),
+//               SizedBox(height: 10),
+//               // Mode toggle
+//               Row(
+//                 mainAxisAlignment: MainAxisAlignment.center,
+//                 children: [
+//                   ChoiceChip(
+//                     label: Text('Agents'),
+//                     selected:
+//                         searchController.searchMode.value == SearchMode.agents,
+//                     onSelected: (selected) {
+//                       if (selected)
+//                         searchController.setSearchMode(SearchMode.agents);
+//                     },
+//                   ),
+//                   SizedBox(width: 10),
+//                   ChoiceChip(
+//                     label: Text('Properties'),
+//                     selected: searchController.searchMode.value ==
+//                         SearchMode.properties,
+//                     onSelected: (selected) {
+//                       if (selected)
+//                         searchController.setSearchMode(SearchMode.properties);
+//                     },
+//                   ),
+//                 ],
+//               ),
+//               SizedBox(height: 10),
+//               // Results
+//               Expanded(
+//                 child: Obx(() {
+//                   if (searchController.isLoading.value) {
+//                     return Center(child: CircularProgressIndicator());
+//                   }
+//                   if (searchController.hasError.value) {
+//                     return Center(
+//                         child: Text(
+//                             'Error: ${searchController.errorMessage.value}'));
+//                   }
+//                   final agentList = searchController.agentList;
+//                   final propertyList = searchController.propertyList;
+
+//                   if (isPropertyMode) {
+//                     if (propertyList.isEmpty)
+//                       return Center(child: Text('No properties found.'));
+//                     return ListView.builder(
+//                       itemCount: propertyList.length,
+//                       itemBuilder: (_, index) {
+//                         final p = propertyList[index];
+//                         return ListTile(
+//                           leading: p.firstImage != null
+//                               ? Image.network(p.firstImage!,
+//                                   width: 50, height: 50, fit: BoxFit.cover)
+//                               : Icon(Icons.home, size: 50),
+//                           title: Text(p.title ?? 'No Title'),
+//                           subtitle: Text(p.location?.street ?? ''),
+//                           trailing:
+//                               Text('\$${p.price?.toStringAsFixed(0) ?? '0'}'),
+//                         );
+//                       },
+//                     );
+//                   } else {
+//                     if (agentList.isEmpty)
+//                       return Center(child: Text('No agents found.'));
+//                     return ListView.builder(
+//                       itemCount: agentList.length,
+//                       itemBuilder: (_, index) {
+//                         final a = agentList[index];
+//                         return ListTile(
+//                           leading: Image.network(a.photo,
+//                               width: 50, height: 50, fit: BoxFit.cover),
+//                           title: Text(a.name),
+//                           subtitle: Text(
+//                               'Rating: ${a.rating} | Properties: ${a.properties.length}'),
+//                         );
+//                       },
+//                     );
+//                   }
+//                 }),
+//               ),
+//             ],
+//           );
+//         }),
+//       ),
+//     );
+//   }
+// }

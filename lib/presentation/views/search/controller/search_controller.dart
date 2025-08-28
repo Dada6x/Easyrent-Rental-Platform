@@ -64,3 +64,62 @@ class Search_Controller extends GetxController {
   }
 }
 
+
+//###################
+// import 'package:easyrent/data/models/agent_model.dart';
+// import 'package:easyrent/data/models/propertyModel.dart';
+// import 'package:easyrent/presentation/views/search/views/mockdata.dart';
+// import 'package:get/get.dart';
+
+
+// enum SearchMode { properties, agents }
+
+// class Search_Controller extends GetxController {
+//   var searchMode = SearchMode.properties.obs;
+
+//   var isLoading = false.obs;
+//   var hasError = false.obs;
+//   var errorMessage = ''.obs;
+
+//   var agentList = <Agent>[].obs;
+//   var propertyList = <PropertyModel>[].obs;
+
+//   Future<void> search(String query) async {
+//     isLoading.value = true;
+//     hasError.value = false;
+//     errorMessage.value = "";
+
+//     await Future.delayed(Duration(seconds: 1)); // simulate network delay
+
+//     try {
+//       if (searchMode.value == SearchMode.agents) {
+//         agentList.value = mockAgents
+//             .where((agent) => agent.name.toLowerCase().contains(query.toLowerCase()))
+//             .toList();
+//       } else {
+//         propertyList.value = mockProperties
+//             .where((property) => property.title?.toLowerCase().contains(query.toLowerCase()) ?? false)
+//             .toList();
+//       }
+//     } catch (e) {
+//       hasError.value = true;
+//       errorMessage.value = e.toString();
+//     } finally {
+//       isLoading.value = false;
+//     }
+//   }
+
+//   void setSearchMode(SearchMode mode) {
+//     if (searchMode.value != mode) {
+//       searchMode.value = mode;
+//       clear();
+//     }
+//   }
+
+//   void clear() {
+//     agentList.clear();
+//     propertyList.clear();
+//     hasError.value = false;
+//     errorMessage.value = '';
+//   }
+// }

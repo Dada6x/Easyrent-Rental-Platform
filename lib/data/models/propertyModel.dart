@@ -61,7 +61,7 @@ class PropertyModel {
     this.viewCount,
     this.priorityScore,
     this.createdAt,
-    this.updatedAt,
+    this.updatedAt, required String firstImage,
   });
 
   PropertyModel.fromJson(Map<String, dynamic> json) {
