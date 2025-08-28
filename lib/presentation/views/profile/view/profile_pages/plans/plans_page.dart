@@ -1,11 +1,9 @@
 import 'dart:async';
-
 import 'package:bounce/bounce.dart';
 import 'package:easyrent/core/constants/utils/enums.dart';
 import 'package:easyrent/core/constants/utils/pages/error_page.dart';
 import 'package:easyrent/core/constants/utils/pages/nodata_page.dart';
 import 'package:easyrent/data/Session/app_session.dart';
-import 'package:easyrent/data/repos/user_repo.dart';
 import 'package:easyrent/main.dart';
 import 'package:easyrent/presentation/views/property_homepage/controller/subscription_controller.dart';
 import 'package:flutter/material.dart';
@@ -41,7 +39,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
 
     // Cold start
     final initialLink = prefs.getBool('canRedirect') ?? true
-        ? await _appLinks.getInitialAppLink()
+        ? await _appLinks.getInitialLink()
         : null;
     if (initialLink != null) {
       _handleDeepLink(initialLink);

@@ -1,13 +1,10 @@
-import 'package:easyrent/core/constants/assets.dart';
-import 'package:easyrent/core/constants/colors.dart';
-import 'package:easyrent/core/constants/svgColorReplacer.dart';
-import 'package:easyrent/core/constants/utils/textStyles.dart';
-import 'package:easyrent/main.dart';
-import 'package:easyrent/presentation/navigation/navigator.dart';
-import 'package:easyrent/presentation/views/property_homepage/widgets/home_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:easyrent/core/constants/assets.dart';
+import 'package:easyrent/core/constants/svgColorReplacer.dart';
+import 'package:easyrent/core/constants/utils/textStyles.dart';
+import 'package:easyrent/presentation/views/property_homepage/widgets/home_appbar.dart';
 
 AppBar searchAppbar(BuildContext context) {
   return AppBar(
@@ -32,11 +29,11 @@ AppBar searchAppbar(BuildContext context) {
         Text("Search for Your Ideal Home".tr, style: AppTextStyles.h16medium),
       ],
     ),
-    actions: const [
-      // Padding(
-      //   padding: EdgeInsets.all(8.0.r),
-      //   child: const NotificationsButton(),
-      // )
+    actions: [
+      Padding(
+        padding: EdgeInsets.all(8.0.r),
+        child: const NotificationsButton(),
+      )
     ],
   );
 }

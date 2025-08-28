@@ -1,5 +1,6 @@
 import 'package:easyrent/core/constants/utils/textStyles.dart';
 import 'package:easyrent/presentation/views/profile/widgets/theme_language_buttons%20widget.dart';
+import 'package:easyrent/presentation/views/property_homepage/widgets/home_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -20,7 +21,7 @@ AppBar profileAppbar() {
         child: const Row(
           children: [
             ThemeToggleButton(),
-            // NotificationsButton(),
+            NotificationsButton(),
           ],
         ),
       )

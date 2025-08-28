@@ -30,37 +30,34 @@ environment:
 dependencies:
   animated_text_kit: ^4.2.3
   animated_theme_switcher: ^2.0.10
+  app_links: ^6.4.1
   badges: ^3.1.2
   bounce: ^1.0.2
   card_swiper: ^3.0.1
+  cloud_firestore: ^6.0.0
   cupertino_icons: ^1.0.8
   dartz: ^0.10.1
   dio: ^5.8.0+1
   fancy_shimmer_image: ^2.0.3
-  firebase_messaging: ^16.0.0
   firebase_core: ^4.0.0
+  firebase_messaging: ^16.0.0
   flutter:
     sdk: flutter
   flutter_animate: ^4.5.2
   flutter_chat_ui: any
   flutter_local_notifications: ^19.0.0
-  cloud_firestore: ^6.0.0
   flutter_map: ^7.0.2
   flutter_screenutil: ^5.9.3
   flutter_svg: ^2.0.17
   geocoding: ^2.0.4
-  # geolocator: ^11.0.0
   get: ^4.7.2
   iconify_flutter_plus: ^1.0.4
-  # https://andronasef.github.io/iconify_flutter/
-  # image_picker: ^1.1.2
+  image_picker: ^1.1.2
   internet_connection_checker_plus: ^2.6.0
   latlong2: ^0.9.1
   like_button: ^2.0.5
   local_auth: ^2.3.0
   logger: ^2.5.0
-  # geolocator: ^11.0.0
-  image_picker: ^1.1.2
   lottie: any
   motion: ^2.0.1
   panorama_viewer: ^2.0.4
@@ -71,7 +68,6 @@ dependencies:
   skeletonizer: ^1.4.3
   url_launcher: any
   webview_flutter: ^4.2.2
-  app_links: ^3.1.0   
 dev_dependencies:
   flutter_lints: ^4.0.0
   flutter_test:

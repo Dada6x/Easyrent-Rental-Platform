@@ -7,6 +7,8 @@ import 'package:easyrent/data/repos/properties_repo.dart';
 import 'package:easyrent/data/repos/user_repo.dart';
 import 'package:easyrent/presentation/views/property_homepage/controller/propertiy_controller.dart';
 import 'package:easyrent/presentation/views/property_homepage/controller/subscription_controller.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -41,6 +43,7 @@ var fcm_token;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 //! notifications
+ //! run on Emulator 
   // await Firebase.initializeApp();
   // String? fcm_token = await FirebaseMessaging.instance.getToken();
   debug.i("🔥 Device FCM Token: $fcm_token"); // this is FCM device token that i need to send to the backend.
@@ -206,7 +209,7 @@ https://images.unsplash.com/photo-1516455590571-18256e5bb9ff?q=80&w=2070&auto=fo
 //TODO
 //! (1)  Search And Filtering
 //! (2)  Agent Details By Id
-//! (3)  Notificationsب
+//! (3)  Notifications
 //! (4)  Profile Image Error
 //! (5)  Upgrade from User to Agent.
 //! (6)  AGENT ROLE ( upload,delete,edit,myProperties)

@@ -1,5 +1,5 @@
 class EndPoints {
-  static String baseUrl = "http://192.168.1.108:3000/";
+  static String baseUrl = "http://192.168.1.7:3000/";
   static String imageUrl(String imagePath) =>
       "${baseUrl}property/images/$imagePath";
   static String login = "/auth/login";
