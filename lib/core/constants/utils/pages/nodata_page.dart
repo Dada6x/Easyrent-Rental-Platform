@@ -25,7 +25,7 @@ class noDataPage extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 50),
               child: Text(
-                'No data',
+                'No Data (404)',
                 textAlign: TextAlign.center,
                 style: AppTextStyles.h16medium.copyWith(color: grey),
               ),

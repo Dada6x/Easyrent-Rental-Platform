@@ -39,7 +39,6 @@ class AgentSearchCard extends StatelessWidget {
                 photo: "dwdawd",
                 rating: 15,
                 properties: []);
-            // = await propertyDio.getAgentsByIdJson(id);
             Get.to(
               AgentPage(
                 agent: agent,

@@ -1,12 +1,10 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:easyrent/core/constants/utils/divider.dart';
-import 'package:easyrent/data/Session/app_session.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:easyrent/core/constants/utils/divider.dart';
+// import 'package:easyrent/data/Session/app_session.dart';
 import 'package:easyrent/presentation/views/profile/view/profile_pages/notifications/views/zero_notifications.dart';
-import 'package:easyrent/presentation/views/profile/view/profile_pages/notifications/widgets/notification_widget.dart';
+// import 'package:easyrent/presentation/views/profile/view/profile_pages/notifications/widgets/notification_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-// import 'package:cloud_firestore/cloud_firestore.dart';
-
 import 'package:get/get.dart';
 
 class NotificationsView extends StatelessWidget {
@@ -20,22 +18,24 @@ class NotificationsView extends StatelessWidget {
         width: 300.w,
         height: double.infinity,
         child: Scaffold(
-          appBar: AppBar(
-            leading: IconButton(
-              onPressed: () => Get.back(),
-              icon: Icon(
-                Icons.arrow_back_ios_new,
-                size: 20.r,
+            appBar: AppBar(
+              leading: IconButton(
+                onPressed: () => Get.back(),
+                icon: Icon(
+                  Icons.arrow_back_ios_new,
+                  size: 20.r,
+                ),
               ),
+              centerTitle: true,
+              title: const Text("Notifications"),
             ),
-            centerTitle: true,
-          ),
-          body: StreamBuilder<QuerySnapshot>(
-            //! this is the Firebase shit
+            body: const ZeroNotifications()
+
+            /*
+          StreamBuilder<QuerySnapshot>(
             stream: FirebaseFirestore.instance
                 .collection("notifications")
                 .where("userId", isEqualTo: AppSession().user?.id ?? 0)
-                //! id
                 .orderBy("timestamp", descending: true)
                 .snapshots(),
             builder: (context, snapshot) {
@@ -45,6 +45,7 @@ class NotificationsView extends StatelessWidget {
               if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
                 return const ZeroNotifications();
               }
+
               final docs = snapshot.data!.docs;
 
               return Padding(
@@ -67,7 +68,8 @@ class NotificationsView extends StatelessWidget {
               );
             },
           ),
-        ),
+           */
+            ),
       ),
     );
   }

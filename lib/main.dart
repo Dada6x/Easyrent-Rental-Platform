@@ -9,8 +9,10 @@ import 'package:easyrent/presentation/views/property_homepage/controller/propert
 import 'package:easyrent/presentation/views/property_homepage/controller/subscription_controller.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
@@ -40,14 +42,42 @@ final userDio = Userrepo(DioConsumer(Dio()));
 final propertyDio = PropertiesRepo(DioConsumer(Dio()));
 var fcm_token;
 
+const androidInit = AndroidInitializationSettings('@mipmap/ic_launcher');
+const initSettings = InitializationSettings(android: androidInit);
+
+// Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+//   await Firebase.initializeApp();
+//   NotificationsService().showNotification(
+//     title: message.notification?.title,
+//     body: message.notification?.body,
+//   );
+// }
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-//! notifications
- //! run on Emulator 
+//$ ################# notifications
+  //! run on Emulator
   // await Firebase.initializeApp();
   // String? fcm_token = await FirebaseMessaging.instance.getToken();
-  debug.i("🔥 Device FCM Token: $fcm_token"); // this is FCM device token that i need to send to the backend.
-//!
+//! fireBase Permissions
+  // await FirebaseMessaging.instance.requestPermission(
+  //   alert: true,
+  //   badge: true,
+  //   sound: true,
+  // );
+
+  // FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  // debug.i(
+  //     "🔥 Device FCM Token: $fcm_token");
+
+//! Listening to the messaging
+  // FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+  //   NotificationsService().showNotification(
+  //     title: message.notification?.title,
+  //     body: message.notification?.body,
+  //   );
+  // });
+
   await SharedPreferences.getInstance();
   await NotificationsService().initNotification();
   userPref = await SharedPreferences.getInstance();
@@ -88,7 +118,6 @@ void main() async {
                       .copyWith(primary: primaryColor),
                 ),
         builder: (_, theme) {
-          
           return GetMaterialApp(
             onInit: () {},
             debugShowCheckedModeBanner: false,

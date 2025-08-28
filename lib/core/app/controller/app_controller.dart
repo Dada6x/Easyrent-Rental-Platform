@@ -10,7 +10,7 @@ import 'package:iconify_flutter_plus/iconify_flutter_plus.dart';
 import 'package:iconify_flutter_plus/icons/carbon.dart';
 import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 
-//! this controller manage three things theme , language , and internet connection
+//! this controller manage three things theme , language , and internet connection only 
 class AppController extends GetxController {
   RxBool isDarkMode = false.obs;
   RxBool isArabic = true.obs;

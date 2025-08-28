@@ -6,7 +6,7 @@ import 'package:easyrent/data/models/propertyModel.dart';
 enum SearchMode { properties, agents }
 
 class Search_Controller extends GetxController {
-  final dio = Dio(BaseOptions(baseUrl: 'http://192.168.137.17:3000'));
+  final dio = Dio(BaseOptions(baseUrl: "http://192.168.1.7:3000/"));
 
   var searchMode = SearchMode.properties.obs;
 
@@ -38,7 +38,8 @@ class Search_Controller extends GetxController {
         );
 
         final data = res.data as List;
-        propertyList.value = data.map((e) => PropertyModel.fromJson(e)).toList();
+        propertyList.value =
+            data.map((e) => PropertyModel.fromJson(e)).toList();
       }
     } catch (e) {
       hasError.value = true;
@@ -63,6 +64,3 @@ class Search_Controller extends GetxController {
   }
 }
 
-
-//! make him make new models instead of this shi i dont even mind 
-//! 

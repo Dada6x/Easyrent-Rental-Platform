@@ -1,3 +1,4 @@
+import 'package:easyrent/core/constants/utils/pages/nodata_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -136,18 +137,18 @@ class Search extends StatelessWidget {
                   );
                 }
 // //! Properties
-//                 if (searchController.propertyList.isEmpty) {
-//                   return const SliverFillRemaining(
-//                     // hasScrollBody: false,
-//                     child: Center(child: noDataPage()),
-//                   );
-//                 }
+                if (searchController.propertyList.isEmpty) {
+                  return const SliverFillRemaining(
+                    // hasScrollBody: false,
+                    child: Center(child: noDataPage()),
+                  );
+                }
 // //! AGENT
-//                 if (searchController.agentList.isEmpty) {
-//                   return const SliverFillRemaining(
-//                     child: Center(child: noDataPage()),
-//                   );
-//                 }
+                if (searchController.agentList.isEmpty) {
+                  return const SliverFillRemaining(
+                    child: Center(child: noDataPage()),
+                  );
+                }
 //! error
                 if (searchController.hasError.value) {
                   return const SliverFillRemaining(

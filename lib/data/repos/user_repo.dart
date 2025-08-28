@@ -211,7 +211,7 @@ class Userrepo {
     }
   }
 
-  // delete ImageProfile
+  //! delete ImageProfile
   Future<Either<String, void>> deleteImageProfile() async {
     try {
       final response = await api.post(
@@ -337,79 +337,7 @@ class Userrepo {
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 //$$$$$$$$$$$$$$$$$$//TODOD REMOVE THIS NONSCENSE :D $$$$$$$$$$$$$$$$$$$$$$$$$
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-// class Userrepo {
-//   Userrepo(this.api);
-//   final ApiConsumer api;
 
-// Future<Either<String, User>> loginUser({
-//   required String number,
-//   required String password,
-// }) async {
-//   try {
-//     final response = await _loadJson('login.json');
-//     final token = response['accessToken'];
-//     await saveToken(token);
-//     await userPref?.setBool('isLoggedIn', true);
-//     final profileResult = await getProfile();
-//     return profileResult.fold(
-//       (e) => const Left("Failed to load profile"),
-//       (_) {
-//         Get.off(() => const HomeScreenNavigator());
-//         return Right(AppSession().user!);
-//       },
-//     );
-//   } catch (e) {
-//     debug.e("Error: $e");
-//     showErrorSnackbar("Something went wrong.");
-//     return const Left("Login failed");
-//   }
-// }
-// Future<Either<String, String>> signUpUser({
-//   required String number,
-//   required String userName,
-//   required String password,
-//   required Map<String, double> latLang,
-// }) async {
-//   try {
-//     await _loadJson('login.json');
-//     return const Right("Signed up");
-//   } catch (e) {
-//     debug.e("Error: $e");
-//     showErrorSnackbar("Signup failed");
-//     return const Left("Signup failed");
-//   }
-// }
-// Future<Either<String, User>> verifyCode({required int code}) async {
-//   try {
-//     final response = await _loadJson('login.json');
-//     final token = response['accessToken'];
-//     await saveToken(token);
-//     userPref?.setBool('isLoggedIn', true);
-//     final profileResult = await getProfile();
-//     return profileResult.fold(
-//       (e) => const Left("Failed to load profile"),
-//       (_) => Right(AppSession().user!),
-//     );
-//   } catch (e) {
-//     debug.e("Error: $e");
-//     showErrorSnackbar("Verification failed");
-//     return const Left("Verification failed");
-//   }
-// }
-
-// Future<Either<String, String>> logoutUser() async {
-//   try {
-//     await _loadJson('login.json');
-//     userPref?.setBool('isLoggedIn', false);
-//     deleteToken();
-//     return const Right("Logged out");
-//   } catch (e) {
-//     debug.e("Error: $e");
-//     showErrorSnackbar("Logout failed");
-//     return const Left("Logout failed");
-//   }
-// }
-// }
 
 //@ helper funs ... so funny hehehe :D (help).
 Future<void> saveToken(String token) async {
