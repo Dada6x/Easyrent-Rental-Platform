@@ -1,20 +1,28 @@
 class EndPoints {
-  static String baseUrl = "http://192.168.1.7:3000/";
+  static String baseUrl = "https://83b08d2bbc5a.ngrok-free.app/";
+  // "http://localhost:3000";
   static String imageUrl(String imagePath) =>
       "${baseUrl}property/images/$imagePath";
   static String login = "/auth/login";
   // static String Logout = "auth/logout";
   static String me = "/auth/me";
   static String registerUser = "/user/register";
+  static const String uploadProperty = "/properties-on/";
+
   static String reset_forgetPassword = "/auth/reset";
   static String resetPasswordAfterReset(int code) => "/auth/reset/$code";
-
+  // static String deletemyPropertyByID(int id) => "http://192.168.137.242:3000/properties-on/$id";
   static String verifyCode(int id) => "/user/verify/$id";
   static String resendCode(int id) => "/user/resend/$id";
   static String getAllAgents = "/user/agency";
   static String getAgentDetalsById(int id) => "/user/agency/$id";
+
+  static String createProperty = "";
+  static String uploadMainImage(int id) => "/properties/upload-img/$id";
+  static String uploadGalleryImages(int id) =>
+      "/properties/upload-multiple-img/$id";
   static String changeFavoriteState(int id) => "/favorite/$id";
-  static String getAllProperties = "/property/all";
+  static String getAllProperties = "/properties/all";
   static String uploadProfileImage = "/user/upload-image";
   // static String getTopProperties = "/property/top/4";
   static String deleteProfileImage = "/user/remove-img";
@@ -42,7 +50,7 @@ class EndPoints {
   // static String openFreeTileDark =
   //     "https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png";
 
-  static String getPropertyById(int id) => "/property/$id";
+  static String getPropertyById(int id) => "/properties/$id";
 
   // static String getUserData(id) {
   //   return "ddwdwdwdwdwdwd/user/$id";
@@ -59,7 +67,7 @@ class ApiKey {
   static String userName = "username";
   static String phone = "phone";
   static String code = "code";
-  static String fcm_token ="token";
+  static String fcm_token = "token";
 
   static String pointsDto = "pointsDto";
 

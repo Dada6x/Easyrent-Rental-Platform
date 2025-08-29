@@ -1,3 +1,4 @@
+import 'package:easyrent/data/models/user_model.dart';
 import 'location_model.dart';
 
 class PropertyModel {
@@ -61,13 +62,25 @@ class PropertyModel {
     this.viewCount,
     this.priorityScore,
     this.createdAt,
-    this.updatedAt, required String firstImage,
+    this.updatedAt,
+    this.isFavorite,
+    this.voteValue,
+    this.firstImage,
+    this.priorityScoreRate,
+    this.acceptCount,
+    this.status,
+    this.user,
+    this.priorityScoreEntity,
   });
 
   PropertyModel.fromJson(Map<String, dynamic> json) {
     rooms = json['rooms'];
     bathrooms = json['bathrooms'];
-    area = json['area'] != null ? (json['area'] as num).toDouble() : null;
+    area = json['area'] != null
+        ? (json['area'] is String
+            ? double.tryParse(json['area']) ?? 0.0
+            : (json['area'] as num).toDouble())
+        : null;
     isFloor = json['isFloor'];
     floorNumber = json['floorNumber'];
     hasGarage = json['hasGarage'];
@@ -78,10 +91,11 @@ class PropertyModel {
     id = json['id'];
     title = json['title'];
     description = json['description'];
+
     price = json['price'] != null
-        ? (json['price'] is int
-            ? (json['price'] as int).toDouble()
-            : json['price'] as double)
+        ? (json['price'] is String
+            ? double.tryParse(json['price']) ?? 0.0
+            : (json['price'] as num).toDouble())
         : 0.0;
 
     location =
@@ -91,7 +105,7 @@ class PropertyModel {
     propertyImage = json['propertyImage'];
     isFavorite = json['isFavorite'];
     voteValue = json['voteValue'];
-    firstImage = json['firstImage'];
+    firstImage = json['firstImage'] ?? ''; // fallback if null
     priorityScoreRate = json['priorityScoreRate'];
     acceptCount = json['acceptCount'];
     status = json['status'];
@@ -132,20 +146,6 @@ class PriorityScoreEntity {
       adminsScoreRate: json['adminsScoreRate'],
       suitabilityScoreRate: json['suitabilityScoreRate'],
       voteScoreRate: json['voteScoreRate'],
-    );
-  }
-}
-
-class User {
-  int? id;
-  String? username;
-
-  User({this.id, this.username});
-
-  factory User.fromJson(Map<String, dynamic> json) {
-    return User(
-      id: json['id'],
-      username: json['username'],
     );
   }
 }

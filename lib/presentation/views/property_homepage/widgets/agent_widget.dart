@@ -1,25 +1,30 @@
 import 'package:easyrent/core/constants/colors.dart';
 import 'package:easyrent/core/constants/utils/error_loading_mssg.dart';
 import 'package:easyrent/core/constants/utils/textStyles.dart';
+import 'package:easyrent/presentation/views/agent/agent_page.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 class AgentWidget extends StatelessWidget {
   final String agentName;
   final String agentRole;
   final String agentImage;
+  final int agentId;
   const AgentWidget(
       {super.key,
       required this.agentName,
       required this.agentRole,
-      required this.agentImage});
+      required this.agentImage,
+      required this.agentId});
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
       onTap: () {
-        // showAgentInfoDialog(context, agentImage);
+        Get.to(() => AgentPage(agentId: agentId));
       },
       leading: CircleAvatar(
         radius: 23.sp,
@@ -28,7 +33,7 @@ class AgentWidget extends StatelessWidget {
             child: FancyShimmerImage(
                 boxFit: BoxFit.cover,
                 imageUrl: agentImage,
-                errorWidget: const ErrorLoadingWidget())),
+                errorWidget: ErrorLoadingWidget())),
       ),
       title: Text(
         agentName,
@@ -38,21 +43,10 @@ class AgentWidget extends StatelessWidget {
         agentRole,
         style: AppTextStyles.h14medium.copyWith(color: grey),
       ),
-      trailing: IntrinsicWidth(
+      trailing: const IntrinsicWidth(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            IconButton(
-              icon: Icon(Icons.chat,
-                  size: 25.r, color: Theme.of(context).colorScheme.primary),
-              onPressed: () {},
-            ),
-            IconButton(
-              icon: Icon(Icons.phone_enabled,
-                  size: 25.r, color: Theme.of(context).colorScheme.primary),
-              onPressed: () {},
-            ),
-          ],
+          children: [],
         ),
       ),
     );
@@ -106,7 +100,7 @@ class AgentWidget extends StatelessWidget {
 //   );
 // }
 
-//! two Choice buttons 
+//! two Choice buttons
 /*
 Row(
                   children: [

@@ -20,8 +20,9 @@ const easyRent = "assets/animations/EeasyRent.json";
 // const panorama3 = "assets/panorama/panoramaPartment3.jpg";
 //!-----------SVG ----------------------
 const svgAvatar = "assets/images/svg/undraw_young-man-avatar_wgbd.svg";
-const reading="assets/images/svg/reading.svg";
+const reading = "assets/images/svg/reading.svg";
 const notification = "assets/images/svg/notifications.svg";
+const AgentAvatar = "assets/images/svg/agentImage.svg";
 const intro1 = "assets/images/svg/property.svg";
 const error = "assets/images/svg/undraw_hot-air-balloon_6knx.svg";
 const intro2 = "assets/images/svg/interview.svg";

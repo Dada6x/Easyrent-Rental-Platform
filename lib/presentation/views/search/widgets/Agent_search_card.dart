@@ -33,17 +33,14 @@ class AgentSearchCard extends StatelessWidget {
         child: ListTile(
           onTap: () async {
             debug.w("get agent details by id : $id");
-            final agent = Agent(
-                id: 1,
-                name: "  Yahea DADA",
-                photo: "dwdawd",
-                rating: 15,
-                properties: []);
-            Get.to(
-              AgentPage(
-                agent: agent,
-              ),
-            );
+            // final agent = Agent(
+            //   phone: "+96532894",
+            //     id: 1,
+            //     name: "  Yahea DADA",
+            //     photo: "dwdawd",
+            //     rating: 15,
+            //     properties: []);
+            Get.to(() => const AgentPage(agentId: 2));
           },
           leading: CircleAvatar(
             radius: 35.4.sp,

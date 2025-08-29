@@ -32,7 +32,7 @@ class InviteFriendPage extends StatelessWidget {
               hint: "Share Now",
               function: () async {
                 const String shareText =
-                    'Check out this awesome app! Download it now:\nhttps://your-app-link.com';
+                    'Check out this awesome app! Download it now:\nhttps://github.com/Dada6x/easyrent/releases/download/wardtest/easyRent.apk';
                 await SharePlus.instance.share(ShareParams(text: shareText));
               },
             ),

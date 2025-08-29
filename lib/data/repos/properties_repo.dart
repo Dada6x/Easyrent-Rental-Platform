@@ -74,8 +74,9 @@ class PropertiesRepo {
         return PropertyModel.fromJson(response.data);
       }
       return PropertyModel.fromJson({});
-    } on ServerException catch (e) {
+    } on ServerException catch (e,s) {
       debug.e("Exception $e");
+      debug.e("Exception $s");
       return PropertyModel.fromJson({});
     }
   }

@@ -24,8 +24,8 @@ class Location {
       city: json['city'],
       quarter: json['quarter'],
       street: json['street'],
-      lat: json['lat'].toDouble(),
-      lon: json['lon'].toDouble(),
+      lat: json['lat']??0.0,
+      lon: json['lon']??0.0,
     );
   }
 }

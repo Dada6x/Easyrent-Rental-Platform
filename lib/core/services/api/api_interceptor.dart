@@ -23,6 +23,7 @@ class ApiInterceptor extends Interceptor {
     }
 
     options.headers['Accept'] = 'application/json';
+    options.headers['Content-Type'] = 'application/json';
 
     super.onRequest(options, handler);
   }

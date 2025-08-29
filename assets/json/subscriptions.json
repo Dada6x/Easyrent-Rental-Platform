@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1,
+    "planDuration": "1 Month",
+    "description": "Basic plan",
+    "planType": "basic",
+    "planPrice": "10.0"
+  },
+  {
+    "id": 2,
+    "planDuration": "12 Months",
+    "description": "Premium plan",
+    "planType": "premium",
+    "planPrice": "100.0"
+  }
+]

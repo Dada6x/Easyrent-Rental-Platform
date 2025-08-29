@@ -7,9 +7,9 @@ import 'package:easyrent/data/repos/properties_repo.dart';
 import 'package:easyrent/data/repos/user_repo.dart';
 import 'package:easyrent/presentation/views/property_homepage/controller/propertiy_controller.dart';
 import 'package:easyrent/presentation/views/property_homepage/controller/subscription_controller.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/foundation.dart';
+// import 'package:firebase_core/firebase_core.dart';
+// import 'package:firebase_messaging/firebase_messaging.dart';
+// import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -243,3 +243,44 @@ https://images.unsplash.com/photo-1516455590571-18256e5bb9ff?q=80&w=2070&auto=fo
 //! (5)  Upgrade from User to Agent.
 //! (6)  AGENT ROLE ( upload,delete,edit,myProperties)
 //! (7)  icon for the application.
+
+
+
+
+//TOODO FINAL SHIT 
+//! Get Agent By Id 
+// ! Notifications consle firebase
+//! homepage femboy 
+//! create 
+//! pfp Request
+//! Upload Property
+//! 
+
+
+//! normal_user 0953266666 lim1234 
+//@ agency_user 0953266661 lim 1234
+//? admin_user 0953266662 lim 1234
+
+/*  
+DarkMode and Light mode 
+online offline connectivity 
+svg replacer for color efficenty 
+the map was web.g not png so its not pixelated 
+the logging system but it need some fixes ( if logged fetch data if not dont fetch )
+the 
+
+
+ */
+
+//! things done wrong 
+/*
+we didnt make an figma which was the first thing to be done.
+malaz waz znji 
+we got late in the ربط
+
+the images must been from the web in order to make the size of the app smaller 
+notifications firebase 
+the Search 
+the Payment
+
+ */

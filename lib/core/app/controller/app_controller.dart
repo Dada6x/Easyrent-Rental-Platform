@@ -64,7 +64,7 @@ class AppController extends GetxController {
             break;
           }
         case InternetStatus.disconnected:
-          // isOffline.value = false;
+          isOffline.value = false;
 
           if (isFirstCheck == true) {
             isFirstCheck = false;

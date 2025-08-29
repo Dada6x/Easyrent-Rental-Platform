@@ -6,7 +6,7 @@ class SubscriptionPlan {
   final String planDuration;
   final String description;
   final PlanType planType;
-  final int planPrice;
+  final String planPrice;
 
   SubscriptionPlan({
     required this.id,
@@ -20,9 +20,9 @@ class SubscriptionPlan {
     return SubscriptionPlan(
       id: json['id'],
       planDuration: json['planDuration'],
-      description: json['description'],
+      description: json['description'],     
       planType: PlanType.fromString(json['planType']),
-      planPrice: json['planPrice'],
+      planPrice: json['planPrice'] ,
     );
   }
 }

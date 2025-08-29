@@ -3,7 +3,8 @@ import 'package:easyrent/core/app/controller/app_controller.dart';
 import 'package:easyrent/core/constants/utils/divider.dart';
 import 'package:easyrent/core/constants/utils/error_loading_mssg.dart';
 import 'package:easyrent/core/constants/utils/textStyles.dart';
-import 'package:easyrent/data/models/agent_model.dart';
+import 'package:easyrent/data/models/propertyModel.dart';
+import 'package:easyrent/presentation/views/agent/agentcontroller.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -14,22 +15,34 @@ import 'package:skeletonizer/skeletonizer.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AgentPage extends StatelessWidget {
-  final Agent agent;
-  const AgentPage({
-    super.key,
-    required this.agent,
-  });
+  final int agentId;
+  const AgentPage({super.key, required this.agentId});
 
   @override
   Widget build(BuildContext context) {
+    final AgentController controller =
+        Get.put(AgentController(dio: Get.find()));
+
+    controller.fetchAgent(agentId);
+
     return Obx(() {
+      if (controller.isLoading.value) {
+        return const Scaffold(
+          body: Center(child: CircularProgressIndicator()),
+        );
+      }
+
+      if (controller.error.isNotEmpty) {
+        return Scaffold(
+          body: Center(child: Text(controller.error.value)),
+        );
+      }
+
+      final agent = controller.agent.value!;
       return Scaffold(
         appBar: AppBar(
           title: const Text("Agent Profile"),
           centerTitle: true,
-          scrolledUnderElevation: 1.0,
-          surfaceTintColor: Colors.transparent,
-          forceMaterialTransparency: true,
           elevation: 0,
         ),
         body: SingleChildScrollView(
@@ -49,27 +62,21 @@ class AgentPage extends StatelessWidget {
                         radius: 70.sp,
                         child: ClipOval(
                           child: FancyShimmerImage(
-                            imageUrl: agent.photo ,
+                            imageUrl: agent.photo,
                             errorWidget: const ErrorLoadingWidget(),
                           ),
                         ),
                       ),
                       SizedBox(height: 12.h),
-                      Text(
-                        agent.name,
-                        style: AppTextStyles.h20medium,
-                      ),
+                      Text(agent.name, style: AppTextStyles.h20medium),
                       SizedBox(height: 4.h),
-                      Text(
-                        "Real Estate Agent • New York",
-                        style: AppTextStyles.h14regular
-                            .copyWith(color: Colors.grey[500]),
-                      ),
+                      Text("Real Estate Agent • New York",
+                          style: AppTextStyles.h14regular
+                              .copyWith(color: Colors.grey[500])),
                       SizedBox(height: 8.h),
-                      SizedBox(width: 4.w),
                       OutlinedButton(
-                          onPressed: () {},
-                          child: Text("+ 963980817760",
+                          onPressed: () => launchPhoneCall(agent.phone),
+                          child: Text(agent.phone,
                               style: TextStyle(fontSize: 14.sp))),
                     ],
                   ),
@@ -79,20 +86,18 @@ class AgentPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     _AgentActionButton(
-                        onTap: () => launchPhoneCall("+123123123"),
+                        onTap: () => launchPhoneCall(agent.phone),
                         icon: Iconify(
-                          size: 32.sp,
                           Ph.phone,
-                          //! copy number to clipboard
+                          size: 32.sp,
                           color: Theme.of(context).colorScheme.primary,
                         ),
                         label: "Call"),
                     _AgentActionButton(
-                        onTap: () => openWhatsApp("+963980817760", ""),
-                        //! send textmessage through whatsapp
+                        onTap: () => openWhatsApp(agent.phone, ""),
                         icon: Iconify(
-                          size: 32.sp,
                           Ph.whatsapp_logo,
+                          size: 32.sp,
                           color: Theme.of(context).colorScheme.primary,
                         ),
                         label: "Message"),
@@ -119,31 +124,12 @@ class AgentPage extends StatelessWidget {
                       viewportFraction: 0.679,
                       scale: 0.73,
                       curve: Curves.linear,
-                      itemCount: 3,
+                      itemCount: agent.properties.length,
                       itemWidth: 160.w,
-                      itemBuilder: (context, index) => _PropertyCard(),
+                      itemBuilder: (context, index) =>
+                          _PropertyCard(property: agent.properties[index]),
                     )),
-                SizedBox(
-                  height: 20.h,
-                ),
-                // Padding(
-                //   padding: const EdgeInsets.all(8.0),
-                //   child: SizedBox(
-                //     height: 50.h,
-                //     width: double.infinity,
-                //     child: TextButton(
-                //       style: TextButton.styleFrom(
-                //         elevation: 1,
-                //         backgroundColor: Theme.of(context).colorScheme.primary,
-                //       ),
-                //       onPressed: () {},
-                //       child: Text(
-                //         "Book a Call".tr,
-                //         style: AppTextStyles.h16semi.copyWith(color: white),
-                //       ),
-                //     ),
-                //   ),
-                // ),
+                SizedBox(height: 20.h),
                 const CustomDivider()
               ],
             ),
@@ -157,12 +143,12 @@ class AgentPage extends StatelessWidget {
 class _AgentActionButton extends StatelessWidget {
   final Iconify icon;
   final String label;
-  final VoidCallback? onTap; // <-- Add this
+  final VoidCallback? onTap;
 
   const _AgentActionButton({
     required this.icon,
     required this.label,
-    this.onTap, // <-- Add this
+    this.onTap,
   });
 
   @override
@@ -173,7 +159,7 @@ class _AgentActionButton extends StatelessWidget {
           onPressed: onTap,
           style: OutlinedButton.styleFrom(
             shape: const CircleBorder(),
-            padding: EdgeInsets.all(10.r), // adjust for icon size
+            padding: EdgeInsets.all(10.r),
           ),
           child: icon,
         ),
@@ -185,6 +171,9 @@ class _AgentActionButton extends StatelessWidget {
 }
 
 class _PropertyCard extends StatelessWidget {
+  final PropertyModel property;
+  const _PropertyCard({required this.property});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -201,7 +190,7 @@ class _PropertyCard extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.vertical(top: Radius.circular(12.r)),
             child: Image.network(
-              "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+              property.firstImage ?? '',
               height: 100.h,
               width: double.infinity,
               fit: BoxFit.cover,
@@ -213,18 +202,18 @@ class _PropertyCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Modern Apartment",
+                  Text(property.title ?? '',
                       style: TextStyle(
                           fontSize: 16.sp, fontWeight: FontWeight.bold)),
                   SizedBox(height: 4.h),
-                  Text("\$1,200 / month",
+                  Text("\$${property.price ?? ''}",
                       style: TextStyle(
                           color: Theme.of(context).colorScheme.primary,
                           fontSize: 13.sp)),
                   SizedBox(height: 4.h),
-                  Text("2 Bed • 1 Bath",
-                      style:
-                          TextStyle(fontSize: 12.sp, color: Colors.grey[600])),
+                  // Text(property. ?? '',
+                  //     style:
+                  //         TextStyle(fontSize: 12.sp, color: Colors.grey[600])),
                 ],
               ),
             ),

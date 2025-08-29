@@ -6,9 +6,9 @@ class User {
   final String username;
   final Location location;
   final int age;
-  final String userType;
+  String userType;
   final bool isAccountVerified;
-  final String? profileImage; // nullable
+  final String? profileImage; 
   final int? planId; // nullable
 
   User({

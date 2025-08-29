@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'package:dartz/dartz.dart';
 import 'package:easyrent/core/services/api/end_points.dart';
 import 'package:easyrent/data/models/plan_model.dart';
+import 'package:easyrent/data/models/propertyModel.dart';
+import 'package:easyrent/presentation/views/auth/views/login.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
@@ -150,25 +152,12 @@ class Userrepo {
       debug.e("ServerException: $e");
       showErrorSnackbar(" exception ${e.errorModel.message}");
       return Left(e);
-    } catch (e) {
+    } catch (e, s) {
       debug.e("Unexpected exception: $e");
+      debug.e("Unexpected exception: $s");
       return Left(ServerException(errorModel: ErrorModel(4, e.toString())));
     }
   }
-  //! fromJson
-//   Future<Either<ServerException, User>> getProfile() async {
-//   try {
-//     final json = await _loadJson('user.json');
-//     final user = User.fromJson(json);
-//     AppSession().user = user;
-//     return Right(user);
-//   } catch (e) {
-//     debug.e("Error loading profile: $e");
-//     return Left(ServerException(
-//       errorModel: ErrorModel(500, "Failed to load profile from mock"),
-//     ));
-//   }
-// }
 
 //!-----------------------Log OUt ---------------------------------->
 
@@ -177,7 +166,7 @@ class Userrepo {
     deleteToken();
     showSnackbarWithContext("We're Going to miss You ", context);
     AppSession().user = null;
-    Get.offAll("/login");
+    Get.offAll(LoginPage());
   }
 
 //!----------------------Upload User Image------------------------->
@@ -332,12 +321,89 @@ class Userrepo {
   // Future<dynamic> orderSubsctiption() async{
   //   final resposne=await api.
   // }
+
+//!----------------------- Upload Property ---------------------------------->
+  Future<Either<String, String>> uploadProperty(PropertyModel property) async {
+    try {
+      // STEP 1: Create the property (without images)
+      final propertyData = {
+        "title": property.title,
+        "description": property.description,
+        "price": property.price,
+        "rooms": property.rooms,
+        "bathrooms": property.bathrooms,
+        "area": property.area,
+        "isFloor": property.isFloor,
+        "floorNumber": property.floorNumber,
+        "hasGarage": property.hasGarage,
+        "hasGarden": property.hasGarden,
+        "propertyType": property.propertyType,
+        "heatingType": property.heatingType,
+        "flooringType": property.flooringType,
+        "isForRent": property.isForRent,
+        "pointsDto": {
+          // <-- updated according to backend
+          "lat": property.location?.lat,
+          "lon": property.location?.lon,
+        },
+        "agencyId": AppSession().user!.id, // or get from your user/session
+      };
+
+      final createResponse = await api.post(
+        EndPoints.uploadProperty, // the create endpoint
+        data: propertyData,
+        isFormData: false,
+      );
+
+      if (createResponse.statusCode != 200 &&
+          createResponse.statusCode != 201) {
+        return Left("Failed to create property: ${createResponse.statusCode}");
+      }
+
+      final propertyId = createResponse.data['id'];
+      if (propertyId == null)
+        return Left("Property ID not returned from server");
+
+      // STEP 2: Upload main image
+      final mainImageFile = await dio.MultipartFile.fromFile(
+        property.propertyImage!,
+        filename: property.propertyImage!.split('/').last,
+      );
+
+      await api.post(
+        EndPoints.uploadMainImage(propertyId),
+        data: {"property-image": mainImageFile},
+        isFormData: true,
+      );
+
+      // STEP 3: Upload multiple images
+      final imageFiles = await Future.wait(
+        property.propertyImages!.map(
+          (path) => dio.MultipartFile.fromFile(
+            path,
+            filename: path.split('/').last,
+          ),
+        ),
+      );
+
+      await api.post(
+        EndPoints.uploadGalleryImages(propertyId),
+        data: {"property-images": imageFiles},
+        isFormData: true,
+      );
+
+      showSuccessSnackbar("Property created and images uploaded successfully!");
+      return Right("Property uploaded successfully");
+    } catch (e) {
+      debug.e("Unexpected upload exception: $e");
+      return Left("Unexpected error occurred");
+    }
+  }
 }
 
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
 //$$$$$$$$$$$$$$$$$$//TODOD REMOVE THIS NONSCENSE :D $$$$$$$$$$$$$$$$$$$$$$$$$
 //$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
-
 
 //@ helper funs ... so funny hehehe :D (help).
 Future<void> saveToken(String token) async {

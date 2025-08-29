@@ -1,4 +1,6 @@
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
+import 'package:easyrent/data/Session/app_session.dart';
+import 'package:easyrent/presentation/views/AgentFeatures/uploadProperties.dart';
 import 'package:easyrent/presentation/views/property_homepage/controller/propertiy_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -26,13 +28,92 @@ class HomeScreenNavigator extends StatefulWidget {
 
 class _HomeScreenNavigatorState extends State<HomeScreenNavigator> {
   int _selectedIndex = 0;
+  late final bool isAgency;
 
-  final List<Widget> _pages = [
-    Homepage(),
-    const MapPage(),
-    const Search(),
-    const Profile(),
-  ];
+  @override
+  void initState() {
+    super.initState();
+    isAgency = AppSession().user!.userType == "agency";
+    Get.find<PropertiesController>().fetchProperties();
+  }
+
+  List<Widget> get _pages => [
+        Homepage(),
+        const MapPage(),
+        if (isAgency) const UploadPropertyPage(), // your agency-specific page
+        const Search(),
+        const Profile(),
+      ];
+
+  List<BottomNavigationBarItem> get _navItems {
+    final items = [
+      BottomNavigationBarItem(
+        activeIcon: Iconify(Bi.house_fill,
+            color: Theme.of(context).colorScheme.primary, size: 30.sp),
+        icon: Iconify(Bi.house, color: grey, size: 30.sp),
+        label: 'Home'.tr,
+      ),
+      BottomNavigationBarItem(
+        activeIcon: Iconify(Bi.map_fill,
+            color: Theme.of(context).colorScheme.primary, size: 30.sp),
+        icon: Iconify(Bi.map, color: grey, size: 30.sp),
+        label: 'Map'.tr,
+      ),
+    ];
+
+    if (isAgency) {
+      items.add(BottomNavigationBarItem(
+        activeIcon: Container(
+          decoration: BoxDecoration(
+            color: Theme.of(context)
+                .colorScheme
+                .primary
+                .withOpacity(0.2), // active background color
+            shape: BoxShape.circle,
+          ),
+          padding: EdgeInsets.all(8.r), // adjust padding for size
+          child: Iconify(
+            Ri.add_circle_fill,
+            color: blue, // icon color inside circle
+            size: 30.sp,
+          ),
+        ),
+        icon: Container(
+          decoration: BoxDecoration(
+            color: Theme.of(context)
+                .colorScheme
+                .primary
+                .withOpacity(0.2), // inactive background color
+            shape: BoxShape.circle,
+          ),
+          padding: EdgeInsets.all(8.r),
+          child: Iconify(
+            Ri.add_circle_line,
+            color: grey,
+            size: 30.sp,
+          ),
+        ),
+        label: 'Add'.tr,
+      ));
+    }
+
+    items.addAll([
+      BottomNavigationBarItem(
+        activeIcon: Iconify(Ri.search_fill,
+            color: Theme.of(context).colorScheme.primary, size: 30.sp),
+        icon: Iconify(Ri.search_2_line, color: grey, size: 30.sp),
+        label: 'Search'.tr,
+      ),
+      BottomNavigationBarItem(
+        activeIcon: Iconify(Bi.person_fill,
+            color: Theme.of(context).colorScheme.primary, size: 30.sp),
+        icon: Iconify(Bi.person, color: grey, size: 30.sp),
+        label: 'Profile'.tr,
+      ),
+    ]);
+
+    return items;
+  }
 
   void _onItemTapped(int index) {
     setState(() {
@@ -40,105 +121,30 @@ class _HomeScreenNavigatorState extends State<HomeScreenNavigator> {
     });
   }
 
-  // late Future<List<PropertyModel>> _propertiesFuture;
-
-  @override
-  void initState() {
-    super.initState();
-    Get.find<PropertiesController>().fetchProperties();
-  }
-
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
-      child: ThemeSwitchingArea(
-        child: Scaffold(
-            key: HomeScreenNavigator.scaffoldKey,
-            endDrawer: const NotificationsView(),
-            bottomNavigationBar: Container(
-              decoration: BoxDecoration(
-                border: Border(
-                  top: BorderSide(
-                    color:
-                        Theme.of(context).colorScheme.primary.withOpacity(0.1),
-                    width: 1.5.r,
-                  ),
-                ),
-              ),
-              child: BottomNavigationBar(
-                currentIndex: _selectedIndex,
-                selectedLabelStyle: AppTextStyles.h12medium,
-                showSelectedLabels: true,
-                fixedColor: Theme.of(context).colorScheme.primary,
-
-                unselectedLabelStyle: AppTextStyles.h12medium,
-                iconSize: 30.r, //!
-                onTap: _onItemTapped,
-                items: [
-                  BottomNavigationBarItem(
-                      activeIcon: Iconify(
-                        Bi.house_fill,
-                        color: Theme.of(context).colorScheme.primary,
-                        size: 30.sp,
-                      ),
-                      icon: Iconify(
-                        Bi.house,
-                        color: grey,
-                        size: 30.sp,
-                      ),
-                      label: 'Home'.tr),
-                  BottomNavigationBarItem(
-                      activeIcon: Iconify(
-                        Bi.map_fill,
-                        color: Theme.of(context).colorScheme.primary,
-                        size: 30.sp,
-                      ),
-                      icon: Iconify(
-                        Bi.map,
-                        color: grey,
-                        size: 30.sp,
-                      ),
-                      label: 'Map'.tr),
-                  BottomNavigationBarItem(
-                      activeIcon: Iconify(
-                        Ri.search_fill,
-                        color: Theme.of(context).colorScheme.primary,
-                        size: 30.sp,
-                      ),
-                      icon: Iconify(
-                        Ri.search_2_line,
-                        color: grey,
-                        size: 30.sp,
-                      ),
-                      label: 'Search'.tr),
-                  BottomNavigationBarItem(
-                      activeIcon: Iconify(
-                        Bi.person_fill,
-                        color: Theme.of(context).colorScheme.primary,
-                        size: 30.sp,
-                      ),
-                      icon: Iconify(
-                        Bi.person,
-                        color: grey,
-                        size: 30.sp,
-                      ),
-                      label: 'Profile'.tr),
-                ],
-                elevation: 2,
-                type: BottomNavigationBarType.fixed,
-              ),
-            ),
-            body: Obx(() {
-              return !Get.find<AppController>().isOffline.value
-                  ? const Center(
-                      child: OfflinePage(),
-                    )
-                  : IndexedStack(
-                      index: _selectedIndex,
-                      children: _pages,
-                    );
-            })),
+    return ThemeSwitchingArea(
+      child: Scaffold(
+        key: HomeScreenNavigator.scaffoldKey,
+        endDrawer: const NotificationsView(),
+        bottomNavigationBar: BottomNavigationBar(
+          currentIndex: _selectedIndex,
+          items: _navItems,
+          onTap: _onItemTapped,
+          type: BottomNavigationBarType.fixed,
+          selectedLabelStyle: AppTextStyles.h12medium,
+          unselectedLabelStyle: AppTextStyles.h12medium,
+          selectedItemColor: Theme.of(context).colorScheme.primary,
+          iconSize: 30.r,
+        ),
+        body: Obx(() {
+          return !Get.find<AppController>().isOffline.value
+              ? const Center(child: OfflinePage())
+              : IndexedStack(
+                  index: _selectedIndex,
+                  children: _pages,
+                );
+        }),
       ),
     );
   }

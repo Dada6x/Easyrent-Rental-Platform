@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'package:easyrent/presentation/views/AgentFeatures/uploadProperties.dart';
+import 'package:easyrent/presentation/views/profile/view/profile_pages/agent-my/myproperties.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -238,7 +240,7 @@ class _ProfileState extends State<Profile> {
             ),
             const CustomDivider(),
             customListTile(
-              string: "My Booking".tr,
+              string: "Plans".tr,
               leading: Iconify(
                 Bi.calendar2,
                 color: Theme.of(context).colorScheme.primary,
@@ -246,16 +248,28 @@ class _ProfileState extends State<Profile> {
               ),
               destination_widget: const MyBooking(),
             ),
-            customListTile(
-              string: "Vip ".tr,
-              leading: Iconify(
-                Mdi.crown,
-                color: orange,
-                //! make it the Color of the plan
-                size: 29.sp,
+            if (AppSession().user?.userType == "agency")
+              customListTile(
+                string: "My Properties".tr,
+                leading: Iconify(
+                  Bi.house_door,
+                  color: Theme.of(context).colorScheme.primary,
+                  size: 29.sp,
+                ),
+                destination_widget: const MyProperties(),
               ),
-              destination_widget: const SubscriptionPage(),
-            ),
+            if (AppSession().user?.userType == "agency")
+              customListTile(
+                string: "Add New Property ".tr,
+                leading: Iconify(
+                  Mdi.add_circle_outline,
+                  color: Theme.of(context).colorScheme.primary,
+                  //! make it the Color of the plan
+                  size: 29.sp,
+                ),
+                destination_widget: const UploadPropertyPage(),
+              ),
+
             //! payment
             customListTile(
               string: "Payments".tr,
@@ -332,9 +346,9 @@ class _ProfileState extends State<Profile> {
                 ),
                 destination_widget: const InviteFriendPage()),
             customListTile(
-                string: "Feed Back ".tr,
+                string: "FeedBack ".tr,
                 leading: Iconify(
-                  Ic.feedback,
+                  Mdi.feedback_outline,
                   color: Theme.of(context).colorScheme.primary,
                   size: 29.sp,
                 ),
