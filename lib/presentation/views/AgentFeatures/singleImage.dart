@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
+import 'package:easyrent/main.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -17,7 +18,8 @@ class _SingleImageState extends State<SingleImage> {
 
   Future<void> _pickImage() async {
     final picker = ImagePicker();
-    final XFile? pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    final XFile? pickedFile =
+        await picker.pickImage(source: ImageSource.gallery);
 
     if (pickedFile != null) {
       setState(() {
@@ -29,7 +31,8 @@ class _SingleImageState extends State<SingleImage> {
   Future<void> _uploadImage() async {
     if (_selectedImage == null) return;
 
-    String url = '{{URL}}/properties-http-media/upload-img/${widget.propertyId}';
+    String url =
+        'https://83b08d2bbc5a.ngrok-free.app/properties-http-media/upload-img/16';
 
     FormData formData = FormData.fromMap({
       'property-image': await MultipartFile.fromFile(
@@ -39,7 +42,17 @@ class _SingleImageState extends State<SingleImage> {
     });
 
     try {
-      Response response = await _dio.post(url, data: formData);
+      Response response = await _dio.post(
+        url,
+        data: formData,
+        options: Options(
+          headers: {
+            'Authorization':
+                'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwidXNlclR5cGUiOiJhZ2VuY3kiLCJpYXQiOjE3NTY1MDAwNjUsImV4cCI6MTc1NjU4NjQ2NX0.nUh6eE7AW-kCIrq5kez0nwq_KeIweM2DtaV4aAdunHo',
+          },
+        ),
+      );
+
       if (response.statusCode == 200) {
         print('Upload successful: ${response.data}');
       } else {

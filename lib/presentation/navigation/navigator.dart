@@ -1,8 +1,4 @@
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
-import 'package:easyrent/data/Session/app_session.dart';
-import 'package:easyrent/presentation/views/AgentFeatures/test.dart';
-import 'package:easyrent/presentation/views/AgentFeatures/uploadProperties.dart';
-import 'package:easyrent/presentation/views/property_homepage/controller/propertiy_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -13,9 +9,12 @@ import 'package:easyrent/core/app/controller/app_controller.dart';
 import 'package:easyrent/core/constants/colors.dart';
 import 'package:easyrent/core/constants/utils/offline_page.dart';
 import 'package:easyrent/core/constants/utils/textStyles.dart';
+import 'package:easyrent/data/Session/app_session.dart';
+import 'package:easyrent/presentation/views/AgentFeatures/uploadProperties_agent.dart';
 import 'package:easyrent/presentation/views/map/map_page.dart';
 import 'package:easyrent/presentation/views/profile/view/profile.dart';
 import 'package:easyrent/presentation/views/profile/view/profile_pages/notifications/views/notifications_drawer.dart';
+import 'package:easyrent/presentation/views/property_homepage/controller/propertiy_controller.dart';
 import 'package:easyrent/presentation/views/property_homepage/views/homePage.dart';
 import 'package:easyrent/presentation/views/search/views/search_page.dart';
 
@@ -41,7 +40,7 @@ class _HomeScreenNavigatorState extends State<HomeScreenNavigator> {
   List<Widget> get _pages => [
         Homepage(),
         const MapPage(),
-        if (isAgency) UploadHomesPage(), // your agency-specific page
+        if (isAgency) const UploadHomesPage(), // your agency-specific page
         const Search(),
         const Profile(),
       ];

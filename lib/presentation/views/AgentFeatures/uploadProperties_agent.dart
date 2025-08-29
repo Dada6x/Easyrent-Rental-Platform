@@ -3,7 +3,9 @@ import 'package:dio/dio.dart';
 import 'package:easyrent/core/constants/colors.dart';
 import 'package:easyrent/core/constants/utils/button.dart';
 import 'package:easyrent/main.dart';
+import 'package:easyrent/presentation/views/AgentFeatures/singleImage.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:iconify_flutter_plus/iconify_flutter_plus.dart';
 import 'package:iconify_flutter_plus/icons/mdi.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -343,7 +345,17 @@ class _UploadHomesPageState extends State<UploadHomesPage> {
                   (val) => setState(() => _hasGarden = val)),
               _buildSwitch("Is Floor", _isFloor,
                   (val) => setState(() => _isFloor = val)),
-              const SizedBox(height: 20),
+              const SizedBox(height: 5),
+              const Text("Gallery ",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                  //! image selectors 
+              const SizedBox(height: 15),
+              _buildImageButton(
+                  "Select a Single Image", Icons.photo_camera, () {}, context),
+              _buildImageButton("Select Multiple Images", Icons.photo_library,
+                  () {}, context),
+              _buildImageButton(
+                  "Select Panorama Images", Icons.panorama, () {}, context),
 
               CustomButton(hint: "Submit Property", function: _submitProperty),
             ],
@@ -414,4 +426,25 @@ class _MapPickerPageState extends State<MapPickerPage> {
       ),
     );
   }
+}
+
+Widget _buildImageButton(
+    String hint, IconData icon, VoidCallback function, BuildContext context) {
+  return Padding(
+    padding: const EdgeInsets.symmetric(vertical: 6),
+    child: ElevatedButton.icon(
+      onPressed: function,
+      icon: Icon(icon, size: 22),
+      label: Text(hint, style: const TextStyle(fontWeight: FontWeight.w600)),
+      style: ElevatedButton.styleFrom(
+        padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 16),
+        backgroundColor: white,
+        foregroundColor: blue,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+        elevation: 4,
+      ),
+    ),
+  );
 }
