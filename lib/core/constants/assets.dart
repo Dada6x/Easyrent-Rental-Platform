@@ -12,7 +12,7 @@ const masterCard = "assets/icons/MasterCard.png";
 const googlePay = "assets/icons/GooglePay.png";
 const chip = "assets/icons/Chip.png";
 const avatar2 = "assets/images/avatar2.png";
-const agentAvatar = "assets/images/agentAvatar.png";
+const agentAvatar = "assets/images/undraw_finance-guy-avatar_vhop.png";
 //!-----------animations----------------------
 const easyRent = "assets/animations/EeasyRent.json";
 //!-----------Panoramas ----------------------

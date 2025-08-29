@@ -285,9 +285,7 @@ class MyPropertyCard extends StatelessWidget {
                       SizedBox(height: 6.h),
                       Text(
                         "${property.rooms} rooms • ${property.bathrooms} baths • ${property.area} m²",
-                        style: AppTextStyles.h12regular.copyWith(
-                          color: Colors.black54,
-                        ),
+                        style: AppTextStyles.h12regular.copyWith(),
                       ),
                       SizedBox(height: 6.h),
                       Text(

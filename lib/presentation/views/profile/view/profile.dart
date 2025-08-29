@@ -275,7 +275,7 @@ class _ProfileState extends State<Profile> {
                   //! make it the Color of the plan
                   size: 29.sp,
                 ),
-                destination_widget: const UploadPropertyPage(),
+                destination_widget: const SecurePaymentWrapper(),
               ),
 
             //! payment

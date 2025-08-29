@@ -1,5 +1,6 @@
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
 import 'package:easyrent/data/Session/app_session.dart';
+import 'package:easyrent/presentation/views/AgentFeatures/test.dart';
 import 'package:easyrent/presentation/views/AgentFeatures/uploadProperties.dart';
 import 'package:easyrent/presentation/views/property_homepage/controller/propertiy_controller.dart';
 import 'package:flutter/material.dart';
@@ -40,7 +41,7 @@ class _HomeScreenNavigatorState extends State<HomeScreenNavigator> {
   List<Widget> get _pages => [
         Homepage(),
         const MapPage(),
-        if (isAgency) const UploadPropertyPage(), // your agency-specific page
+        if (isAgency) UploadHomesPage(), // your agency-specific page
         const Search(),
         const Profile(),
       ];

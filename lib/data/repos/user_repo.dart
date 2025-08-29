@@ -346,13 +346,12 @@ class Userrepo {
           "lat": property.location?.lat,
           "lon": property.location?.lon,
         },
-        "agencyId": AppSession().user!.id, // or get from your user/session
+        "agencyId": AppSession().user!.id,
       };
 
       final createResponse = await api.post(
-        EndPoints.uploadProperty, // the create endpoint
+        EndPoints.uploadProperty,
         data: propertyData,
-        isFormData: false,
       );
 
       if (createResponse.statusCode != 200 &&
