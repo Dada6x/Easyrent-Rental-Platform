@@ -24,7 +24,7 @@ AppBar homePageAppbar() {
           ignoreContainers: false,
           enabled: AppSession().user == null,
           child: CircleAvatar(
-            radius: 28.r,
+            radius: 30.r,
             backgroundColor: Colors.transparent,
             child: ClipOval(
               child: AppSession().user?.profileImage != null
@@ -34,11 +34,17 @@ AppBar homePageAppbar() {
                           "http://192.168.1.7:3000/user/images/${AppSession().user!.profileImage}",
                       errorWidget: const Icon(Icons.error),
                     )
-                  : Image.asset(
-                      width: 56.w,
-                      avatar2,
-                      fit: BoxFit.contain,
-                    ),
+                  : AppSession().user!.userType == 'agency'
+                      ? Image.asset(
+                          agentAvatar,
+                          width: 56.w,
+                          fit: BoxFit.contain,
+                        )
+                      : Image.asset(
+                          avatar2,
+                          width: 56.w,
+                          fit: BoxFit.contain,
+                        ),
             ),
           ),
         ),

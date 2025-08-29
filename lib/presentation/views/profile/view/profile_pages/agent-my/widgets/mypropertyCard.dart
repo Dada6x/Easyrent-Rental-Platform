@@ -13,6 +13,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:iconify_flutter_plus/iconify_flutter_plus.dart';
+import 'package:iconify_flutter_plus/icons/bi.dart';
+import 'package:iconify_flutter_plus/icons/el.dart';
+import 'package:iconify_flutter_plus/icons/mi.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 import 'package:easyrent/core/app/controller/app_controller.dart';
@@ -37,7 +41,7 @@ class MyPropertyCard extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               ListTile(
-                leading: const Icon(Icons.info, color: blue),
+                leading: const Iconify(Bi.info_circle, color: blue),
                 title: const Text("View Details"),
                 onTap: () async {
                   Navigator.pop(context);
@@ -47,7 +51,7 @@ class MyPropertyCard extends StatelessWidget {
                 },
               ),
               ListTile(
-                leading: const Icon(Icons.edit, color: Colors.orange),
+                leading: const Iconify(Mi.edit_alt, color: blue),
                 title: const Text("Edit Property"),
                 onTap: () {
                   Navigator.pop(context);
@@ -55,8 +59,11 @@ class MyPropertyCard extends StatelessWidget {
                 },
               ),
               ListTile(
-                leading: const Icon(Icons.delete, color: Colors.red),
-                title: const Text("Delete Property"),
+                leading: const Iconify(Mi.delete, color: blue),
+                title: const Text(
+                  "Delete Property",
+                  style: TextStyle(color: red),
+                ),
                 onTap: () {
                   Navigator.pop(context);
                   showDeletePropertyDialog(context, property.id!);
@@ -116,10 +123,8 @@ class MyPropertyCard extends StatelessWidget {
                         child: TextButton(
                           onPressed: () => Navigator.pop(context),
                           style: TextButton.styleFrom(
-                            backgroundColor: Theme.of(context)
-                                .colorScheme
-                                .primary
-                                .withOpacity(0.2),
+                            backgroundColor:
+                                Theme.of(context).colorScheme.primary,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8.r),
                             ),
@@ -175,20 +180,11 @@ class MyPropertyCard extends StatelessWidget {
                             } on DioException catch (e) {
                               debug.i(
                                   "DioError: ${e.response?.statusCode} ${e.response?.data}");
-                              Get.snackbar(
-                                "Error",
-                                "Network error: ${e.message}",
-                                backgroundColor: Colors.orange.withOpacity(0.1),
-                                colorText: Colors.orange,
-                              );
+
+                              showSnackbarWithContext("NetworkError", context);
                             } catch (e, s) {
                               debug.i("Unexpected error: $e\n$s");
-                              Get.snackbar(
-                                "Error",
-                                "Something went wrong",
-                                backgroundColor: Colors.orange.withOpacity(0.1),
-                                colorText: Colors.orange,
-                              );
+                              showErrorSnackbar("Something Went Wrong ");
                             }
                           },
                           style: TextButton.styleFrom(

@@ -64,26 +64,18 @@ class _HomeScreenNavigatorState extends State<HomeScreenNavigator> {
     if (isAgency) {
       items.add(BottomNavigationBarItem(
         activeIcon: Container(
-          decoration: BoxDecoration(
-            color: Theme.of(context)
-                .colorScheme
-                .primary
-                .withOpacity(0.2), // active background color
+          decoration: const BoxDecoration(
             shape: BoxShape.circle,
           ),
-          padding: EdgeInsets.all(8.r), // adjust padding for size
+          padding: EdgeInsets.all(8.r),
           child: Iconify(
             Ri.add_circle_fill,
-            color: blue, // icon color inside circle
+            color: blue,
             size: 30.sp,
           ),
         ),
         icon: Container(
-          decoration: BoxDecoration(
-            color: Theme.of(context)
-                .colorScheme
-                .primary
-                .withOpacity(0.2), // inactive background color
+          decoration: const BoxDecoration(
             shape: BoxShape.circle,
           ),
           padding: EdgeInsets.all(8.r),

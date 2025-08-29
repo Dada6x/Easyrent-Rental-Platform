@@ -83,41 +83,49 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
   @override
   Widget build(BuildContext context) {
     planController.getSubscriptionPlans();
-    return RefreshIndicator(
-      onRefresh: () => planController.getSubscriptionPlans(),
-      child: Padding(
-          padding: EdgeInsets.all(16.w),
-          child: Obx(() {
-            if (planController.isLoading.value) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-            if (planController.hasError.value) {
-              return const ErrorPage();
-            }
-            if (planController.plans.isEmpty) {
-              return const noDataPage();
-            }
-            return ListView.builder(
-                itemCount: planController.plans.length,
-                itemBuilder: (context, index) {
-                  final plan = planController.plans[index];
-                  return _buildPlanCard(context,
-                      planId: plan.id,
-                      isCurrent: plan.id == userPlanId,
-                      title: plan.planType.value,
-                      duration: plan.planDuration,
-                      description: plan.description,
-                      isLoading: planController.isOrderLoading,
-                      price: plan.planPrice.toString(),
-                      icon: plan.planType.icon, onTap: () {
-                    debug.d("yezzir skiii ghhhhhhhh");
-                    planController.orderSubscription(plan.id, context);
-                  }, color: Colors.white);
-                });
-          }
-              )),
+    return Scaffold(
+      appBar: AppBar(
+        scrolledUnderElevation: 0.0,
+        surfaceTintColor: Colors.transparent,
+        forceMaterialTransparency: true,
+        elevation: 0,
+        title: const Text("Choose a plan"),
+      ),
+      body: RefreshIndicator(
+        onRefresh: () => planController.getSubscriptionPlans(),
+        child: Padding(
+            padding: EdgeInsets.all(16.w),
+            child: Obx(() {
+              if (planController.isLoading.value) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              if (planController.hasError.value) {
+                return const ErrorPage();
+              }
+              if (planController.plans.isEmpty) {
+                return const noDataPage();
+              }
+              return ListView.builder(
+                  itemCount: planController.plans.length,
+                  itemBuilder: (context, index) {
+                    final plan = planController.plans[index];
+                    return _buildPlanCard(context,
+                        planId: plan.id,
+                        isCurrent: plan.id == userPlanId,
+                        title: plan.planType.value,
+                        duration: plan.planDuration,
+                        description: plan.description,
+                        isLoading: planController.isOrderLoading,
+                        price: plan.planPrice.toString(),
+                        icon: plan.planType.icon, onTap: () {
+                      debug.d("yezzir skiii ghhhhhhhh");
+                      planController.orderSubscription(plan.id, context);
+                    }, color: Colors.white);
+                  });
+            })),
+      ),
     );
   }
 

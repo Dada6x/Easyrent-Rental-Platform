@@ -104,12 +104,20 @@ class _ProfileState extends State<Profile> {
                                             imageUrl:
                                                 "http://192.168.1.4:3000/user/images/${AppSession().user!.profileImage}",
                                           )
-                                        : Image.asset(
-                                            avatar2,
-                                            width: 170.sp,
-                                            height: 170.sp,
-                                            fit: BoxFit.cover,
-                                          ),
+                                        : AppSession().user!.userType ==
+                                                'agency'
+                                            ? Image.asset(
+                                                agentAvatar,
+                                                width: 170.sp,
+                                                height: 170.sp,
+                                                fit: BoxFit.cover,
+                                              )
+                                            : Image.asset(
+                                                avatar2,
+                                                width: 170.sp,
+                                                height: 170.sp,
+                                                fit: BoxFit.cover,
+                                              ),
                               ),
                             ),
                           ),

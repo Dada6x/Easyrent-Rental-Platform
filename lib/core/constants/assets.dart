@@ -12,6 +12,7 @@ const masterCard = "assets/icons/MasterCard.png";
 const googlePay = "assets/icons/GooglePay.png";
 const chip = "assets/icons/Chip.png";
 const avatar2 = "assets/images/avatar2.png";
+const agentAvatar = "assets/images/agentAvatar.png";
 //!-----------animations----------------------
 const easyRent = "assets/animations/EeasyRent.json";
 //!-----------Panoramas ----------------------
@@ -30,6 +31,7 @@ const intro3 = "assets/images/svg/payment.svg";
 const intro4 = "assets/images/svg/houseapproved.svg";
 const searchHouse = "assets/images/svg/search_house.svg";
 const househome = "assets/images/svg/house.svg";
+const Business = "assets/images/svg/undraw_businesswoman-avatar_ktl2.svg";
 const noData = "assets/images/svg/undraw_hiking_9zta.svg";
 const invite = "assets/images/svg/inviteFriends.svg";
 const security = "assets/images/svg/securitymobile.svg";
