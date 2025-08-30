@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:easyrent/core/constants/colors.dart';
 import 'package:easyrent/core/constants/utils/button.dart';
+import 'package:easyrent/core/constants/utils/textStyles.dart';
 import 'package:easyrent/main.dart';
 import 'package:easyrent/presentation/views/AgentFeatures/singleImage.dart';
 import 'package:flutter/material.dart';
@@ -232,7 +233,8 @@ class _UploadHomesPageState extends State<UploadHomesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Upload Property")),
+      appBar: AppBar(
+          title: Text("Upload Property", style: AppTextStyles.h24medium)),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Form(
@@ -348,7 +350,7 @@ class _UploadHomesPageState extends State<UploadHomesPage> {
               const SizedBox(height: 5),
               const Text("Gallery ",
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                  //! image selectors 
+              //! image selectors
               const SizedBox(height: 15),
               _buildImageButton(
                   "Select a Single Image", Icons.photo_camera, () {}, context),
@@ -387,7 +389,11 @@ class _MapPickerPageState extends State<MapPickerPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Pick Location'),
+        scrolledUnderElevation: 0.0,
+        surfaceTintColor: Colors.transparent,
+        forceMaterialTransparency: true,
+        elevation: 0,
+        title: Text('Pick Location', style: AppTextStyles.h16medium),
         actions: [
           TextButton(
               onPressed: () => Navigator.pop(context, pickedLocation),

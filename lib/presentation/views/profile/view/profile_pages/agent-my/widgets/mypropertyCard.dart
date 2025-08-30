@@ -148,6 +148,10 @@ class MyPropertyCard extends StatelessWidget {
 
                             Navigator.pop(context); // close dialog
 
+                            // Use parent context safely
+                            final parentContext =
+                                context; // WRONG! context here is dialog's context
+
                             try {
                               final prefs =
                                   await SharedPreferences.getInstance();
@@ -156,7 +160,7 @@ class MyPropertyCard extends StatelessWidget {
                               final dio = Dio();
                               final response = await dio.delete(
                                 "https://83b08d2bbc5a.ngrok-free.app/properties-on/$propertyId",
-                                data: {"password": password}, // pass password
+                                data: {"password": password},
                                 options: Options(
                                   headers: {
                                     "Authorization": "Bearer $token",
@@ -168,23 +172,18 @@ class MyPropertyCard extends StatelessWidget {
 
                               if (response.statusCode == 200 ||
                                   response.statusCode == 204) {
+                                // Pass the BuildContext from MyPropertyCard build method here
                                 showSnackbarWithContext(
-                                    "Property has been Deleted Successfully ",
-                                    context);
+                                    "Property has been Deleted Successfully",
+                                    Get.overlayContext ?? parentContext);
                               } else {
-                                debug.i(
-                                    "Delete failed: ${response.statusCode} ${response.data}");
-
-                                showErrorSnackbar("Failed to delete property ");
+                                showErrorSnackbar("Failed to delete property");
                               }
                             } on DioException catch (e) {
-                              debug.i(
-                                  "DioError: ${e.response?.statusCode} ${e.response?.data}");
-
-                              showSnackbarWithContext("NetworkError", context);
-                            } catch (e, s) {
-                              debug.i("Unexpected error: $e\n$s");
-                              showErrorSnackbar("Something Went Wrong ");
+                              showSnackbarWithContext("Network Error",
+                                  Get.overlayContext ?? parentContext);
+                            } catch (e) {
+                              showErrorSnackbar("Something went wrong");
                             }
                           },
                           style: TextButton.styleFrom(
