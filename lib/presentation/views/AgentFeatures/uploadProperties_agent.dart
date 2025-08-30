@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:easyrent/core/constants/colors.dart';
 import 'package:easyrent/core/constants/utils/button.dart';
@@ -7,8 +8,10 @@ import 'package:easyrent/main.dart';
 import 'package:easyrent/presentation/views/AgentFeatures/singleImage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:iconify_flutter_plus/iconify_flutter_plus.dart';
 import 'package:iconify_flutter_plus/icons/mdi.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
@@ -21,6 +24,32 @@ class UploadHomesPage extends StatefulWidget {
 }
 
 class _UploadHomesPageState extends State<UploadHomesPage> {
+  final ImagePicker _picker = ImagePicker();
+
+// Lists to hold selected images
+  List<XFile> _galleryImages = [];
+  List<XFile> _panoramaImages = [];
+
+// Pick normal images
+  Future<void> _pickGalleryImages() async {
+    final List<XFile>? images = await _picker.pickMultiImage();
+    if (images != null) {
+      setState(() {
+        _galleryImages = images;
+      });
+    }
+  }
+
+// Pick panorama images
+  Future<void> _pickPanoramaImages() async {
+    final List<XFile>? images = await _picker.pickMultiImage();
+    if (images != null) {
+      setState(() {
+        _panoramaImages = images;
+      });
+    }
+  }
+
   final _formKey = GlobalKey<FormState>();
 
   // Controllers
@@ -52,7 +81,8 @@ class _UploadHomesPageState extends State<UploadHomesPage> {
     final result = await Navigator.push<LatLng>(
       context,
       MaterialPageRoute(
-        builder: (_) => MapPickerPage(initialLocation: _pickedLocation),
+        builder: (_) =>
+            const MapPickerPage(initialLocation: LatLng(33.5138, 36.2765)),
       ),
     );
     if (result != null) setState(() => _pickedLocation = result);
@@ -86,11 +116,11 @@ class _UploadHomesPageState extends State<UploadHomesPage> {
     debug.i(data);
 
     final prefs = await SharedPreferences.getInstance();
-    final token = prefs.getString('token') ?? 'YOUR_FALLBACK_TOKEN_HERE';
+    final token = prefs.getString('token');
 
     try {
       final response = await _dio.post(
-        'https://83b08d2bbc5a.ngrok-free.app/properties-on/',
+        'https://18fbfdf5e6a5.ngrok-free.app/properties-on/',
         data: jsonEncode(data),
         options: Options(
           headers: {
@@ -103,6 +133,7 @@ class _UploadHomesPageState extends State<UploadHomesPage> {
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         debug.i(response.data);
+        final propertyId = response.data;
         _formKey.currentState!.reset();
         setState(() {
           _pickedLocation = const LatLng(0, 0);
@@ -114,6 +145,7 @@ class _UploadHomesPageState extends State<UploadHomesPage> {
           _hasGarden = false;
           _isFloor = false;
         });
+        Get.to(() => SingleImage(propertyId: propertyId.toString()));
       } else {
         debug.i(response.data);
       }
@@ -348,16 +380,56 @@ class _UploadHomesPageState extends State<UploadHomesPage> {
               _buildSwitch("Is Floor", _isFloor,
                   (val) => setState(() => _isFloor = val)),
               const SizedBox(height: 5),
+              //!
               const Text("Gallery ",
                   style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
               //! image selectors
               const SizedBox(height: 15),
-              _buildImageButton(
-                  "Select a Single Image", Icons.photo_camera, () {}, context),
-              _buildImageButton("Select Multiple Images", Icons.photo_library,
-                  () {}, context),
-              _buildImageButton(
-                  "Select Panorama Images", Icons.panorama, () {}, context),
+
+              _buildImageButton("Upload Images", Icons.photo_library,
+                  _pickGalleryImages, context),
+
+// Show selected normal images
+              if (_galleryImages.isNotEmpty)
+                Wrap(
+                  spacing: 8,
+                  runSpacing: 8,
+                  children: _galleryImages.map((img) {
+                    return ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: Image.file(
+                        File(img.path),
+                        width: 80,
+                        height: 80,
+                        fit: BoxFit.cover,
+                      ),
+                    );
+                  }).toList(),
+                ),
+
+              const SizedBox(height: 15),
+
+// Upload panorama images
+              _buildImageButton("Select Panorama Images", Icons.panorama,
+                  _pickPanoramaImages, context),
+
+// Show selected panorama images
+              if (_panoramaImages.isNotEmpty)
+                Wrap(
+                  spacing: 8,
+                  runSpacing: 8,
+                  children: _panoramaImages.map((img) {
+                    return ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: Image.file(
+                        File(img.path),
+                        width: 80,
+                        height: 80,
+                        fit: BoxFit.cover,
+                      ),
+                    );
+                  }).toList(),
+                ),
 
               CustomButton(hint: "Submit Property", function: _submitProperty),
             ],

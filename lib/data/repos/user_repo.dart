@@ -360,8 +360,9 @@ class Userrepo {
       }
 
       final propertyId = createResponse.data['id'];
-      if (propertyId == null)
-        return Left("Property ID not returned from server");
+      if (propertyId == null) {
+        return const Left("Property ID not returned from server");
+      }
 
       // STEP 2: Upload main image
       final mainImageFile = await dio.MultipartFile.fromFile(
@@ -392,10 +393,10 @@ class Userrepo {
       );
 
       showSuccessSnackbar("Property created and images uploaded successfully!");
-      return Right("Property uploaded successfully");
+      return const Right("Property uploaded successfully");
     } catch (e) {
       debug.e("Unexpected upload exception: $e");
-      return Left("Unexpected error occurred");
+      return const Left("Unexpected error occurred");
     }
   }
 }

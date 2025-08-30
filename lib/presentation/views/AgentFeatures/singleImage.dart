@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
-import 'package:easyrent/main.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -14,7 +13,7 @@ class SingleImage extends StatefulWidget {
 
 class _SingleImageState extends State<SingleImage> {
   File? _selectedImage;
-  final Dio _dio = Dio(); // Your Dio instance
+  final Dio _dio = Dio();
 
   Future<void> _pickImage() async {
     final picker = ImagePicker();
@@ -32,7 +31,7 @@ class _SingleImageState extends State<SingleImage> {
     if (_selectedImage == null) return;
 
     String url =
-        'https://83b08d2bbc5a.ngrok-free.app/properties-http-media/upload-img/16';
+        'https://18fbfdf5e6a5.ngrok-free.app/properties-media/upload-multiple-img/${widget.propertyId}';
 
     FormData formData = FormData.fromMap({
       'property-image': await MultipartFile.fromFile(

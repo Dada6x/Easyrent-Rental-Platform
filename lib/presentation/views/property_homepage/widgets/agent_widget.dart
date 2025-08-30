@@ -33,7 +33,7 @@ class AgentWidget extends StatelessWidget {
             child: FancyShimmerImage(
                 boxFit: BoxFit.cover,
                 imageUrl: agentImage,
-                errorWidget: ErrorLoadingWidget())),
+                errorWidget: const ErrorLoadingWidget())),
       ),
       title: Text(
         agentName,

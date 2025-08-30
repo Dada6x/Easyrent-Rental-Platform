@@ -1,5 +1,5 @@
 class EndPoints {
-  static String baseUrl = "https://83b08d2bbc5a.ngrok-free.app/";
+  static String baseUrl = "https://18fbfdf5e6a5.ngrok-free.app/";
   // "http://localhost:3000";
   static String imageUrl(String imagePath) =>
       "${baseUrl}property/images/$imagePath";

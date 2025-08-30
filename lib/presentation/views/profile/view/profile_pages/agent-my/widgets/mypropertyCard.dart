@@ -179,7 +179,7 @@ class MyPropertyCard extends StatelessWidget {
                               } else {
                                 showErrorSnackbar("Failed to delete property");
                               }
-                            } on DioException catch (e) {
+                            } on DioException {
                               showSnackbarWithContext("Network Error",
                                   Get.overlayContext ?? parentContext);
                             } catch (e) {

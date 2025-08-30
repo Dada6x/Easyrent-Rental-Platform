@@ -1,66 +1,103 @@
-import 'package:dio/dio.dart';
+// controllers/search_controller.dart
+// import 'package:easyrent/data/models/agent_model.dart';
+// import 'package:easyrent/data/models/propertyModel.dart';
+import 'package:easyrent/presentation/views/search/models/search_agent_model.dart';
+import 'package:easyrent/presentation/views/search/models/search_property_model.dart';
 import 'package:get/get.dart';
-import 'package:easyrent/data/models/agent_model.dart';
-import 'package:easyrent/data/models/propertyModel.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
-enum SearchMode { properties, agents }
+enum SearchMode { agents, properties }
 
 class Search_Controller extends GetxController {
-  final dio = Dio(BaseOptions(baseUrl: "http://192.168.1.7:3000/properties/all"));
-
   var searchMode = SearchMode.properties.obs;
+
+  var agents = <SearchAgentModel>[].obs;
+  var properties = <SearchPropertyModel>[].obs;
 
   var isLoading = false.obs;
   var hasError = false.obs;
-  var errorMessage = ''.obs;
 
-  var agentList = <Agent>[].obs;
-  var propertyList = <PropertyModel>[].obs;
+  int currentPage = 1;
+  bool hasMore = true;
 
-  Future<void> search(String query) async {
-    isLoading.value = true;
-    hasError.value = false;
-    errorMessage.value = "";
+  final String baseUrl = "https://18fbfdf5e6a5.ngrok-free.app"; 
 
+  @override
+  void onInit() {
+    super.onInit();
+    fetchInitial();
+  }
+
+  void switchMode(SearchMode mode) {
+    searchMode.value = mode;
+    resetData();
+    fetchInitial();
+  }
+
+  void resetData() {
+    agents.clear();
+    properties.clear();
+    currentPage = 1;
+    hasMore = true;
+  }
+
+  Future<void> fetchInitial() async {
+    if (searchMode.value == SearchMode.properties) {
+      await fetchProperties(reset: true);
+    } else {
+      await fetchAgents();
+    }
+  }
+
+  Future<void> fetchAgents() async {
     try {
-      if (searchMode.value == SearchMode.agents) {
-        final res = await dio.get(
-          '/user/agency',
-          queryParameters: {'search': query},
-        );
+      isLoading.value = true;
+      hasError.value = false;
 
-        final data = res.data as List;
-        agentList.value = data.map((e) => Agent.fromJson(e)).toList();
+      final res = await http.get(Uri.parse("$baseUrl/users/agency"));
+      if (res.statusCode == 200) {
+        final List data = jsonDecode(res.body);
+        agents.value = data.map((e) => SearchAgentModel.fromJson(e)).toList();
       } else {
-        final res = await dio.get(
-          '/property/all',
-          queryParameters: {'search': query},
-        );
-
-        final data = res.data as List;
-        propertyList.value =
-            data.map((e) => PropertyModel.fromJson(e)).toList();
+        hasError.value = true;
       }
     } catch (e) {
       hasError.value = true;
-      errorMessage.value = e.toString();
     } finally {
       isLoading.value = false;
     }
   }
 
-  void setSearchMode(SearchMode mode) {
-    if (searchMode.value != mode) {
-      searchMode.value = mode;
-      clear();
+  Future<void> fetchProperties({bool reset = false}) async {
+    if (!hasMore) return;
+    try {
+      isLoading.value = true;
+      hasError.value = false;
+
+      final res = await http.get(Uri.parse(
+          "$baseUrl/properties/all?pageNum=$currentPage&numPerPage=10"));
+
+      if (res.statusCode == 200) {
+        final List data = jsonDecode(res.body);
+        final newProps =
+            data.map((e) => SearchPropertyModel.fromJson(e)).toList();
+
+        if (reset) properties.clear();
+        properties.addAll(newProps);
+
+        if (newProps.length < 10) {
+          hasMore = false;
+        } else {
+          currentPage++;
+        }
+      } else {
+        hasError.value = true;
+      }
+    } catch (e) {
+      hasError.value = true;
+    } finally {
+      isLoading.value = false;
     }
   }
-
-  void clear() {
-    agentList.clear();
-    propertyList.clear();
-    hasError.value = false;
-    errorMessage.value = '';
-  }
 }
-

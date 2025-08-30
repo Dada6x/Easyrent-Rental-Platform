@@ -1,6 +1,5 @@
 import 'package:easyrent/core/constants/utils/pages/nodata_page.dart';
 import 'package:easyrent/data/models/agent_model.dart';
-import 'package:easyrent/data/models/location_model.dart';
 import 'package:easyrent/data/models/propertyModel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -12,17 +11,18 @@ import 'package:easyrent/core/constants/colors.dart';
 import 'package:easyrent/core/constants/utils/pages/error_page.dart';
 import 'package:easyrent/presentation/views/property_homepage/widgets/filterChips.dart';
 import 'package:easyrent/presentation/views/property_homepage/widgets/searchbar.dart';
-import 'package:easyrent/presentation/views/search/controller/search_controller.dart';
 import 'package:easyrent/presentation/views/search/widgets/agent_feed.dart';
 import 'package:easyrent/presentation/views/search/widgets/search_appbar.dart';
 import 'package:easyrent/presentation/views/search/widgets/search_feed.dart';
+import 'package:dio/dio.dart';
 
 class Search extends StatelessWidget {
   const Search({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final searchController = Get.put(Search_Controller());
+    final searchController = Get.put(SearchController());
+
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: searchAppbar(context),
@@ -31,212 +31,154 @@ class Search extends StatelessWidget {
         child: Obx(() {
           final isPropertyMode =
               searchController.searchMode.value == SearchMode.properties;
-          return CustomScrollView(
-            keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-            slivers: [
-              //! search textfield
-              SliverToBoxAdapter(
-                child: CustomSearchBar(
-                  onSearch: (query) => searchController.search(query),
+
+          return NotificationListener<ScrollNotification>(
+            onNotification: (scrollInfo) {
+              if (isPropertyMode &&
+                  scrollInfo.metrics.pixels ==
+                      scrollInfo.metrics.maxScrollExtent &&
+                  !searchController.isLoading.value &&
+                  searchController.hasMoreProperties) {
+                searchController.fetchProperties();
+              }
+              return false;
+            },
+            child: CustomScrollView(
+              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+              slivers: [
+                //! search textfield
+                SliverToBoxAdapter(
+                  child: CustomSearchBar(
+                    onSearch: (query) => searchController.search(query),
+                  ),
                 ),
-              ),
-              //! toggle chips
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 8.h),
-                  child: Center(
-                    child: Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 20.w, vertical: 5.h),
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          width: 1,
-                          color: Theme.of(context)
-                              .colorScheme
-                              .primary
-                              .withOpacity(0.1),
+                //! toggle chips
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(vertical: 8.h),
+                    child: Center(
+                      child: Container(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 20.w, vertical: 5.h),
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            width: 1,
+                            color: Theme.of(context)
+                                .colorScheme
+                                .primary
+                                .withOpacity(0.1),
+                          ),
+                          borderRadius: BorderRadius.circular(12.r),
                         ),
-                        borderRadius: BorderRadius.circular(12.r),
-                      ),
-                      child: Wrap(
-                        children: [
-                          ChoiceChip(
-                            avatar: Iconify(
-                              MaterialSymbols.real_estate_agent_rounded,
-                              color: searchController.searchMode.value ==
-                                      SearchMode.agents
-                                  ? white
-                                  : blue,
+                        child: Wrap(
+                          children: [
+                            ChoiceChip(
+                              avatar: Iconify(
+                                MaterialSymbols.real_estate_agent_rounded,
+                                color: searchController.searchMode.value ==
+                                        SearchMode.agents
+                                    ? white
+                                    : blue,
+                              ),
+                              side: BorderSide.none,
+                              showCheckmark: false,
+                              label: const Text(' Agents '),
+                              selected: searchController.searchMode.value ==
+                                  SearchMode.agents,
+                              selectedColor:
+                                  Theme.of(context).colorScheme.primary,
+                              labelStyle: TextStyle(
+                                color: searchController.searchMode.value ==
+                                        SearchMode.agents
+                                    ? white
+                                    : (Get.isDarkMode ? white : black),
+                              ),
+                              onSelected: (selected) {
+                                if (selected) {
+                                  searchController
+                                      .setSearchMode(SearchMode.agents);
+                                }
+                              },
                             ),
-                            side: BorderSide.none,
-                            showCheckmark: false,
-                            label: const Text(' Agents '),
-                            selected: searchController.searchMode.value ==
-                                SearchMode.agents,
-                            selectedColor:
-                                Theme.of(context).colorScheme.primary,
-                            labelStyle: TextStyle(
-                              color: searchController.searchMode.value ==
-                                      SearchMode.agents
-                                  ? white
-                                  : (Get.isDarkMode ? white : black),
+                            ChoiceChip(
+                              avatar: Iconify(
+                                Mdi.house_group,
+                                color: searchController.searchMode.value ==
+                                        SearchMode.properties
+                                    ? white
+                                    : blue,
+                              ),
+                              side: BorderSide.none,
+                              showCheckmark: false,
+                              label: const Text('Properties'),
+                              selected: searchController.searchMode.value ==
+                                  SearchMode.properties,
+                              selectedColor:
+                                  Theme.of(context).colorScheme.primary,
+                              labelStyle: TextStyle(
+                                color: searchController.searchMode.value ==
+                                        SearchMode.properties
+                                    ? white
+                                    : (Get.isDarkMode ? white : black),
+                              ),
+                              onSelected: (selected) {
+                                if (selected) {
+                                  searchController
+                                      .setSearchMode(SearchMode.properties);
+                                }
+                              },
                             ),
-                            onSelected: (selected) {
-                              if (selected) {
-                                searchController
-                                    .setSearchMode(SearchMode.agents);
-                              }
-                            },
-                          ),
-                          ChoiceChip(
-                            avatar: Iconify(
-                              Mdi.house_group,
-                              color: searchController.searchMode.value ==
-                                      SearchMode.properties
-                                  ? white
-                                  : blue,
-                            ),
-                            side: BorderSide.none,
-                            showCheckmark: false,
-                            label: const Text('Properties'),
-                            selected: searchController.searchMode.value ==
-                                SearchMode.properties,
-                            selectedColor:
-                                Theme.of(context).colorScheme.primary,
-                            labelStyle: TextStyle(
-                              color: searchController.searchMode.value ==
-                                      SearchMode.properties
-                                  ? white
-                                  : (Get.isDarkMode ? white : black),
-                            ),
-                            onSelected: (selected) {
-                              if (selected) {
-                                searchController
-                                    .setSearchMode(SearchMode.properties);
-                              }
-                            },
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              //! filter chips (for properties only)
-              if (isPropertyMode && searchController.propertyList.isNotEmpty)
-                SliverToBoxAdapter(
-                  child: Padding(
-                    padding:
-                        EdgeInsets.symmetric(vertical: 10.h, horizontal: 3.w),
-                    child: const PropertyFilterChips(),
+                //! filter chips (for properties only)
+                if (isPropertyMode && searchController.propertyList.isNotEmpty)
+                  SliverToBoxAdapter(
+                    child: Padding(
+                      padding:
+                          EdgeInsets.symmetric(vertical: 10.h, horizontal: 3.w),
+                      child: const PropertyFilterChips(),
+                    ),
                   ),
-                ),
-              //$ content BODY
-              Obx(() {
-//! Loading
-                if (searchController.isLoading.value) {
-                  return const SliverFillRemaining(
-                    child: Center(child: CircularProgressIndicator()),
-                  );
-                }
-// //! Properties
-                if (searchController.propertyList.isEmpty) {
-                  return const SliverFillRemaining(
-                    // hasScrollBody: false,
-                    child: Center(child: noDataPage()),
-                  );
-                }
-// //! AGENT
-                if (searchController.agentList.isEmpty) {
-                  return const SliverFillRemaining(
-                    child: Center(child: noDataPage()),
-                  );
-                }
-//! error
-                if (searchController.hasError.value) {
-                  return const SliverFillRemaining(
-                    // fillOverscroll: true,
-                    // hasScrollBody: true,
-                    child: Center(child: ErrorPage()),
-                  );
-                }
-//$ found data
-                final isPropertyMode =
-                    searchController.searchMode.value == SearchMode.properties;
-                if (isPropertyMode) {
-                  return PropertySearchFeed(
-                      propertyList: searchController.propertyList.toList());
-                } else {
-                  return AgentSearchFeed(agentList: searchController.agentList);
-                }
+                //! content body
+                Obx(() {
+                  if (searchController.isLoading.value &&
+                      searchController.propertyList.isEmpty &&
+                      searchController.agentList.isEmpty) {
+                    return const SliverFillRemaining(
+                      child: Center(child: CircularProgressIndicator()),
+                    );
+                  }
 
-                //! Mock Data
-                // final isPropertyMode =
-                //     searchController.searchMode.value == SearchMode.properties;
+                  if (searchController.hasError.value) {
+                    return const SliverFillRemaining(
+                      child: Center(child: ErrorPage()),
+                    );
+                  }
 
-                // if (isPropertyMode) {
-                //   // Example mock property list
-                //   final mockProperties = [
-                //     PropertyModel(
-                //       id: 1,
-                //       title: 'Luxury Apartment',
-                //       location: Location(
-                //         country: 'Syria',
-                //         governorate: 'Damascus',
-                //         city: 'Damascus',
-                //         quarter: 'Al-Midan',
-                //         street: 'Main Street',
-                //         lat: 33.5,
-                //         lon: 36.3,
-                //       ),
-                //       firstImage: 'https://via.placeholder.com/300',
-                //       price: 1500,
-                //       rooms: 3,
-                //       bathrooms: 2,
-                //     ),
-                //     PropertyModel(
-                //       id: 2,
-                //       title: 'Cozy House',
-                //       location: Location(
-                //         country: 'Syria',
-                //         governorate: 'Aleppo',
-                //         city: 'Aleppo',
-                //         quarter: 'Salahuddin',
-                //         street: 'Second Street',
-                //         lat: 36.2,
-                //         lon: 37.1,
-                //       ),
-                //       firstImage: 'https://via.placeholder.com/300',
-                //       price: 1200,
-                //       rooms: 2,
-                //       bathrooms: 1,
-                //     ),
-                //   ];
-
-                //   return PropertySearchFeed(propertyList: mockProperties);
-                // } else {
-                //   // Example mock agent list
-                //   final mockAgents = [
-                //     Agent(
-                //       id: 1,
-                //       name: 'John Doe',
-                //       photo: 'https://via.placeholder.com/150',
-                //       rating: 4.5,
-                //       properties: [],
-                //     ),
-                //     Agent(
-                //       id: 2,
-                //       name: 'Jane Smith',
-                //       photo: 'https://via.placeholder.com/150',
-                //       rating: 4.2,
-                //       properties: [],
-                //     ),
-                //   ];
-
-                //   return AgentSearchFeed(agentList: mockAgents);
-                // }
-              }),
-            ],
+                  if (isPropertyMode) {
+                    if (searchController.propertyList.isEmpty) {
+                      return const SliverFillRemaining(
+                        child: Center(child: noDataPage()),
+                      );
+                    }
+                    return PropertySearchFeed(
+                        propertyList: searchController.propertyList.toList());
+                  } else {
+                    if (searchController.agentList.isEmpty) {
+                      return const SliverFillRemaining(
+                        child: Center(child: noDataPage()),
+                      );
+                    }
+                    return AgentSearchFeed(
+                        agentList: searchController.agentList.toList());
+                  }
+                }),
+              ],
+            ),
           );
         }),
       ),
@@ -244,121 +186,85 @@ class Search extends StatelessWidget {
   }
 }
 
+//#######################
+// Controller with pagination
 
+class SearchController extends GetxController {
+  RxList<PropertyModel> propertyList = <PropertyModel>[].obs;
+  RxList<Agent> agentList = <Agent>[].obs;
 
+  RxBool isLoading = false.obs;
+  RxBool hasError = false.obs;
 
-//#################
-// import 'package:easyrent/presentation/views/search/controller/search_controller.dart';
-// import 'package:flutter/material.dart';
-// import 'package:get/get.dart';
+  Rx<SearchMode> searchMode = SearchMode.properties.obs;
 
-// class Search extends StatelessWidget {
-//   Search({super.key});
-//   final   searchController = Get.put(Search_Controller());
+  int currentPage = 1;
+  final int numPerPage = 10;
+  bool hasMoreProperties = true;
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(title: Text('Search Demo')),
-//       body: Padding(
-//         padding: const EdgeInsets.all(12.0),
-//         child: Obx(() {
-//           final isPropertyMode =
-//               searchController.searchMode.value == SearchMode.properties;
-//           return Column(
-//             children: [
-//               // Search bar
-//               TextField(
-//                 onChanged: (value) => searchController.search(value),
-//                 decoration: InputDecoration(
-//                   hintText: 'Search...',
-//                   border: OutlineInputBorder(),
-//                   suffixIcon: Icon(Icons.search),
-//                 ),
-//               ),
-//               SizedBox(height: 10),
-//               // Mode toggle
-//               Row(
-//                 mainAxisAlignment: MainAxisAlignment.center,
-//                 children: [
-//                   ChoiceChip(
-//                     label: Text('Agents'),
-//                     selected:
-//                         searchController.searchMode.value == SearchMode.agents,
-//                     onSelected: (selected) {
-//                       if (selected)
-//                         searchController.setSearchMode(SearchMode.agents);
-//                     },
-//                   ),
-//                   SizedBox(width: 10),
-//                   ChoiceChip(
-//                     label: Text('Properties'),
-//                     selected: searchController.searchMode.value ==
-//                         SearchMode.properties,
-//                     onSelected: (selected) {
-//                       if (selected)
-//                         searchController.setSearchMode(SearchMode.properties);
-//                     },
-//                   ),
-//                 ],
-//               ),
-//               SizedBox(height: 10),
-//               // Results
-//               Expanded(
-//                 child: Obx(() {
-//                   if (searchController.isLoading.value) {
-//                     return Center(child: CircularProgressIndicator());
-//                   }
-//                   if (searchController.hasError.value) {
-//                     return Center(
-//                         child: Text(
-//                             'Error: ${searchController.errorMessage.value}'));
-//                   }
-//                   final agentList = searchController.agentList;
-//                   final propertyList = searchController.propertyList;
+  void setSearchMode(SearchMode mode) {
+    searchMode.value = mode;
+    if (mode == SearchMode.properties) {
+      if (propertyList.isEmpty) fetchProperties(reset: true);
+    } else {
+      if (agentList.isEmpty) fetchAgents();
+    }
+  }
 
-//                   if (isPropertyMode) {
-//                     if (propertyList.isEmpty)
-//                       return Center(child: Text('No properties found.'));
-//                     return ListView.builder(
-//                       itemCount: propertyList.length,
-//                       itemBuilder: (_, index) {
-//                         final p = propertyList[index];
-//                         return ListTile(
-//                           leading: p.firstImage != null
-//                               ? Image.network(p.firstImage!,
-//                                   width: 50, height: 50, fit: BoxFit.cover)
-//                               : Icon(Icons.home, size: 50),
-//                           title: Text(p.title ?? 'No Title'),
-//                           subtitle: Text(p.location?.street ?? ''),
-//                           trailing:
-//                               Text('\$${p.price?.toStringAsFixed(0) ?? '0'}'),
-//                         );
-//                       },
-//                     );
-//                   } else {
-//                     if (agentList.isEmpty)
-//                       return Center(child: Text('No agents found.'));
-//                     return ListView.builder(
-//                       itemCount: agentList.length,
-//                       itemBuilder: (_, index) {
-//                         final a = agentList[index];
-//                         return ListTile(
-//                           leading: Image.network(a.photo,
-//                               width: 50, height: 50, fit: BoxFit.cover),
-//                           title: Text(a.name),
-//                           subtitle: Text(
-//                               'Rating: ${a.rating} | Properties: ${a.properties.length}'),
-//                         );
-//                       },
-//                     );
-//                   }
-//                 }),
-//               ),
-//             ],
-//           );
-//         }),
-//       ),
-//     );
-//   }
-// }
+  Future<void> fetchProperties({bool reset = false}) async {
+    if (isLoading.value || !hasMoreProperties) return;
+    try {
+      isLoading.value = true;
+      if (reset) {
+        currentPage = 1;
+        hasMoreProperties = true;
+        propertyList.clear();
+      }
+      final response = await Dio().get(
+        'https://83b08d2bbc5a.ngrok-free.app/properties/all',
+        queryParameters: {
+          'pageNum': currentPage,
+          'numPerPage': numPerPage,
+        },
+      );
+
+      final List<PropertyModel> fetched = (response.data['data'] as List)
+          .map((e) => PropertyModel.fromJson(e))
+          .toList();
+
+      if (fetched.length < numPerPage) hasMoreProperties = false;
+      propertyList.addAll(fetched);
+      currentPage++;
+    } catch (e) {
+      hasError.value = true;
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  Future<void> fetchAgents() async {
+    try {
+      isLoading.value = true;
+      final response =
+          await Dio().get('https://83b08d2bbc5a.ngrok-free.app/users/agency');
+      final List<Agent> fetched = (response.data['data'] as List)
+          .map((e) => Agent.fromJson(e))
+          .toList();
+      agentList.assignAll(fetched);
+    } catch (e) {
+      hasError.value = true;
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  void search(String query) {
+    if (searchMode.value == SearchMode.properties) {
+      fetchProperties(reset: true); // optionally add query param
+    } else {
+      fetchAgents(); // optionally filter by query
+    }
+  }
+}
+
+enum SearchMode { properties, agents }

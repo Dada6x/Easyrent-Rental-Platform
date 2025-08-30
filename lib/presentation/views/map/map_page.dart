@@ -1,6 +1,5 @@
 import 'package:bounce/bounce.dart';
 import 'package:card_swiper/card_swiper.dart';
-import 'package:easyrent/core/constants/utils/rawSnackBar.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';

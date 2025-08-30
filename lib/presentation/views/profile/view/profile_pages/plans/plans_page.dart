@@ -70,7 +70,7 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
   }
 
   String currentPlan = "Platinum Plan";
-  bool _pendingLogout = false;
+  final bool _pendingLogout = false;
 
   void _subscribeToPlan(String plan) {
     setState(() {

@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:easyrent/core/constants/utils/pages/nodata_page.dart';
-import 'package:easyrent/core/services/api/end_points.dart';
 import 'package:easyrent/data/models/propertyModel.dart';
 import 'package:easyrent/presentation/views/profile/view/profile_pages/agent-my/widgets/mypropertyCard.dart';
 import 'package:flutter/material.dart';

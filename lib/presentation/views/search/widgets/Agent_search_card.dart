@@ -1,6 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:easyrent/core/constants/utils/error_loading_mssg.dart';
-import 'package:easyrent/data/models/agent_model.dart';
 import 'package:easyrent/main.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
