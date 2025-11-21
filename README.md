@@ -1,5 +1,5 @@
 # 🏠 EasyRent – Real Estate Listing & Rental Platform
-![](poster/poster.png)
+![Poster](poster/poster.png)
 
 **Tech Stack**: Flutter, Dart, GetX, Firebase, Stripe API
 
@@ -7,43 +7,37 @@ EasyRent is a cross-platform mobile application designed to simplify the way use
 
 ---
 
+## 🎥 App Showcase
+
+> _A quick preview of how EasyRent looks and feels in action._
+
+![EasyRent Showcase](poster/showcase.gif)
+
+---
+
 ## 🚀 Features
 
 ### 🌐 Property Discovery
-
 - **Advanced Filtering**: Find properties by location, price, area, room count, and more.
 - **Map Integration**: View property locations using interactive maps.
 - **360° Panoramic Views**: Virtually tour properties with immersive panoramic images.
 
 ### 💳 Payment & Security
-
 - **Stripe Integration**: Secure payment system for subscriptions and premium features.
 - **Vault System**: Secure storage for credit card information.
 
 ### 🧠 UI/UX & Performance
-
-- **Responsive Design**: Clean, modern interface adaptable to all screen sizes.
-- **Shimmer Loading Effects**: Enhanced loading experience with shimmer placeholders.
-- **Smooth Animations**: Polished transitions and user interactions.
-- **Optimized Performance**: Lightweight and fast with clean architecture and state management using GetX.
+- **Responsive Design**: Modern interface adaptable to all screen sizes.
+- **Shimmer Loading Effects**: Smooth loading experience with shimmer placeholders.
+- **Polished Animations**: Clean transitions and user interactions.
+- **Optimized Performance**: Lightweight and fast with clean architecture and GetX.
 
 ---
 
 ## 🛠️ Architecture
 
-- **Clean Architecture**: Separation of concerns across presentation, domain, and data layers.
-- **Service-Based Approach**: Modular services for authentication, payments, and property data.
-- **Secure Local Storage**: Vault-based encryption for sensitive data.
+The project follows a **clean and scalable architecture**, using a modular service-based structure and separation of concerns across presentation, domain, and data layers.
 
----
-
-## 📬 Contact
-
-If you're interested in collaborating, providing feedback, or learning more, feel free to reach out!
-
----
-
-> _EasyRent – Your Gateway to Perfect Homes._
 
 app achitacture
 
@@ -201,18 +195,7 @@ lib
 │     │  │  └─ seeall.dart
 │     │  └─ widgets
 │     │     ├─ agent_widget.dart
-│     │     ├─ comments_section_widget.dart
-│     │     ├─ comment_widget.dart
-│     │     ├─ feed_page.dart
-│     │     ├─ filterChips.dart
-│     │     ├─ gallery_widget.dart
-│     │     ├─ home_appbar.dart
-│     │     ├─ horizontal_feed_grid.dart
-│     │     ├─ map_location_widget.dart
-│     │     ├─ panorama_page.dart
-│     │     ├─ property_card_big.dart
-│     │     ├─ property_card_smoll.dart
-│     │     └─ searchbar.dart
+|     |     |......
 │     └─ search
 │        ├─ controller
 │        │  └─ search_controller.dart
@@ -224,11 +207,8 @@ lib
 │        │  └─ search_page.dart
 │        └─ widgets
 │           ├─ agent_feed.dart
-│           ├─ Agent_search_card.dart
-│           ├─ property_widget_search_card.dart
-│           ├─ search_appbar.dart
-│           ├─ search_feed.dart
 │           └─ web_page.dart
+|           ......
 └─ routes
    ├─ apppages.dart
    └─ routes.dart

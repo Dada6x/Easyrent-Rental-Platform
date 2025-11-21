@@ -106,7 +106,7 @@ class Search extends StatelessWidget {
                                 color: searchController.searchMode.value ==
                                         SearchMode.properties
                                     ? white
-                                    : green,
+                                    : blue,
                               ),
                               side: BorderSide.none,
                               showCheckmark: false,

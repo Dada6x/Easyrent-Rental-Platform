@@ -8,19 +8,31 @@
     "user": {
       "username": "fatma_listing"
     },
+    "propertyType": "Apartment",
+    "heatingType": "Electric Heating",
+    "flooringType": "Tile",
+    "hasGarage": false,
+    "hasGarden": false,
+    "isFloor": true,
+    "floorNumber": 3,
     "price": 3.4,
     "location": {
-      "country": "مصر",
-      "governorate": "الغربية",
-      "city": "طنطا",
-      "quarter": "حي أول طنطا",
-      "street": "شارع رئيسي",
+      "country": "Egypt",
+      "governorate": "Gharbia",
+      "city": "Tanta",
+      "quarter": "Tanta First District",
+      "street": "Main Street",
       "lat": 30.7865,
       "lon": 30.9955
     },
     "state": "visible",
-    "propertyImages": null,
-    "firstImage": "https://images.unsplash.com/photo-1505015920881-0f83c2f7c95e"
+    "propertyImages": [
+      "https://images.unsplash.com/photo-1505015920881-0f83c2f7c95e"
+    ],
+    "firstImage": "https://images.unsplash.com/photo-1505015920881-0f83c2f7c95e",
+    "panoramaImages": {
+      "Living Room": "https://storage.googleapis.com/gtv-videos-bucket/sample/images/BigBuckBunny.jpg"
+    }
   },
   {
     "rooms": 5,
@@ -31,19 +43,31 @@
     "user": {
       "username": "sara_admin"
     },
+    "propertyType": "Duplex",
+    "heatingType": "Gas Heating",
+    "flooringType": "Wood",
+    "hasGarage": true,
+    "hasGarden": true,
+    "isFloor": false,
+    "floorNumber": null,
     "price": 5.2,
     "location": {
-      "country": "مصر",
-      "governorate": "أسيوط",
-      "city": "أسيوط",
-      "quarter": "منطقة الوليدية",
-      "street": "شارع رئيسي",
+      "country": "Egypt",
+      "governorate": "Asyut",
+      "city": "Asyut",
+      "quarter": "Al-Walidiya District",
+      "street": "Main Street",
       "lat": 27.1809,
       "lon": 31.1837
     },
     "state": "hidden",
-    "propertyImages": null,
-    "firstImage": "https://images.unsplash.com/photo-1523755231516-e43fd2e8dca5"
+    "propertyImages": [
+      "https://images.unsplash.com/photo-1523755231516-e43fd2e8dca5"
+    ],
+    "firstImage": "https://images.unsplash.com/photo-1523755231516-e43fd2e8dca5",
+    "panoramaImages": {
+      "Master Bedroom": "https://storage.googleapis.com/gtv-videos-bucket/sample/images/Sintel.jpg"
+    }
   },
   {
     "rooms": 2,
@@ -54,19 +78,31 @@
     "user": {
       "username": "youssef_agent"
     },
+    "propertyType": "Studio",
+    "heatingType": "Electric Heating",
+    "flooringType": "Ceramic",
+    "hasGarage": false,
+    "hasGarden": false,
+    "isFloor": true,
+    "floorNumber": 1,
     "price": 2.5,
     "location": {
-      "country": "مصر",
-      "governorate": "الجيزة",
-      "city": "الجيزة",
-      "quarter": "المهندسين",
-      "street": "شارع رئيسي",
+      "country": "Egypt",
+      "governorate": "Giza",
+      "city": "Giza",
+      "quarter": "Mohandessin",
+      "street": "Main Street",
       "lat": 30.0131,
       "lon": 31.2089
     },
     "state": "hidden",
-    "propertyImages": null,
-    "firstImage": "https://images.unsplash.com/photo-1505691723518-36a5ac3be353"
+    "propertyImages": [
+      "https://images.unsplash.com/photo-1505691723518-36a5ac3be353"
+    ],
+    "firstImage": "https://images.unsplash.com/photo-1505691723518-36a5ac3be353",
+    "panoramaImages": {
+      "Kitchen": "https://storage.googleapis.com/gtv-videos-bucket/sample/images/ElephantsDream.jpg"
+    }
   },
   {
     "rooms": 3,
@@ -77,18 +113,30 @@
     "user": {
       "username": "dina_owner"
     },
+    "propertyType": "Villa",
+    "heatingType": "Central Heating",
+    "flooringType": "Marble",
+    "hasGarage": true,
+    "hasGarden": true,
+    "isFloor": false,
+    "floorNumber": null,
     "price": 6.1,
     "location": {
-      "country": "مصر",
-      "governorate": "القليوبية",
-      "city": "بنها",
-      "quarter": "شارع فريد ندا",
-      "street": "شارع رئيسي",
+      "country": "Egypt",
+      "governorate": "Qalyubia",
+      "city": "Banha",
+      "quarter": "Farid Nada Street",
+      "street": "Main Street",
       "lat": 30.4654,
       "lon": 31.1848
     },
     "state": "visible",
-    "propertyImages": null,
-    "firstImage": "https://images.unsplash.com/photo-1516455590571-18256e5bb9ff"
+    "propertyImages": [
+      "https://images.unsplash.com/photo-1516455590571-18256e5bb9ff"
+    ],
+    "firstImage": "https://images.unsplash.com/photo-1516455590571-18256e5bb9ff",
+    "panoramaImages": {
+      "Garden": "https://storage.googleapis.com/gtv-videos-bucket/sample/images/Subaru-Outback.jpg"
+    }
   }
 ]

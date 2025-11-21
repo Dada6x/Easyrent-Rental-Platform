@@ -39,7 +39,9 @@ class PropertyCardSmall extends StatelessWidget {
           onPressed: () async {
             final property = await propertyDio.propertyDetailsById(id);
             Get.to(
-              () => PropertyDetailsPage(property: property),
+              () => PropertyDetailsPage(
+                  // property: property
+                  ),
               duration: const Duration(milliseconds: 600),
             );
           },
@@ -59,7 +61,7 @@ class PropertyCardSmall extends StatelessWidget {
                       child: FancyShimmerImage(
                         height: 140.h,
                         boxFit: BoxFit.cover,
-                        imageUrl:"https://9f7fa8d46ede.ngrok-free.app/properties-media/images/$image" ,
+                        imageUrl: image,
                         errorWidget: const ErrorLoadingWidget(),
                       ),
                     ),

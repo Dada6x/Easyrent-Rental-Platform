@@ -64,6 +64,7 @@ class AppController extends GetxController {
             break;
           }
         case InternetStatus.disconnected:
+          // ! this makes the app dose not  work when there is no internet access :3
           isOffline.value = false;
 
           if (isFirstCheck == true) {

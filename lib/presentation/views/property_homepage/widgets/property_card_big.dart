@@ -40,7 +40,10 @@ class PropertyCardBig extends StatelessWidget {
           SystemSound.play(SystemSoundType.click);
           final property = await propertyDio.propertyDetailsById(id);
           Get.to(
-            () => PropertyDetailsPage(property: property),
+            () => PropertyDetailsPage(
+              
+              // property: property
+              ),
             duration: const Duration(milliseconds: 600),
           );
         },
@@ -66,7 +69,7 @@ class PropertyCardBig extends StatelessWidget {
                           height: 340.h,
                           width: 250.w,
                           boxFit: BoxFit.cover,
-                          imageUrl: "https://9f7fa8d46ede.ngrok-free.app/properties-media/images/$imagePath",
+                          imageUrl: imagePath,
                           errorWidget: const ErrorLoadingWidget()),
                       //! Gradient Overlay
                       Positioned.fill(

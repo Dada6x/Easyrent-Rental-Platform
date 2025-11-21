@@ -47,7 +47,9 @@ class MyPropertyCard extends StatelessWidget {
                   Navigator.pop(context);
                   final prop =
                       await propertyDio.propertyDetailsById(property.id!);
-                  Get.to(() => PropertyDetailsPage(property: prop));
+                  Get.to(() => PropertyDetailsPage(
+                      // property: prop
+                      ));
                 },
               ),
               ListTile(

@@ -135,26 +135,18 @@ class Userrepo {
 //!-----------------------Get Profile Info ---------------------------------->
   Future<Either<ServerException, User>> getProfile() async {
     try {
-      final response = await api.get(
-        EndPoints.me,
-      );
-      debug.i("Profile Request ${response.statusCode}");
-      if (response.statusCode == 200) {
-        final user = User.fromJson(response.data);
+      final jsonData = await _loadJson('user.json');
+      final users = jsonData as List;
+      if (users.isNotEmpty) {
+        final user = User.fromJson(users[0]);
         AppSession().user = user;
         return Right(user);
       } else {
-        return Left(ServerException(
-            errorModel:
-                ErrorModel(response.statusCode, response.errorMessage)));
+        return Left(
+            ServerException(errorModel: ErrorModel(404, "No user data found")));
       }
-    } on ServerException catch (e) {
-      debug.e("ServerException: $e");
-      showErrorSnackbar(" exception ${e.errorModel.message}");
-      return Left(e);
-    } catch (e, s) {
+    } catch (e) {
       debug.e("Unexpected exception: $e");
-      debug.e("Unexpected exception: $s");
       return Left(ServerException(errorModel: ErrorModel(4, e.toString())));
     }
   }
@@ -423,7 +415,7 @@ Future<void> setSubscribeSuccess() async {
   await prefs.setBool('isSuccess', true);
 }
 
-Future<Map<String, dynamic>> _loadJson(String fileName) async {
+Future<dynamic> _loadJson(String fileName) async {
   final data = await rootBundle.loadString('assets/json/$fileName');
   return json.decode(data);
 }

@@ -5,7 +5,7 @@ class EndPoints {
   // "http://localhost:3000";
   static String imageUrl(String imagePath) =>
       "https://9f7fa8d46ede.ngrok-free.app/properties-media/images/property/images/$imagePath";
-  static String login = "/auth/login";
+  static String login = "https://dummyjson.com/c/eb3d-d728-4cdf-ab19";
   // static String Logout = "auth/logout";
   static String me = "/auth/me";
   static String registerUser = "/user/register";

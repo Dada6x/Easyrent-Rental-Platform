@@ -179,7 +179,7 @@ class PropertiesRepo {
   //!------------------------ get all properties(homePage)----------------------------->
   Future<List<OuterPropertyModel>> getProperties() async {
     try {
-      final responseData = await _loadJson('getAllProperties.json');
+      final responseData = await _loadJson('allproperties.json');
       return OuterPropertyModel.propertiesFromSnapshot(responseData);
     } catch (e) {
       debug.e("Mock error: $e");
@@ -201,8 +201,13 @@ class PropertiesRepo {
   //!------------------------ get Properties Details ------------------------------->
   Future<PropertyModel> propertyDetailsById(int id) async {
     try {
-      final json = await _loadJson('propertyDetails.json');
-      return PropertyModel.fromJson(json);
+      final jsonData = await _loadJson('propertydetails.json');
+      final properties = jsonData as List;
+      final propertyJson = properties.firstWhere(
+        (prop) => prop['id'] == id,
+        orElse: () => {},
+      );
+      return PropertyModel.fromJson(propertyJson);
     } catch (e) {
       debug.e("Mock error: $e");
       return PropertyModel.fromJson({});

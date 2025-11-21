@@ -19,7 +19,6 @@ class _SplashScreenState extends State<SplashScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _animation;
-  
 
   @override
   void initState() {
@@ -33,7 +32,17 @@ class _SplashScreenState extends State<SplashScreen>
       CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
     );
 
-    Future.delayed(const Duration(seconds: 2), () {
+    //! fetch the User Profile During the SplashScreen only if hes Logged in
+    Future<void> fetchProfile = Future.value();
+    if (userPref?.getBool("isLoggedIn") == true) {
+      debug.f("User is Logged in so im fetching his Data ");
+      fetchProfile = _fetchUserProfile();
+    } else {
+      debug.w("User is Not Logged in so im Not fetching his Data ");
+    }
+
+    Future.delayed(const Duration(seconds: 2), () async {
+      await fetchProfile;
       _controller.forward().whenComplete(() {
         // ! just the introduction Screens sharedPref
         if (userPref?.getBool("isFirst") == true) {
@@ -43,14 +52,14 @@ class _SplashScreenState extends State<SplashScreen>
         }
       });
     });
+  }
 
-    //! fetch the User Profile During the SplashScreen only if hes Logged in
-    if (userPref?.getBool("isLoggedIn") == true) {
-      debug.f("User is Logged in so im fetching his Data ");
-      userDio.getProfile();
-    } else {
-      debug.w("User is Not Logged in so im Not fetching his Data ");
-    }
+  Future<void> _fetchUserProfile() async {
+    final result = await userDio.getProfile();
+    result.fold(
+      (l) => debug.e("Failed to fetch profile: $l"),
+      (r) => debug.i("Profile fetched successfully"),
+    );
   }
 
   @override

@@ -1,0 +1,13 @@
+[
+  {
+    "id": 1,
+    "phone": "+123456789",
+    "username": "Yahea",
+    "location": { "lat": 30.0444, "lon": 31.2357 },
+    "age": 25,
+    "userType": "agent",
+    "isAccountVerified": true,
+    "profileImage": null,
+    "plan": { "id": 1 }
+  }
+]

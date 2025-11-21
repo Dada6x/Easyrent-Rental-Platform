@@ -91,6 +91,7 @@ void main() async {
     ),
   );
 
+  userPref?.setBool('isLoggedIn', true);
   // the payment Card gyroscope 3D shi
   await Motion.instance.initialize();
   Motion.instance.setUpdateInterval(60.fps);

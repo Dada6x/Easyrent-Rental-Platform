@@ -1,0 +1,138 @@
+[
+  {
+    "id": 200,
+    "title": "Cozy Apartment in Tanta",
+    "description": "A beautiful 1-bedroom apartment with modern amenities.",
+    "rooms": 1,
+    "bathrooms": 3,
+    "area": 150,
+    "price": 3.4,
+    "isForRent": true,
+    "propertyType": "apartment",
+    "heatingType": "central",
+    "flooringType": "tile",
+    "isFloor": false,
+    "floorNumber": 1,
+    "hasGarage": true,
+    "hasGarden": false,
+    "location": {
+      "country": "مصر",
+      "governorate": "الغربية",
+      "city": "طنطا",
+      "quarter": "حي أول طنطا",
+      "street": "شارع رئيسي",
+      "lat": 30.7865,
+      "lon": 30.9955
+    },
+    "state": "visible",
+    "propertyImage": "https://images.unsplash.com/photo-1505015920881-0f83c2f7c95e",
+    "propertyImages": ["https://images.unsplash.com/photo-1505015920881-0f83c2f7c95e"],
+    "firstImage": "https://images.unsplash.com/photo-1505015920881-0f83c2f7c95e",
+    "agent": {
+      "id": 1,
+      "username": "fatma_listing"
+    }
+  },
+  {
+    "id": 201,
+    "title": "Spacious House in Asyut",
+    "description": "A large 5-bedroom house perfect for families.",
+    "rooms": 5,
+    "bathrooms": 3,
+    "area": 180,
+    "price": 5.2,
+    "isForRent": true,
+    "propertyType": "house",
+    "heatingType": "electric",
+    "flooringType": "wood",
+    "isFloor": true,
+    "floorNumber": 2,
+    "hasGarage": true,
+    "hasGarden": true,
+    "location": {
+      "country": "مصر",
+      "governorate": "أسيوط",
+      "city": "أسيوط",
+      "quarter": "منطقة الوليدية",
+      "street": "شارع رئيسي",
+      "lat": 27.1809,
+      "lon": 31.1837
+    },
+    "state": "hidden",
+    "propertyImage": "https://images.unsplash.com/photo-1523755231516-e43fd2e8dca5",
+    "propertyImages": ["https://images.unsplash.com/photo-1523755231516-e43fd2e8dca5"],
+    "firstImage": "https://images.unsplash.com/photo-1523755231516-e43fd2e8dca5",
+    "agent": {
+      "id": 2,
+      "username": "sara_admin"
+    }
+  },
+  {
+    "id": 202,
+    "title": "Modern Flat in Giza",
+    "description": "A stylish 2-bedroom flat in the heart of Giza.",
+    "rooms": 2,
+    "bathrooms": 2,
+    "area": 80,
+    "price": 2.5,
+    "isForRent": true,
+    "propertyType": "flat",
+    "heatingType": "gas",
+    "flooringType": "carpet",
+    "isFloor": false,
+    "floorNumber": 3,
+    "hasGarage": false,
+    "hasGarden": false,
+    "location": {
+      "country": "مصر",
+      "governorate": "الجيزة",
+      "city": "الجيزة",
+      "quarter": "المهندسين",
+      "street": "شارع رئيسي",
+      "lat": 30.0131,
+      "lon": 31.2089
+    },
+    "state": "hidden",
+    "propertyImage": "https://images.unsplash.com/photo-1505691723518-36a5ac3be353",
+    "propertyImages": ["https://images.unsplash.com/photo-1505691723518-36a5ac3be353"],
+    "firstImage": "https://images.unsplash.com/photo-1505691723518-36a5ac3be353",
+    "agent": {
+      "id": 3,
+      "username": "youssef_agent"
+    }
+  },
+  {
+    "id": 203,
+    "title": "Luxury Villa in Benha",
+    "description": "An exquisite 3-bedroom villa with garden.",
+    "rooms": 3,
+    "bathrooms": 3,
+    "area": 200,
+    "price": 6.1,
+    "isForRent": true,
+    "propertyType": "villa",
+    "heatingType": "solar",
+    "flooringType": "marble",
+    "isFloor": true,
+    "floorNumber": 1,
+    "hasGarage": true,
+    "hasGarden": true,
+    "location": {
+      "country": "مصر",
+      "governorate": "القليوبية",
+      "city": "بنها",
+      "quarter": "شارع فريد ندا",
+      "street": "شارع رئيسي",
+      "lat": 30.4654,
+      "lon": 31.1848
+    },
+    "state": "visible",
+    "propertyImage": "https://images.unsplash.com/photo-1516455590571-18256e5bb9ff",
+    "propertyImages": ["https://images.unsplash.com/photo-1516455590571-18256e5bb9ff"],
+    "firstImage": "https://images.unsplash.com/photo-1516455590571-18256e5bb9ff",
+    "agent": {
+      "id": 4,
+      "username": "dina_owner"
+    }
+  }
+]
