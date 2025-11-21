@@ -66,7 +66,7 @@ class PropertyCardBig extends StatelessWidget {
                           height: 340.h,
                           width: 250.w,
                           boxFit: BoxFit.cover,
-                          imageUrl: EndPoints.imageUrl(imagePath),
+                          imageUrl: "https://9f7fa8d46ede.ngrok-free.app/properties-media/images/$imagePath",
                           errorWidget: const ErrorLoadingWidget()),
                       //! Gradient Overlay
                       Positioned.fill(

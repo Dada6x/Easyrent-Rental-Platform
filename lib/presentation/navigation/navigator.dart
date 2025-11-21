@@ -70,7 +70,7 @@ class _HomeScreenNavigatorState extends State<HomeScreenNavigator> {
           padding: EdgeInsets.all(8.r),
           child: Iconify(
             Ri.add_circle_fill,
-            color: blue,
+            color: Theme.of(context).colorScheme.primary,
             size: 30.sp,
           ),
         ),

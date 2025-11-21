@@ -182,7 +182,7 @@ lib/
 │   │   │   ├── property_list_page.dart
 │   │   │   └── property_detail_page.dart
 │   │   ├── //~bloc/
-│   │   │   ├── property_bloc.dart
+│   │   │   ├── property_bloc.dart3
 │   │   │   ├── property_event.dart
 │   │   │   └── property_state.dart
 │   │   ├── widgets/         # PropertyCard, PriceTag, etc.
@@ -215,72 +215,6 @@ UI rebuilds with the new state
 * Navigation through routes
 -----------------
 
-/! first 
-https://images.unsplash.com/photo-1518780664697-55e3ad937233?q=80&w=1965&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D
-https://plus.unsplash.com/premium_photo-1689609950069-2961f80b1e70?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D
-https://images.unsplash.com/photo-1523217582562-09d0def993a6?q=80&w=2080&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D
-https://images.unsplash.com/photo-1449844908441-8829872d2607?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D
-
-https://images.unsplash.com/photo-1523755231516-e43fd2e8dca5?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D
-https://images.unsplash.com/photo-1505691723518-36a5ac3be353?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D
-https://images.unsplash.com/photo-1501127122-f385ca6ddd9d?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D
-https://images.unsplash.com/photo-1505015920881-0f83c2f7c95e?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D
-https://images.unsplash.com/photo-1556020685-ae41abfc9365?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D
-https://images.unsplash.com/photo-1516455590571-18256e5bb9ff?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D
-*/
-
-/*!SECTION
-
-
 
 */
 
-//TODO
-//! (1)  Search And Filtering
-//! (2)  Agent Details By Id
-//! (3)  Notifications
-//! (4)  Profile Image Error
-//! (5)  Upgrade from User to Agent.
-//! (6)  AGENT ROLE ( upload,delete,edit,myProperties)
-//! (7)  icon for the application.
-
-
-
-
-//TOODO FINAL SHIT 
-//! Get Agent By Id 
-// ! Notifications consle firebase
-//! homepage femboy 
-//! create 
-//! pfp Request
-//! Upload Property
-//! 
-
-
-//! normal_user 0953266666 lim1234 
-//@ agency_user 0953266661 lim 1234
-//? admin_user 0953266662 lim 1234
-
-/*  
-DarkMode and Light mode 
-online offline connectivity 
-svg replacer for color efficenty 
-the map was web.g not png so its not pixelated 
-the logging system but it need some fixes ( if logged fetch data if not dont fetch )
-the 
-
-
- */
-
-//! things done wrong 
-/*
-we didnt make an figma which was the first thing to be done.
-malaz waz znji 
-we got late in the ربط
-
-the images must been from the web in order to make the size of the app smaller 
-notifications firebase 
-the Search 
-the Payment
-
- */

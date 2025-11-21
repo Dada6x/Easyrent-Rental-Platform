@@ -1,8 +1,10 @@
 class EndPoints {
-  static String baseUrl = "https://18fbfdf5e6a5.ngrok-free.app/";
+  static String baseUrl = "https://eeb3703e6943.ngrok-free.app";
+
+  // https://eeb3703e6943.ngrok-free.app
   // "http://localhost:3000";
   static String imageUrl(String imagePath) =>
-      "${baseUrl}property/images/$imagePath";
+      "https://9f7fa8d46ede.ngrok-free.app/properties-media/images/property/images/$imagePath";
   static String login = "/auth/login";
   // static String Logout = "auth/logout";
   static String me = "/auth/me";

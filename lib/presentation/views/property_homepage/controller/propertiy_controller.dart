@@ -38,10 +38,11 @@ class PropertiesController extends GetxController {
   void fetchAgents() async {
     debug.w("Fetching Agents in the GETX Controller ");
     try {
+
       isLoading(true);
       hasError(false);
-      final agents = await propertyDio.getAgentsJson();
-      agentList.assignAll(agents);
+      final agents = await propertyDio.getProperties();
+      // agentList.assignAll(agents);
     } catch (e) {
       hasError(true);
     } finally {

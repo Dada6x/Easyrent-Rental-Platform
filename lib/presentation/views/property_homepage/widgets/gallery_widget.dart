@@ -33,7 +33,7 @@ class GalleryWidget extends StatelessWidget {
                       height: 200.h,
                       child: FancyShimmerImage(
                         imageUrl:
-                            "http://192.168.1.4:3000/property/images/${images[index]}",
+                            "https://9f7fa8d46ede.ngrok-free.app/properties-media/images/${images[index]}",
                         boxFit: BoxFit.cover,
                         errorWidget: const ErrorLoadingWidget(),
                       ),

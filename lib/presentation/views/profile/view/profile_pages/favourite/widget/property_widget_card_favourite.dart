@@ -160,7 +160,7 @@ class _PropertyCardFavoriteState extends State<PropertyCardFavorite> {
                         onTap: (isLiked) async {
                           final newState = !isLiked;
                           try {
-                            propertyDio.changeFavoriteState(widget.id);
+                            // propertyDio.changeFavoriteState(widget.id);
                             showSnackbarWithContext(
                               "Property removed from Favorites",
                               context,

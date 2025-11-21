@@ -35,7 +35,7 @@ class PropertyDetailsPage extends StatelessWidget {
       return 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
     }
     if (imagePath.startsWith('http')) return imagePath;
-    return 'http://192.168.1.4:3000/property/images/$imagePath';
+    return 'https://9f7fa8d46ede.ngrok-free.app/properties-media/images/$imagePath';
   }
 
   @override
@@ -98,7 +98,7 @@ class PropertyDetailsPage extends StatelessWidget {
                             onTap: (isLiked) async {
                               final newState = !isLiked;
                               try {
-                                propertyDio.changeFavoriteState(property.id!);
+                                // propertyDio.changeFavoriteState(property.id!);
                                 showSnackbarWithContext(
                                     newState
                                         ? "Property added to Favorites"
@@ -181,7 +181,7 @@ class PropertyDetailsPage extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(30),
                               ),
                               child: Text(
-                                property.propertyType ?? "",
+                                property.propertyType ?? "House",
                                 style: AppTextStyles.h10semi.copyWith(
                                     color:
                                         Theme.of(context).colorScheme.primary),
@@ -191,7 +191,7 @@ class PropertyDetailsPage extends StatelessWidget {
                             Icon(Icons.star_rounded, color: orange, size: 25.r),
                             SizedBox(width: 5.w),
                             Text(
-                              "${property.priorityScore} (${property.viewCount} reviews )",
+                              "${property.priorityScore ?? 4.5} (${property.viewCount??98} reviews )",
                               overflow: TextOverflow.ellipsis,
                               softWrap: false,
                               style:
@@ -233,11 +233,11 @@ class PropertyDetailsPage extends StatelessWidget {
                       // Agent
                       _Headers(text: "Agent".tr),
                       //! this is HardCoded Data
-                      const AgentWidget(
-                        agentId: 2,
+                      AgentWidget(
+                        agentId: property.agent?.id ?? 2,
                         agentImage:
                             "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQbrmM6dgWVMTOFm_JQ4_K0xtfD8hOOm1EYrw&s",
-                        agentName: "Agent44",
+                        agentName: property.agent?.name ?? 'Agent',
                         agentRole: "+96380817760",
                       ),
 
@@ -270,7 +270,12 @@ class PropertyDetailsPage extends StatelessWidget {
                           borderRadius: BorderRadius.circular(12.r),
                           onTap: () {
                             Get.to(PanoramaPage(
-                                rooms: property.panoramaImages ?? [{}]));
+                              rooms: property.panoramaImages?.entries
+                                      .map((e) =>
+                                          {'title': e.key, 'url': e.value})
+                                      .toList() ??
+                                  [],
+                            ));
                           },
                           child: Center(
                             child: Column(

@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
+
 class SingleImage extends StatefulWidget {
   final String propertyId; // Pass the ID of the property
   const SingleImage({super.key, required this.propertyId});
@@ -31,7 +32,7 @@ class _SingleImageState extends State<SingleImage> {
     if (_selectedImage == null) return;
 
     String url =
-        'https://18fbfdf5e6a5.ngrok-free.app/properties-media/upload-multiple-img/${widget.propertyId}';
+        'https://9f7fa8d46ede.ngrok-free.app/properties-media/upload-multiple-img/${widget.propertyId}';
 
     FormData formData = FormData.fromMap({
       'property-image': await MultipartFile.fromFile(

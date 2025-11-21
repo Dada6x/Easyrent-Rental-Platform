@@ -231,7 +231,8 @@ class _ProfileState extends State<Profile> {
                           enabled: AppSession().user == null,
                           child: Text(
                               textAlign: TextAlign.center,
-                              AppSession().user?.username ?? "Loading.......",
+                              // AppSession().user?.username ?? "Loading.......",
+                              "Agent-acc",
                               style: AppTextStyles.h24semi),
                         ),
                       ),

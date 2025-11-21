@@ -1,4 +1,4 @@
-import 'package:easyrent/data/models/user_model.dart';
+import 'package:easyrent/data/models/agent_model.dart';
 import 'location_model.dart';
 
 class PropertyModel {
@@ -21,7 +21,7 @@ class PropertyModel {
   String? state;
   String? propertyImage;
   List<String>? propertyImages;
-  List<Map<String, String>>? panoramaImages;
+  Map<String, String>? panoramaImages;
   int? voteScore;
   int? viewCount;
   int? priorityScore;
@@ -34,7 +34,7 @@ class PropertyModel {
   int? acceptCount;
   String? status;
 
-  User? user;
+  Agent? agent;
   PriorityScoreEntity? priorityScoreEntity;
 
   PropertyModel({
@@ -69,7 +69,7 @@ class PropertyModel {
     this.priorityScoreRate,
     this.acceptCount,
     this.status,
-    this.user,
+    this.agent,
     this.priorityScoreEntity,
   });
 
@@ -91,7 +91,6 @@ class PropertyModel {
     id = json['id'];
     title = json['title'];
     description = json['description'];
-
     price = json['price'] != null
         ? (json['price'] is String
             ? double.tryParse(json['price']) ?? 0.0
@@ -105,12 +104,13 @@ class PropertyModel {
     propertyImage = json['propertyImage'];
     isFavorite = json['isFavorite'];
     voteValue = json['voteValue'];
-    firstImage = json['firstImage'] ?? ''; // fallback if null
+    firstImage = json['firstImage'] ?? '';
     priorityScoreRate = json['priorityScoreRate'];
     acceptCount = json['acceptCount'];
     status = json['status'];
 
-    user = json['user'] != null ? User.fromJson(json['user']) : null;
+    agent = json['agent'] != null ? Agent.fromJson(json['agent']) : null;
+
     priorityScoreEntity = json['priorityScoreEntity'] != null
         ? PriorityScoreEntity.fromJson(json['priorityScoreEntity'])
         : null;
@@ -118,9 +118,11 @@ class PropertyModel {
     propertyImages =
         (json['propertyImages'] as List?)?.map((e) => e.toString()).toList();
 
-    panoramaImages = (json['panoramaImages'] as List?)
-        ?.map((e) => Map<String, String>.from(e as Map))
-        .toList();
+    // ✅ Fix for panoramaImages
+    panoramaImages = json['panoramaImages'] != null
+        ? (json['panoramaImages'] as Map<String, dynamic>)
+            .map((key, value) => MapEntry(key, value.toString()))
+        : null;
 
     voteScore = json['voteScore'];
     viewCount = json['viewCount'];

@@ -159,7 +159,7 @@ class MyPropertyCard extends StatelessWidget {
 
                               final dio = Dio();
                               final response = await dio.delete(
-                                "https://83b08d2bbc5a.ngrok-free.app/properties-on/$propertyId",
+                                "https://9f7fa8d46ede.ngrok-free.app/properties-on/$propertyId",
                                 data: {"password": password},
                                 options: Options(
                                   headers: {

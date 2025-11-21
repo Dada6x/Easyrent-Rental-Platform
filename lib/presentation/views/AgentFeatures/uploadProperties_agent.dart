@@ -1,14 +1,12 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:dio/dio.dart';
+import 'package:dio/dio.dart' as dio;
 import 'package:easyrent/core/constants/colors.dart';
 import 'package:easyrent/core/constants/utils/button.dart';
 import 'package:easyrent/core/constants/utils/textStyles.dart';
 import 'package:easyrent/main.dart';
-import 'package:easyrent/presentation/views/AgentFeatures/singleImage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:iconify_flutter_plus/iconify_flutter_plus.dart';
 import 'package:iconify_flutter_plus/icons/mdi.dart';
 import 'package:image_picker/image_picker.dart';
@@ -26,11 +24,11 @@ class UploadHomesPage extends StatefulWidget {
 class _UploadHomesPageState extends State<UploadHomesPage> {
   final ImagePicker _picker = ImagePicker();
 
-// Lists to hold selected images
+  // Lists to hold selected images
   List<XFile> _galleryImages = [];
   List<XFile> _panoramaImages = [];
 
-// Pick normal images
+  // Pick normal images
   Future<void> _pickGalleryImages() async {
     final List<XFile>? images = await _picker.pickMultiImage();
     if (images != null) {
@@ -40,7 +38,7 @@ class _UploadHomesPageState extends State<UploadHomesPage> {
     }
   }
 
-// Pick panorama images
+  // Pick panorama images
   Future<void> _pickPanoramaImages() async {
     final List<XFile>? images = await _picker.pickMultiImage();
     if (images != null) {
@@ -71,7 +69,7 @@ class _UploadHomesPageState extends State<UploadHomesPage> {
   bool _hasGarden = false;
   bool _isFloor = false;
 
-  final Dio _dio = Dio();
+  final dio.Dio _dio = dio.Dio();
 
   final List<String> heatingTypes = ['Central', 'Gas', 'Electric', 'None'];
   final List<String> flooringTypes = ['Wood', 'Tile', 'Carpet', 'Concrete'];
@@ -86,6 +84,41 @@ class _UploadHomesPageState extends State<UploadHomesPage> {
       ),
     );
     if (result != null) setState(() => _pickedLocation = result);
+  }
+
+  /// Uploads images to:
+  ///  {{URL}}/properties-media/upload-multiple-img/{propertyId}
+  /// using form-data key "property-images"
+  Future<void> _uploadImages(String propertyId, List<XFile> images) async {
+    if (images.isEmpty) return;
+
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token') ?? '';
+
+    try {
+      dio.FormData formData = dio.FormData();
+
+      for (var img in images) {
+        final file = await dio.MultipartFile.fromFile(img.path, filename: img.name);
+        formData.files.add(MapEntry("property-images", file));
+      }
+
+      final response = await _dio.post(
+        "https://9f7fa8d46ede.ngrok-free.app/properties-media/upload-multiple-img/$propertyId",
+        data: formData,
+        options: dio.Options(
+          headers: {
+            'Authorization': 'Bearer $token',
+            'Content-Type': 'multipart/form-data',
+          },
+        ),
+      );
+
+      debug.i("Upload images response: ${response.data}");
+    } catch (e, s) {
+      debug.i("Image upload error: $e");
+      debug.i(s);
+    }
   }
 
   Future<void> _submitProperty() async {
@@ -106,9 +139,9 @@ class _UploadHomesPageState extends State<UploadHomesPage> {
       "floorNumber": int.tryParse(_floorNumberController.text) ?? 0,
       "hasGarage": _hasGarage,
       "hasGarden": _hasGarden,
-      "heatingType": _selectedHeatingType.toString() ?? '',
-      "flooringType": _selectedFlooringType.toString() ?? '',
-      "propertyType": _selectedPropertyType.toString() ?? '',
+      "heatingType": _selectedHeatingType?.toString() ?? '',
+      "flooringType": _selectedFlooringType?.toString() ?? '',
+      "propertyType": _selectedPropertyType?.toString() ?? '',
       "isFloor": _isFloor,
       "agencyId": 2,
     };
@@ -116,24 +149,31 @@ class _UploadHomesPageState extends State<UploadHomesPage> {
     debug.i(data);
 
     final prefs = await SharedPreferences.getInstance();
-    final token = prefs.getString('token');
+    final token = prefs.getString('token') ?? '';
 
     try {
       final response = await _dio.post(
-        'https://18fbfdf5e6a5.ngrok-free.app/properties-on/',
+        'https://9f7fa8d46ede.ngrok-free.app/properties-on/',
         data: jsonEncode(data),
-        options: Options(
+        options: dio.Options(
           headers: {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer $token',
           },
-          validateStatus: (status) => true,
+          // validateStatus can be added here if you need
         ),
       );
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         debug.i(response.data);
-        final propertyId = response.data;
+
+        final propertyId = response.data.toString();
+
+        // Upload selected images (gallery + panorama)
+        await _uploadImages(propertyId, _galleryImages);
+        await _uploadImages(propertyId, _panoramaImages);
+
+        // Reset form
         _formKey.currentState!.reset();
         setState(() {
           _pickedLocation = const LatLng(0, 0);
@@ -144,14 +184,25 @@ class _UploadHomesPageState extends State<UploadHomesPage> {
           _hasGarage = false;
           _hasGarden = false;
           _isFloor = false;
+          _galleryImages = [];
+          _panoramaImages = [];
         });
-        Get.to(() => SingleImage(propertyId: propertyId.toString()));
+
+        Get.snackbar(
+          "Success",
+          "Property uploaded successfully!",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.green.shade600,
+          colorText: Colors.white,
+        );
       } else {
         debug.i(response.data);
+        Get.snackbar("Error", "Failed to upload property");
       }
     } catch (e, s) {
       debug.i(e);
       debug.i(s);
+      Get.snackbar("Error", "Something went wrong");
     }
   }
 
@@ -265,8 +316,7 @@ class _UploadHomesPageState extends State<UploadHomesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          title: Text("Upload Property", style: AppTextStyles.h24medium)),
+      appBar: AppBar(title: Text("Upload Property", style: AppTextStyles.h24medium)),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Form(
@@ -275,8 +325,7 @@ class _UploadHomesPageState extends State<UploadHomesPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Section: Basic Info
-              const Text("Basic Info",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              const Text("Basic Info", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
               const SizedBox(height: 10),
               TextFormField(
                   controller: _titleController,
@@ -286,8 +335,7 @@ class _UploadHomesPageState extends State<UploadHomesPage> {
               TextFormField(
                   controller: _descriptionController,
                   decoration: _inputDecoration("Description"),
-                  validator: (val) =>
-                      val!.isEmpty ? "Enter description" : null),
+                  validator: (val) => val!.isEmpty ? "Enter description" : null),
               const SizedBox(height: 10),
               TextFormField(
                   controller: _priceController,
@@ -297,8 +345,7 @@ class _UploadHomesPageState extends State<UploadHomesPage> {
               const SizedBox(height: 15),
 
               // Section: Features
-              const Text("Property Features",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              const Text("Property Features", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
               const SizedBox(height: 10),
               Row(
                 children: [
@@ -307,24 +354,21 @@ class _UploadHomesPageState extends State<UploadHomesPage> {
                           controller: _roomsController,
                           decoration: _inputDecoration("Rooms"),
                           keyboardType: TextInputType.number,
-                          validator: (val) =>
-                              val!.isEmpty ? "Enter rooms" : null)),
+                          validator: (val) => val!.isEmpty ? "Enter rooms" : null)),
                   const SizedBox(width: 10),
                   Expanded(
                       child: TextFormField(
                           controller: _bathroomsController,
                           decoration: _inputDecoration("Bathrooms"),
                           keyboardType: TextInputType.number,
-                          validator: (val) =>
-                              val!.isEmpty ? "Enter bathrooms" : null)),
+                          validator: (val) => val!.isEmpty ? "Enter bathrooms" : null)),
                   const SizedBox(width: 10),
                   Expanded(
                       child: TextFormField(
                           controller: _areaController,
                           decoration: _inputDecoration("Area (m²)"),
                           keyboardType: TextInputType.number,
-                          validator: (val) =>
-                              val!.isEmpty ? "Enter area" : null)),
+                          validator: (val) => val!.isEmpty ? "Enter area" : null)),
                 ],
               ),
               const SizedBox(height: 10),
@@ -332,64 +376,44 @@ class _UploadHomesPageState extends State<UploadHomesPage> {
                   controller: _floorNumberController,
                   decoration: _inputDecoration("Floor Number"),
                   keyboardType: TextInputType.number,
-                  validator: (val) =>
-                      val!.isEmpty ? "Enter floor number" : null),
+                  validator: (val) => val!.isEmpty ? "Enter floor number" : null),
               const SizedBox(height: 10),
 
-              _buildDropdown("Heating Type", _selectedHeatingType, heatingTypes,
-                  (val) => setState(() => _selectedHeatingType = val)),
+              _buildDropdown("Heating Type", _selectedHeatingType, heatingTypes, (val) => setState(() => _selectedHeatingType = val)),
               const SizedBox(height: 10),
-              _buildDropdown(
-                  "Flooring Type",
-                  _selectedFlooringType,
-                  flooringTypes,
-                  (val) => setState(() => _selectedFlooringType = val)),
+              _buildDropdown("Flooring Type", _selectedFlooringType, flooringTypes, (val) => setState(() => _selectedFlooringType = val)),
               const SizedBox(height: 10),
-              _buildDropdown(
-                  "Property Type",
-                  _selectedPropertyType,
-                  propertyTypes,
-                  (val) => setState(() => _selectedPropertyType = val)),
+              _buildDropdown("Property Type", _selectedPropertyType, propertyTypes, (val) => setState(() => _selectedPropertyType = val)),
               const SizedBox(height: 15),
 
               // Section: Location
-              const Text("Location",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              const Text("Location", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
               const SizedBox(height: 10),
               _buildMapPreview(),
               const SizedBox(height: 5),
               Text(
                 _pickedLocation == const LatLng(0, 0)
                     ? "No location selected"
-                    : "Latitude: ${_pickedLocation.latitude.toStringAsFixed(6)}, "
-                        "Longitude: ${_pickedLocation.longitude.toStringAsFixed(6)}",
+                    : "Latitude: ${_pickedLocation.latitude.toStringAsFixed(6)}, Longitude: ${_pickedLocation.longitude.toStringAsFixed(6)}",
                 style: const TextStyle(fontSize: 14, color: Colors.grey),
               ),
               const SizedBox(height: 15),
 
               // Section: Options
-              const Text("Options",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              const Text("Options", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
               const SizedBox(height: 10),
-              _buildSwitch("For Rent", _isForRent,
-                  (val) => setState(() => _isForRent = val)),
-              _buildSwitch("Has Garage", _hasGarage,
-                  (val) => setState(() => _hasGarage = val)),
-              _buildSwitch("Has Garden", _hasGarden,
-                  (val) => setState(() => _hasGarden = val)),
-              _buildSwitch("Is Floor", _isFloor,
-                  (val) => setState(() => _isFloor = val)),
+              _buildSwitch("For Rent", _isForRent, (val) => setState(() => _isForRent = val)),
+              _buildSwitch("Has Garage", _hasGarage, (val) => setState(() => _hasGarage = val)),
+              _buildSwitch("Has Garden", _hasGarden, (val) => setState(() => _hasGarden = val)),
+              _buildSwitch("Is Floor", _isFloor, (val) => setState(() => _isFloor = val)),
               const SizedBox(height: 5),
-              //!
-              const Text("Gallery ",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-              //! image selectors
+
+              const Text("Gallery ", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
               const SizedBox(height: 15),
 
-              _buildImageButton("Upload Images", Icons.photo_library,
-                  _pickGalleryImages, context),
+              _buildImageButton("Upload Images", Icons.photo_library, _pickGalleryImages, context),
 
-// Show selected normal images
+              // Show selected normal images
               if (_galleryImages.isNotEmpty)
                 Wrap(
                   spacing: 8,
@@ -397,23 +421,16 @@ class _UploadHomesPageState extends State<UploadHomesPage> {
                   children: _galleryImages.map((img) {
                     return ClipRRect(
                       borderRadius: BorderRadius.circular(8),
-                      child: Image.file(
-                        File(img.path),
-                        width: 80,
-                        height: 80,
-                        fit: BoxFit.cover,
-                      ),
+                      child: Image.file(File(img.path), width: 80, height: 80, fit: BoxFit.cover),
                     );
                   }).toList(),
                 ),
 
               const SizedBox(height: 15),
 
-// Upload panorama images
-              _buildImageButton("Select Panorama Images", Icons.panorama,
-                  _pickPanoramaImages, context),
+              _buildImageButton("Select Panorama Images", Icons.panorama, _pickPanoramaImages, context),
 
-// Show selected panorama images
+              // Show selected panorama images
               if (_panoramaImages.isNotEmpty)
                 Wrap(
                   spacing: 8,
@@ -421,12 +438,7 @@ class _UploadHomesPageState extends State<UploadHomesPage> {
                   children: _panoramaImages.map((img) {
                     return ClipRRect(
                       borderRadius: BorderRadius.circular(8),
-                      child: Image.file(
-                        File(img.path),
-                        width: 80,
-                        height: 80,
-                        fit: BoxFit.cover,
-                      ),
+                      child: Image.file(File(img.path), width: 80, height: 80, fit: BoxFit.cover),
                     );
                   }).toList(),
                 ),
@@ -469,8 +481,7 @@ class _MapPickerPageState extends State<MapPickerPage> {
         actions: [
           TextButton(
               onPressed: () => Navigator.pop(context, pickedLocation),
-              child: const Padding(
-                  padding: EdgeInsets.all(8.0), child: Text('Confirm'))),
+              child: const Padding(padding: EdgeInsets.all(8.0), child: Text('Confirm'))),
         ],
       ),
       body: FlutterMap(
@@ -479,9 +490,7 @@ class _MapPickerPageState extends State<MapPickerPage> {
           onTap: (tapPos, point) => setState(() => pickedLocation = point),
         ),
         children: [
-          TileLayer(
-              urlTemplate: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
-              subdomains: const ['a', 'b', 'c']),
+          TileLayer(urlTemplate: "https://tile.openstreetmap.org/{z}/{x}/{y}.png", subdomains: const ['a', 'b', 'c']),
           MarkerLayer(markers: [
             Marker(
               point: pickedLocation,
@@ -489,14 +498,11 @@ class _MapPickerPageState extends State<MapPickerPage> {
               height: 36,
               child: Container(
                 decoration: BoxDecoration(
-                  color:
-                      Theme.of(context).colorScheme.primary.withOpacity(0.15),
+                  color: Theme.of(context).colorScheme.primary.withOpacity(0.15),
                   shape: BoxShape.circle,
-                  border: Border.all(
-                      color: Theme.of(context).colorScheme.primary, width: 1.5),
+                  border: Border.all(color: Theme.of(context).colorScheme.primary, width: 1.5),
                 ),
-                child: Icon(Icons.circle,
-                    size: 28, color: Theme.of(context).colorScheme.primary),
+                child: Icon(Icons.circle, size: 28, color: Theme.of(context).colorScheme.primary),
               ),
             ),
           ]),
@@ -506,8 +512,7 @@ class _MapPickerPageState extends State<MapPickerPage> {
   }
 }
 
-Widget _buildImageButton(
-    String hint, IconData icon, VoidCallback function, BuildContext context) {
+Widget _buildImageButton(String hint, IconData icon, VoidCallback function, BuildContext context) {
   return Padding(
     padding: const EdgeInsets.symmetric(vertical: 6),
     child: ElevatedButton.icon(

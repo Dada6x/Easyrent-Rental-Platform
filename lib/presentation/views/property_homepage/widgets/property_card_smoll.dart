@@ -59,7 +59,7 @@ class PropertyCardSmall extends StatelessWidget {
                       child: FancyShimmerImage(
                         height: 140.h,
                         boxFit: BoxFit.cover,
-                        imageUrl:EndPoints.imageUrl(image) ,
+                        imageUrl:"https://9f7fa8d46ede.ngrok-free.app/properties-media/images/$image" ,
                         errorWidget: const ErrorLoadingWidget(),
                       ),
                     ),

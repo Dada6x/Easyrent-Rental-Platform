@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:easyrent/core/constants/colors.dart';
 import 'package:easyrent/core/constants/utils/error_loading_mssg.dart';
 import 'package:easyrent/core/constants/utils/textStyles.dart';
@@ -13,18 +14,19 @@ class AgentWidget extends StatelessWidget {
   final String agentRole;
   final String agentImage;
   final int agentId;
-  const AgentWidget(
-      {super.key,
-      required this.agentName,
-      required this.agentRole,
-      required this.agentImage,
-      required this.agentId});
+  const AgentWidget({
+    super.key,
+    required this.agentName,
+    required this.agentRole,
+    required this.agentImage,
+    required this.agentId,
+  });
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
       onTap: () {
-        Get.to(() => AgentPage(agentId: agentId));
+        Get.to(() => const AgentPage());
       },
       leading: CircleAvatar(
         radius: 23.sp,

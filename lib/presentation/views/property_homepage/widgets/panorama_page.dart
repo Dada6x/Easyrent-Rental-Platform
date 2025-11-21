@@ -23,6 +23,9 @@ class _PanoramaPageState extends State<PanoramaPage> {
     });
   }
 
+  static String baseUrl =
+      'https://9f7fa8d46ede.ngrok-free.app/properties-media/images/';
+
   @override
   Widget build(BuildContext context) {
     final currentRoom = widget.rooms[currentIndex];
@@ -36,7 +39,8 @@ class _PanoramaPageState extends State<PanoramaPage> {
               child: PanoramaViewer(
                 maxZoom: 3,
                 sensitivity: 1.5,
-                child: Image.network(currentRoom['url']!),
+                child: Image.network(
+                    'https://9f7fa8d46ede.ngrok-free.app/properties-media/images/${currentRoom['url']}'),
               ),
             ),
             Positioned(

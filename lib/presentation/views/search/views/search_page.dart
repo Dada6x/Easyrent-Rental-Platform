@@ -106,7 +106,7 @@ class Search extends StatelessWidget {
                                 color: searchController.searchMode.value ==
                                         SearchMode.properties
                                     ? white
-                                    : blue,
+                                    : green,
                               ),
                               side: BorderSide.none,
                               showCheckmark: false,
@@ -221,7 +221,7 @@ class SearchController extends GetxController {
         propertyList.clear();
       }
       final response = await Dio().get(
-        'https://83b08d2bbc5a.ngrok-free.app/properties/all',
+        'https://9f7fa8d46ede.ngrok-free.app/properties/all',
         queryParameters: {
           'pageNum': currentPage,
           'numPerPage': numPerPage,
@@ -246,7 +246,7 @@ class SearchController extends GetxController {
     try {
       isLoading.value = true;
       final response =
-          await Dio().get('https://83b08d2bbc5a.ngrok-free.app/users/agency');
+          await Dio().get('https://9f7fa8d46ede.ngrok-free.app/users/agency');
       final List<Agent> fetched = (response.data['data'] as List)
           .map((e) => Agent.fromJson(e))
           .toList();

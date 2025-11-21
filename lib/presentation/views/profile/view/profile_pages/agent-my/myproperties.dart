@@ -28,7 +28,7 @@ class _MyPropertiesState extends State<MyProperties> {
 
     final response = await http.get(
       //TODO
-      Uri.parse('https://83b08d2bbc5a.ngrok-free.app/properties-on/my'),
+      Uri.parse('https://9f7fa8d46ede.ngrok-free.app/properties-on/my'),
       headers: {
         "Accept": "application/json",
         "Content-Type": "application/json",
