@@ -205,12 +205,12 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
                               height: 20.h,
                               child: CircularProgressIndicator(
                                 strokeWidth: 1.sp,
-                                color: secondary,
+                                color: Colors.amber,
                               )),
                         )
                       : const Text(
                           "Subscribe",
-                          style: TextStyle(color: secondary),
+                          style: TextStyle(color: Colors.amber),
                         )))
             ],
           ),

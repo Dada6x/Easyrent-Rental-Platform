@@ -59,7 +59,7 @@ class PropertyCardSmall extends StatelessWidget {
                     ClipRRect(
                       borderRadius: BorderRadius.all(Radius.circular(16.r)),
                       child: FancyShimmerImage(
-                        height: 140.h,
+                        height: 140,
                         boxFit: BoxFit.cover,
                         imageUrl: image,
                         errorWidget: const ErrorLoadingWidget(),

@@ -135,30 +135,7 @@ class _ChatPageState extends State<Ai_ChatBot> {
               ],
             ),
           ),
-        Expanded(
-          child: Chat(
-            theme: DarkChatTheme(
-              secondaryColor: Theme.of(context).colorScheme.secondary,
-              inputElevation: 0,
-              backgroundColor: Colors.transparent,
-              primaryColor: Theme.of(context).colorScheme.primary,
-              inputTextCursorColor: white,
-              inputBackgroundColor: Theme.of(context).colorScheme.tertiary,
-              inputTextColor: Colors.grey,
-            ),
-            inputOptions: InputOptions(
-              autofocus: false,
-              usesSafeArea: true,
-              textEditingController: messageController,
-              autocorrect: false,
-            ),
-            showUserAvatars: true,
-            showUserNames: true,
-            messages: _messages,
-            onSendPressed: _handleSendPressed,
-            user: _user,
-          ),
-        ),
+       
       ],
     );
   }

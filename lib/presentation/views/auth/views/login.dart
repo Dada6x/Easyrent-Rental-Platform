@@ -1,3 +1,5 @@
+import 'package:easyrent/data/Session/app_session.dart';
+import 'package:easyrent/presentation/navigation/navigator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -112,5 +114,10 @@ class LoginPage extends StatelessWidget {
       number: _numberController.text,
       password: _passwordController.text,
     );
+
+    userDio.getProfile();
+
+    Get.off(() => const HomeScreenNavigator());
+    (AppSession().user!);
   }
 }

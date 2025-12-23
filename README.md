@@ -11,7 +11,7 @@ EasyRent is a cross-platform mobile application designed to simplify the way use
 
 > _A quick preview of how EasyRent looks and feels in action._
 
-![EasyRent Showcase](poster/showcase.gif)
+![ShowCase](poster/showcase.gif)
 
 ---
 

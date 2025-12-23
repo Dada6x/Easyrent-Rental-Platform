@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:animated_theme_switcher/animated_theme_switcher.dart';
+import 'package:device_preview/device_preview.dart';
 import 'package:dio/dio.dart';
 import 'package:easyrent/core/app/notifications/notificationsApi.dart';
 import 'package:easyrent/core/constants/colors.dart';
@@ -7,6 +10,7 @@ import 'package:easyrent/data/repos/properties_repo.dart';
 import 'package:easyrent/data/repos/user_repo.dart';
 import 'package:easyrent/presentation/views/property_homepage/controller/propertiy_controller.dart';
 import 'package:easyrent/presentation/views/property_homepage/controller/subscription_controller.dart';
+import 'package:flutter/foundation.dart';
 // import 'package:firebase_core/firebase_core.dart';
 // import 'package:firebase_messaging/firebase_messaging.dart';
 // import 'package:flutter/foundation.dart';
@@ -91,56 +95,64 @@ void main() async {
     ),
   );
 
-  userPref?.setBool('isLoggedIn', true);
+  userPref?.setBool('isLoggedIn', true); 
   // the payment Card gyroscope 3D shi
   await Motion.instance.initialize();
   Motion.instance.setUpdateInterval(60.fps);
-  runApp(ScreenUtilInit(
-    designSize: const Size(430, 932),
-    minTextAdapt: true,
-    splitScreenMode: true,
-    builder: (context, child) {
-      Get.put(AppController());
-      Get.put(PropertiesController());
-      Get.put(SubscriptionController());
-      debug.d("application Started0!!");
-      return ThemeProvider(
-        duration: const Duration(milliseconds: 700),
-        initTheme: isDarkTheme
-            ? Themes().darkMode.copyWith(
-                colorScheme: Themes()
-                    .darkMode
-                    .colorScheme
-                    .copyWith(primary: primaryColor))
-            : Themes().lightMode.copyWith(
+
+  runApp(DevicePreview(
+    backgroundColor: Colors.white,
+    isToolbarVisible: false,
+    enabled: kIsWeb ? true : false,
+    builder: (context) => ScreenUtilInit(
+      minTextAdapt: true,
+      designSize: kIsWeb 
+          ? const Size(1920, 1080)
+          : const Size(430, 932),
+      splitScreenMode: true,
+      builder: (context, child) {
+        Get.put(AppController());
+        Get.put(PropertiesController());
+        Get.put(SubscriptionController());
+        debug.d("application Started0!!");
+        return ThemeProvider(
+          duration: const Duration(milliseconds: 700),
+          initTheme: isDarkTheme
+              ? Themes().darkMode.copyWith(
                   colorScheme: Themes()
-                      .lightMode
+                      .darkMode
                       .colorScheme
-                      .copyWith(primary: primaryColor),
+                      .copyWith(primary: primaryColor))
+              : Themes().lightMode.copyWith(
+                    colorScheme: Themes()
+                        .lightMode
+                        .colorScheme
+                        .copyWith(primary: primaryColor),
+                  ),
+          builder: (_, theme) {
+            return GetMaterialApp(
+              onInit: () {},
+              debugShowCheckedModeBanner: false,
+              theme: theme,
+              translations: MyLocale(),
+              //! middlewares
+              initialRoute: '/',
+              getPages: [
+                GetPage(
+                  name: '/',
+                  page: () => const SplashScreen(),
                 ),
-        builder: (_, theme) {
-          return GetMaterialApp(
-            onInit: () {},
-            debugShowCheckedModeBanner: false,
-            theme: theme,
-            translations: MyLocale(),
-            //! middlewares
-            initialRoute: '/',
-            getPages: [
-              GetPage(
-                name: '/',
-                page: () => const SplashScreen(),
-              ),
-              GetPage(name: '/login', page: () => LoginPage(), middlewares: [
-                MiddlewareAuth(),
-              ]),
-              GetPage(
-                  name: '/homePage', page: () => const HomeScreenNavigator()),
-            ],
-          );
-        },
-      );
-    },
+                GetPage(name: '/login', page: () => LoginPage(), middlewares: [
+                  MiddlewareAuth(),
+                ]),
+                GetPage(
+                    name: '/homePage', page: () => const HomeScreenNavigator()),
+              ],
+            );
+          },
+        );
+      },
+    ),
   ));
 }
 
@@ -218,4 +230,3 @@ UI rebuilds with the new state
 
 
 */
-

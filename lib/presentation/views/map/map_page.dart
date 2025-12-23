@@ -238,12 +238,7 @@ class _MapPageState extends State<MapPage> {
                     iconSize: 30.r,
                     constraints: const BoxConstraints(),
                   ),
-                  Divider(
-                    color: Get.isDarkMode ? black : white,
-                    thickness: 1,
-                    indent: 10.w,
-                    endIndent: 10.w,
-                  ),
+              
                   IconButton(
                     icon: Icon(
                       Icons.remove,

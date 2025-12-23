@@ -10,8 +10,8 @@ class NotificationsService {
 
   final FlutterLocalNotificationsPlugin notificationsPlugin =
       FlutterLocalNotificationsPlugin();
-  bool _isInitialized = false;
 
+  bool _isInitialized = false;
   bool get isInitialized => _isInitialized;
 
   //! Initialize Notifications
@@ -20,12 +20,23 @@ class NotificationsService {
 
     // Android Initialization
     const AndroidInitializationSettings initSettingsAndroid =
-        AndroidInitializationSettings("@mipmap/ic_launcher");
+        AndroidInitializationSettings('@mipmap/ic_launcher');
 
-    const InitializationSettings initSettings =
-        InitializationSettings(android: initSettingsAndroid);
+    // Windows Initialization
+    const WindowsInitializationSettings initSettingsWindows =
+        WindowsInitializationSettings(
+      appName: 'EasyRent',
+      appUserModelId: 'com.example.easyrent',
+      guid: 'b5a3b1e2-9f6d-4f0e-8c4a-1a2b3c4d5e6f',
+    );
+
+    const InitializationSettings initSettings = InitializationSettings(
+      android: initSettingsAndroid,
+      windows: initSettingsWindows,
+    );
 
     await notificationsPlugin.initialize(initSettings);
+
     _isInitialized = true;
   }
 
@@ -57,6 +68,3 @@ class NotificationsService {
     await notificationsPlugin.show(id, title, body, notificationDetails());
   }
 }
-
-
-
