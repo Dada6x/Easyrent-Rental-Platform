@@ -7,6 +7,10 @@ EasyRent is a cross-platform mobile application designed to simplify the way use
 
 ---
 
+## 🚀 Check out the live demo
+https://easyrent-rental-platform.vercel.app
+
+
 ## 🎥 App Showcase
 
 > _A quick preview of how EasyRent looks and feels in action._
