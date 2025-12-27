@@ -59,185 +59,176 @@ class _ProfileState extends State<Profile> {
             //     : const SizedBox(),
             Material(
               shadowColor: Colors.transparent,
-              child: Motion(
-                filterQuality: FilterQuality.high,
-                controller: MotionController(maxAngle: 50, damping: 0.2),
-                glare: const GlareConfiguration(maxOpacity: 0),
-                shadow: const ShadowConfiguration(color: Colors.transparent),
-                translation:
-                    const TranslationConfiguration(maxOffset: Offset(50, 120)),
-                borderRadius: BorderRadius.circular(80),
-                child: Padding(
-                  padding: EdgeInsets.all(15.sp),
-                  child: Column(
-                    children: [
-                      Stack(
-                        children: [
-                          Skeletonizer(
-                            enabled: AppSession().user == null,
-                            child: CircleAvatar(
-                              radius: 85.sp,
-                              backgroundColor: Colors.transparent,
-                              child: ClipOval(
-                                child: _selectedImage != null
-                                    ? Image.file(
-                                        File(_selectedImage!.path),
-                                        fit: BoxFit.cover,
-                                        width: 170.sp,
-                                        height: 170.sp,
-                                      )
-                                    : (AppSession()
-                                                .user
-                                                ?.profileImage
-                                                ?.isNotEmpty ??
-                                            false)
-                                        ? FancyShimmerImage(
-                                            width: 170.sp,
-                                            height: 170.sp,
-                                            boxFit: BoxFit.cover,
-                                            errorWidget:
-                                                const ErrorLoadingWidget(),
-                                            //TODO REMOVE ITTTT
-                                            imageUrl:
-                                                "http://192.168.1.4:3000/user/images/${AppSession().user!.profileImage}",
-                                          )
-                                        : AppSession().user!.userType ==
-                                                'agency'
-                                            ? Image.asset(
-                                                agentAvatar,
-                                                width: 170.sp,
-                                                height: 170.sp,
-                                                fit: BoxFit.cover,
-                                              )
-                                            : Image.asset(
-                                                avatar2,
-                                                width: 170.sp,
-                                                height: 170.sp,
-                                                fit: BoxFit.cover,
-                                              ),
-                              ),
-                            ),
-                          ),
-                          Visibility(
-                            visible: AppSession().user != null,
-                            child: Positioned(
-                              bottom: 1.h,
-                              right: -10.w,
-                              height: 49.h,
-                              child: RawMaterialButton(
-                                onPressed: () {
-                                  Get.dialog(
-                                    AlertDialog(
-                                      title: const Center(
-                                          child: Text('Choose Image')),
-                                      actions: <Widget>[
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceEvenly,
-                                          children: [
-                                            IconButton(
-                                              onPressed: () async {
-                                                Get.back();
-                                                final picker = ImagePicker();
-                                                final XFile? image =
-                                                    await picker.pickImage(
-                                                  source: ImageSource.camera,
-                                                );
-
-                                                if (image != null) {
-                                                  final result = await userDio
-                                                      .uploadUserImage(image);
-                                                  result.fold(
-                                                    (error) =>
-                                                        showErrorSnackbar(
-                                                            error),
-                                                    (success) {
-                                                      showSuccessSnackbar(
-                                                          success);
-                                                      setState(() {
-                                                        _selectedImage = image;
-                                                      });
-                                                    },
-                                                  );
-                                                }
-                                              },
-                                              icon: Icon(
-                                                Icons.camera,
-                                                color: Theme.of(context)
-                                                    .colorScheme
-                                                    .primary,
-                                                semanticLabel: "Camera",
-                                              ),
-                                            ),
-                                            IconButton(
-                                              onPressed: () async {
-                                                Get.back();
-                                                final picker = ImagePicker();
-                                                final XFile? image =
-                                                    await picker.pickImage(
-                                                  source: ImageSource.gallery,
-                                                );
-
-                                                if (image != null) {
-                                                  final result = await userDio
-                                                      .uploadUserImage(image);
-                                                  result.fold(
-                                                    (error) =>
-                                                        showErrorSnackbar(
-                                                            error),
-                                                    (success) {
-                                                      showSuccessSnackbar(
-                                                          success);
-                                                      setState(() {
-                                                        _selectedImage = image;
-                                                      });
-                                                    },
-                                                  );
-                                                }
-                                              },
-                                              icon: Icon(
-                                                Icons.image,
-                                                color: Theme.of(context)
-                                                    .colorScheme
-                                                    .primary,
-                                                semanticLabel: "Gallery",
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  );
-                                },
-                                elevation: 2,
-                                fillColor:
-                                    Theme.of(context).colorScheme.secondary,
-                                padding: EdgeInsets.all(10.r),
-                                shape: const CircleBorder(),
-                                child: Icon(
-                                  Icons.camera_alt_outlined,
-                                  color: Theme.of(context).colorScheme.primary,
-                                  size: 28.sp,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      // image
-                      Padding(
-                        padding: EdgeInsets.all(8.r),
-                        child: Skeletonizer(
+              child: Padding(
+                padding: EdgeInsets.all(15.sp),
+                child: Column(
+                  children: [
+                    Stack(
+                      children: [
+                        Skeletonizer(
                           enabled: AppSession().user == null,
-                          child: Text(
-                              textAlign: TextAlign.center,
-                              // AppSession().user?.username ?? "Loading.......",
-                              "Agent-acc",
-                              style: AppTextStyles.h24semi),
+                          child: CircleAvatar(
+                            radius: 85.sp,
+                            backgroundColor: Colors.transparent,
+                            child: ClipOval(
+                              child: _selectedImage != null
+                                  ? Image.file(
+                                      File(_selectedImage!.path),
+                                      fit: BoxFit.cover,
+                                      width: 170.sp,
+                                      height: 170.sp,
+                                    )
+                                  : (AppSession()
+                                              .user
+                                              ?.profileImage
+                                              ?.isNotEmpty ??
+                                          false)
+                                      ? FancyShimmerImage(
+                                          width: 170.sp,
+                                          height: 170.sp,
+                                          boxFit: BoxFit.cover,
+                                          errorWidget:
+                                              const ErrorLoadingWidget(),
+                                          //TODO REMOVE ITTTT
+                                          imageUrl:
+                                              "http://192.168.1.4:3000/user/images/${AppSession().user!.profileImage}",
+                                        )
+                                      : AppSession().user!.userType ==
+                                              'agency'
+                                          ? Image.asset(
+                                              agentAvatar,
+                                              width: 170.sp,
+                                              height: 170.sp,
+                                              fit: BoxFit.cover,
+                                            )
+                                          : Image.asset(
+                                              avatar2,
+                                              width: 170.sp,
+                                              height: 170.sp,
+                                              fit: BoxFit.cover,
+                                            ),
+                            ),
+                          ),
                         ),
+                        Visibility(
+                          visible: AppSession().user != null,
+                          child: Positioned(
+                            bottom: 1.h,
+                            right: -10.w,
+                            height: 49.h,
+                            child: RawMaterialButton(
+                              onPressed: () {
+                                Get.dialog(
+                                  AlertDialog(
+                                    title: const Center(
+                                        child: Text('Choose Image')),
+                                    actions: <Widget>[
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          IconButton(
+                                            onPressed: () async {
+                                              Get.back();
+                                              final picker = ImagePicker();
+                                              final XFile? image =
+                                                  await picker.pickImage(
+                                                source: ImageSource.camera,
+                                              );
+              
+                                              if (image != null) {
+                                                final result = await userDio
+                                                    .uploadUserImage(image);
+                                                result.fold(
+                                                  (error) =>
+                                                      showErrorSnackbar(
+                                                          error),
+                                                  (success) {
+                                                    showSuccessSnackbar(
+                                                        success);
+                                                    setState(() {
+                                                      _selectedImage = image;
+                                                    });
+                                                  },
+                                                );
+                                              }
+                                            },
+                                            icon: Icon(
+                                              Icons.camera,
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .primary,
+                                              semanticLabel: "Camera",
+                                            ),
+                                          ),
+                                          IconButton(
+                                            onPressed: () async {
+                                              Get.back();
+                                              final picker = ImagePicker();
+                                              final XFile? image =
+                                                  await picker.pickImage(
+                                                source: ImageSource.gallery,
+                                              );
+              
+                                              if (image != null) {
+                                                final result = await userDio
+                                                    .uploadUserImage(image);
+                                                result.fold(
+                                                  (error) =>
+                                                      showErrorSnackbar(
+                                                          error),
+                                                  (success) {
+                                                    showSuccessSnackbar(
+                                                        success);
+                                                    setState(() {
+                                                      _selectedImage = image;
+                                                    });
+                                                  },
+                                                );
+                                              }
+                                            },
+                                            icon: Icon(
+                                              Icons.image,
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .primary,
+                                              semanticLabel: "Gallery",
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              },
+                              elevation: 2,
+                              fillColor:
+                                  Theme.of(context).colorScheme.secondary,
+                              padding: EdgeInsets.all(10.r),
+                              shape: const CircleBorder(),
+                              child: Icon(
+                                Icons.camera_alt_outlined,
+                                color: Theme.of(context).colorScheme.primary,
+                                size: 28.sp,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    // image
+                    Padding(
+                      padding: EdgeInsets.all(8.r),
+                      child: Skeletonizer(
+                        enabled: AppSession().user == null,
+                        child: Text(
+                            textAlign: TextAlign.center,
+                            // AppSession().user?.username ?? "Loading.......",
+                            "Agent-acc",
+                            style: AppTextStyles.h24semi),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
               ),
             ),

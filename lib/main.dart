@@ -16,7 +16,7 @@ import 'package:flutter/foundation.dart';
 // import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_local_not\ifications/flutter_local_notifications.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:logger/logger.dart';
@@ -95,65 +95,71 @@ void main() async {
     ),
   );
 
-  userPref?.setBool('isLoggedIn', true); 
+  userPref?.setBool('isLoggedIn', true);
   // the payment Card gyroscope 3D shi
   await Motion.instance.initialize();
   Motion.instance.setUpdateInterval(60.fps);
 
-  runApp(DevicePreview(
-    backgroundColor: Colors.white,
-    isToolbarVisible: false,
-    enabled: kIsWeb ? true : false,
-    builder: (context) => ScreenUtilInit(
-      minTextAdapt: true,
-      designSize: kIsWeb 
-          ? const Size(1920, 1080)
-          : const Size(430, 932),
-      splitScreenMode: true,
-      builder: (context, child) {
-        Get.put(AppController());
-        Get.put(PropertiesController());
-        Get.put(SubscriptionController());
-        debug.d("application Started0!!");
-        return ThemeProvider(
-          duration: const Duration(milliseconds: 700),
-          initTheme: isDarkTheme
-              ? Themes().darkMode.copyWith(
-                  colorScheme: Themes()
-                      .darkMode
-                      .colorScheme
-                      .copyWith(primary: primaryColor))
-              : Themes().lightMode.copyWith(
+  runApp(LayoutBuilder(builder: (context, constraints) {
+    final width = constraints.maxWidth;
+    debug.i(width);
+    return DevicePreview(
+      backgroundColor: Colors.white,
+      isToolbarVisible: false,
+      enabled: kIsWeb ? true : false,
+      builder: (context) => ScreenUtilInit(
+        minTextAdapt: true,
+        designSize: width > 650 ? const Size(1650, 850) : const Size(430, 870),
+        splitScreenMode: true,
+        builder: (context, child) { 
+          Get.put(AppController());
+          Get.put(PropertiesController());
+          Get.put(SubscriptionController());
+          debug.d("application Started0!!");
+          return ThemeProvider(
+            duration: const Duration(milliseconds: 700),
+            initTheme: isDarkTheme
+                ? Themes().darkMode.copyWith(
                     colorScheme: Themes()
-                        .lightMode
+                        .darkMode
                         .colorScheme
-                        .copyWith(primary: primaryColor),
+                        .copyWith(primary: primaryColor))
+                : Themes().lightMode.copyWith(
+                      colorScheme: Themes()
+                          .lightMode
+                          .colorScheme
+                          .copyWith(primary: primaryColor),
+                    ),
+            builder: (_, theme) {
+              return GetMaterialApp(
+                onInit: () {},
+                debugShowCheckedModeBanner: false,
+                theme: theme,
+                translations: MyLocale(),
+                //! middlewares
+                initialRoute: '/',
+                getPages: [
+                  GetPage(
+                    name: '/',
+                    page: () => const SplashScreen(),
                   ),
-          builder: (_, theme) {
-            return GetMaterialApp(
-              onInit: () {},
-              debugShowCheckedModeBanner: false,
-              theme: theme,
-              translations: MyLocale(),
-              //! middlewares
-              initialRoute: '/',
-              getPages: [
-                GetPage(
-                  name: '/',
-                  page: () => const SplashScreen(),
-                ),
-                GetPage(name: '/login', page: () => LoginPage(), middlewares: [
-                  MiddlewareAuth(),
-                ]),
-                GetPage(
-                    name: '/homePage', page: () => const HomeScreenNavigator()),
-              ],
-            );
-          },
-        );
-      },
-    ),
-  ));
+                  GetPage(
+                      name: '/login',
+                      page: () => LoginPage(),
+                      middlewares: [
+                        MiddlewareAuth(),
+                      ]),
+                  GetPage(
+                      name: '/homePage',
+                      page: () => const HomeScreenNavigator()),
+                ],
+              );
+            },
+          );
+        },
+      ),
+    );
+  }));
 }
 
 //////////////////! use this package for animtations
